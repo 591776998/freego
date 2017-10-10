@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>资质提交</title>
+    <link href="__PUBLIC__/temp/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 80%;
+                margin:0 auto;
+                padding-bottom:125px ;
+            }
+            .comment{
+                width: 100%;
+                font-size:0.8em;
+                color: #666666;
+            }
+
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+            .header{
+                left: 0px;
+            }
+
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.3em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 30px auto;
+            }
+            .comb{
+                width: 98%;text-align: center;
+                margin: 20px auto;
+            }
+
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.5em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 98%;text-align: center;
+                margin: 25px auto;
+            }
+
+        }
+        .header{
+            width: 100%;
+            padding: 16px 0;
+            background: #F9F9F9;
+            color:#FFCC00;
+            font-weight: bold;
+            position: fixed;
+            top: 0px;
+            z-index: 99999;
+
+        }
+        .btn1{
+            border: none;
+            background: #F9F9F9;
+        }
+        .btn11{
+            border: none;
+            background: #FFFFFF;
+            color: #FFCC00;
+        }
+
+        .btn2{
+            border: none;
+            background: #F9F9F9;
+            width: 210px;
+            padding: 3px 0;
+        }
+        .btn3{
+            border: none;
+            background: #F9F9F9;
+            width:140px;
+            padding: 3px 0;
+        }
+        .btn4{
+            border-radius: 8px;
+            padding: 3px 12px;
+            font-size: 0.8em;
+            background: #FFFFFF;
+            margin-left:  10px;
+
+        }
+        .btn5{
+            border: none;
+            background: #F9F9F9;
+            width: 220px;
+            padding: 3px 0;
+        }
+        .btn6{
+            width: 250px;
+            font-size: 0.7em;
+            padding: 5px 5px;
+        }
+        .btn7{
+            border: none;
+            background: #F9F9F9;
+            width:100%;
+            padding: 3px 5px;
+        }
+        .span1{
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+        .img-rounded{
+            width: 100px;
+            height: 100px;
+        }
+        .hrline{
+            width: 100%;
+            height: 2px;
+            border-top:1px solid #DDDDDD ;
+        }
+        button{
+            outline: 0;
+        }
+        .col-xs-4{
+            padding: 0;
+        }
+        .input-file {
+            position: absolute;
+            display: block !important;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            opacity: .01;
+            filter: alpha(opacity=1);
+            cursor: pointer;
+            z-index: 1;
+        }
+        .img_input_wrap{
+            width: 100px;
+            margin: 0 auto;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <div class="comment">
+                <div class="row header">
+                    <div class="col-xs-4 col-md-4" style="text-align: left">
+                        <button class="btn1" id="headbtn">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            首页</button>
+                    </div>
+                    <div class="col-xs-4 col-md-4" style="color: #080808; text-align: center;">
+                        <p class="btn1">资质提交</p></div>
+                    <div class="col-xs-4 col-md-4" style=" text-align: right;">
+                        <button class="btn1" type="button" id="submit">
+                            下一步<span class="glyphicon glyphicon-chevron-right"></span>
+                        </button></div>
+                </div>
+
+                <form method="post" id="main_form" >
+                <div class="comm" style="margin-top: 80px">
+                    负责人姓名：<input name="boss_name" class="btn2" type="text">
+                </div>
+                <div class="comm">
+                    身份证号：&nbsp&nbsp&nbsp&nbsp<input name="boss_id_card" class="btn2" type="text">
+                </div>
+                <div class="comm" style="text-align: left">
+                    &nbsp上传身份证照片：
+                </div>
+                <div class="comm">
+                    <span class="span1">负责人的证件文字清晰可辨；负责人手持本人身份证正面拍照，五官可见，证件文字清晰可辨</span>
+                </div>
+                <div class="comm" style="font-size: 0.8em">
+                    <div class="row">
+                        <div class="col-xs-4 img_input" >
+                            <div class="img_input_wrap">
+                                <img class="img-rounded"> <input name="card_front_img" class="input hide input-file" type="file" accept="image/*" hidden /><br>
+                            </div>
+                            <p>身份证正面照</p>
+                            <a target="_blank" href="http://www.tp5.local/uploads/static/img/base/xiaolongxia.jpg?v=1" class="btn11">查看示例</a>
+                        </div>
+                        <div class="col-xs-4 img_input">
+                            <div class="img_input_wrap">
+                                <img class="img-rounded"> <input name="card_back_img" class="input hide input-file" type="file" accept="image/*" hidden />
+                            </div>
+                            <p>身份证背面照</p>
+                            <a target="_blank"  class="btn11">查看示例</a>
+                        </div>
+                        <div class="col-xs-4 img_input">
+                            <div class="img_input_wrap">
+                                <img class="img-rounded"> <input name="card_hold_img" class="input hide input-file" type="file" accept="image/*" hidden />
+                            </div>
+                            <p>手持身份证照</p>
+                            <a target="_blank"  class="btn11">查看示例</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="comm">
+                    <div class="hrline"></div>
+                </div>
+                <div class="comm">
+                    门店名称：&nbsp&nbsp&nbsp&nbsp<input name="place_title" class="btn2" type="text">
+                </div>
+                <div class="comm">
+                    门店电话：&nbsp&nbsp&nbsp&nbsp<input name="place_phone" class="btn2" type="text">
+                </div>
+                <div class="comm" >
+                    <label style="font-weight: normal">APP已有该地点id为</label>
+                    <input name="place_id" type="text" class="btn3" />
+                </div>
+                <div class="comm" style="text-align: left">
+                    &nbsp 门店地址：
+                </div>
+                <div class="comm">
+                    <div class="comb">
+                        省：&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <select name="p_code" class="btn6">
+                            <option value="">--请选择--</option>
+                            {{volist name="p" id="vo"}}
+                            <option value="{{$vo.p_code}}">{{$vo.name}}</option>
+                            {{/volist}}
+                        </select>
+                    </div>
+                    <div class="comb">
+                        市：&nbsp&nbsp&nbsp&nbsp&nbsp<select name="c_code" class="btn6"></select>
+                    </div>
+                    <div class="comb">
+                        区县：&nbsp&nbsp<select name="t_code" class="btn6"></select>
+                    </div>
+                    <div class="comb">
+                        详细：&nbsp&nbsp<input name="address" class="btn6" style="background: #F9F9F9;border:none" placeholder="街道－号牌－楼层：例如青云路1号x栋x喽x单元" />
+                    </div>
+                    <div class="comb">
+                        审核机构代码：<input name="branch_code" class="btn3" style="width: 180px;font-size: 0.7em" placeholder="例如贵阳分会的代码xxxxxx" />
+                        <a style="color: #FFCC00;" href="tel://10086">询问</a>
+                    </div>
+                    <div class="comb">
+                        <div class="hrline"></div>
+                    </div>
+                </div>
+                <div class="comm">
+                    <div class="comb" style="text-align: left">
+                        营业执照注册号／统一信用代码：
+                    </div>
+                    <div class="comb">
+                        <input name="bl_code" type="text" class="btn7" >
+                    </div>
+                </div>
+                <div class="comm">
+                    <div class="comb" style="text-align: left">
+                        营业执照“名称”一栏内容：
+                    </div>
+                    <div class="comb">
+                        <input name="bl_title" type="text" class="btn7" >
+                    </div>
+                </div>
+                <div class="comm">
+                    <div class="comb" style="text-align: left">
+                        上传营业执照正面照片：
+                    </div>
+                    <div class="comb" style="text-align: left;font-size: 0.7em;font-weight: bold">
+                        营业执照在有效期内的正面照，证件文字清晰可辨
+                    </div>
+                    <div class="comb img_input_wrap">
+                        <img class="img-rounded img_input">
+                        <input name="bl_img"  hidden  class="input hide input-file" type="file" accept="image/*"/>
+                        <br/>
+                        <a target="_blank" href="#" class="btn11">查看示例</a>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/temp/js/jquery.min.js"> </script>
+<script src="__PUBLIC__/temp/js/bootstrap.js"></script>
+<script type="text/javascript" src="__PUBLIC__/temp/js/seller.js"></script>
+<script type="text/javascript">
+    var address = {{$p|json_encode}};
+    var address_city = [];
+
+</script>
+<script type="text/javascript">
+    $().ready(function(){
+        //图片
+        imgInput();
+
+        $('#submit').on('click',function () {
+            var formData = new FormData(document.querySelector('#main_form'));
+            $.ajax({
+                type: "POST",
+                url: "{{:web_url('/seller/sellerinfo/save')}}",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if(200 == data.code){
+                        msg('提交成功！！',1);
+                        jump("{{:web_url('/seller/sellerinfo/res')}}");
+                    }else{
+                        msg(data.desc,2);
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    msg("提交失败，请检查网络后重试",2);
+                }
+            });
+        });
+        $("#headbtn").click(function(){
+            jump("{{:web_url('/seller/session/login')}}");
+        });
+
+        $("select[name=p_code]").on('change',function () {
+            var c_code_select = $('select[name=c_code]');
+            c_code_select.empty();
+            var p_code = $(this).val();
+            if(p_code){
+                var arr = arrFind(address,'p_code',p_code);
+                if(arr.length > 0){
+                    var dom = '<option value="">--请选择--</option>';
+                    dom += arr[0].sub.map(function (temp) {
+                        return '<option value="'+temp.c_code+'">'+temp.name+'</option>';
+                    }).join('');
+                    c_code_select.html(dom);
+                    address_city = arr[0].sub;
+                    $('select[name=t_code]').empty();
+                }
+            }
+        })
+
+        $("select[name=c_code]").on('change',function () {
+            var t_code_select = $('select[name=t_code]');
+            t_code_select.empty();
+            var c_code = $(this).val();
+            if(c_code){
+                var arr = arrFind(address_city,'c_code',c_code);
+                if(arr.length > 0){
+                    var dom = '<option value="">--请选择--</option>';
+                    dom += arr[0].sub.map(function (temp) {
+                        return '<option value="'+temp.t_code+'">'+temp.name+'</option>';
+                    }).join('');
+                    t_code_select.html(dom);
+                }
+            }
+        })
+    });
+
+    //图片
+    function imgInput() {
+//        var can = true;
+//        $('.img_input').on('click','img',function (e) {
+//            if(can){
+//                can = false;
+//                var input = $(this).find('.input');
+//                input.trigger("click");
+//                can = true;
+//            }
+//        });
+        $('.img_input_wrap').on('change','.input',function () {
+            var parent = $(this).parent();
+            var objUrl = getObjectURL(this.files[0]) ;
+            if (objUrl) {
+                parent.find('img').attr("src", objUrl) ; //将图片路径存入src中，显示出图片
+            }
+        });
+    }
+
+    //过滤出符合条件的数组的子集
+    function arrFind(arr,key,val) {
+        return arr.filter(function (item) {
+            return item[key] == val;
+        });
+    }
+
+</script>
+</body>
+</html>

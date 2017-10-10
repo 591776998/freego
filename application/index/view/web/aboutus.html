@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/com.css">
+    <style>
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        a,a:hover,a:active{
+            text-decoration: none !important;
+            text-decoration-color: #fff;
+        }
+        .yellow {
+            color: #f49700 !important;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        .mui-bar-nav~.mui-content {
+            padding-top: 64px;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+</head>
+
+<body>
+{{eq name="is_app" value="102"}}
+{{include file="web/h5_view_head" logo_url="$logo_url" /}}
+{{else/}}
+<header class="mui-bar mui-bar-nav" style="padding-top: 20px;height: 64px;">
+    <a id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left yellow"><span class="ltext"></span></a>
+    <h1 class="mui-title">{{$title}}</h1>
+</header>
+{{/eq}}
+<div class="mui-content contentList">
+    {{$data}}
+</div>
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script>
+    var sd = new shiDianCommon();
+    var token   = sd.token('{{$token}}');
+    var baseUrl = '{{$baseUrl}}';
+    var pulicS  = '__PUBLIC__/img/';
+    mui.ready(function() {
+
+        //返回
+        var pop_btn = document.querySelector("pop");
+        if(null != pop_btn){
+            pop_btn.addEventListener("tap",function () {
+                shidian('pop',{});
+            });
+        }
+        var back_btn = document.querySelector("back");
+        if(null != back_btn){
+            back_btn.addEventListener("tap",function () {
+                shidian('back',{});
+            });
+        }
+
+    });
+
+
+</script>
+</body>
+
+</html>

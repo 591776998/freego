@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/um/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <script type="text/javascript">
+    </script>
+    <style>
+        @media (min-width:992px) {
+            .row{
+                width: 60%;
+                margin: 0 auto;
+                border-right: 2px solid #DDDDDD;
+                border-left: 2px solid #DDDDDD;
+            }
+            .imgCom{
+                width: 100%;
+                height:135px;
+                margin: 10px 0;
+                background: #F2F2F2 ;
+
+            }
+            .main{
+                padding: 10px 45px;
+                margin: 0 18%;
+            }
+        }
+        @media (max-width:376px){
+            .comment{
+                font-size:7px;
+                padding-top: 10px;
+
+                color: #979797;
+                line-height:50px;
+                font-weight:bold;
+            }
+        }
+        @media (min-width:410px){
+            .comment{
+                font-size:1.2em;
+                padding-top: 10px;
+                letter-spacing:0.5px;
+                color: #979797;
+                line-height:50px;
+                font-weight:bold;
+            }
+        }
+
+        a:hover{
+            cursor: pointer;
+        }
+        .main{
+            padding: 10px 45px;
+
+        }
+
+        .span1{
+            background: #D8D8D8;
+            padding: 6px 10px;
+            margin:0 10px;
+            font-weight:normal;
+            border: none;
+            height: 25px;
+            width: 140px;
+        }
+        .span2{
+
+            padding: 6px 10px;
+            font-size: 1.0em;
+            font-weight: normal;
+
+        }
+        .btn{
+            border-radius: 7px;
+            margin-left:5px ;
+            font-size: 0.9em;
+            margin-bottom:5px ;
+            padding: 2px;
+            color: #979797;
+            height: 28px;
+            background: #FFFFFF;
+            border: 1px solid #DDDDDD;
+
+        }
+        .btn1{
+            border-radius: 7px;
+            margin-left:5px ;
+            font-size: 0.9em;
+            margin-bottom:5px ;
+            padding: 2px;
+            color: #0000ff;
+            height: 28px;
+            background: #FFFFFF;
+            border:none;
+
+        }
+
+        .select{
+            width: 95%;
+            height: 25px;
+            color: #000000;
+            font-size: 15px;
+            margin: 0 5px;
+        }
+        a{
+            color:#0000ff;
+            margin: 0 10px;
+        }
+        .imgCom{
+            width: 100%;
+            height: 75px;
+            margin: 10px 0;
+            background: #F2F2F2 ;
+        }
+        textarea{
+            background: #F2F2F2;
+            width: 100%;
+            border:none;
+        }
+
+
+    </style>
+    <!--/script-->
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <h2 style="font-weight: bolder">服务商品</h2>
+            <form id="main_form" action="{{:web_url('seller/Services/save')}}" enctype="multipart/form-data" method="post" onkeypress="javascript:return noJump();">
+                <input name="place_id" value="{{$place_id}}" hidden/>
+                <div class="comment" style="clear: both;">
+                    名称：<input  name="title" class="span1" type="text" style="width: 210px" /><br />
+                    最低至&nbsp<input name="discount" class="span1" style="width: 200px" placeholder="有效范围0-10"/>折<br />
+                    封面图片<br />
+                    <div class="img_input">
+                        <img class="imgCom" style="width: 90px;height: 90px;">
+                        <input name="img" class="input hide" type="file" accept="image/*" hidden />
+                    </div>
+                </div>
+                <br />
+
+                <script name="content" type="text/plain" id="myEditor" style="width:100%;height:300px;"></script>
+
+                <button type="button" id="submit" class="btn">提交</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<a href="#to-top" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+<script src="__PUBLIC__/js/jquery.3.2.1.js"> </script>
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+<script src="__PUBLIC__/js/seller.js"></script>
+<script type="text/javascript" src="__PUBLIC__/um/third-party/template.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/um/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/um/umeditor.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/um/lang/zh-cn/zh-cn.js"></script>
+<script>
+$(function() {
+    var um = UM.getEditor('myEditor');
+
+    //图片
+    imgInput();
+
+    //提交
+    $('#submit').on('click',function () {
+        var formData = new FormData(document.querySelector('#main_form'));
+        $.ajax({
+            type: "POST",
+            url: "{{:web_url('/seller/services/save')}}",
+            data: formData,//.serialize(),
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if(200 == data.code){
+                    var parent_win = window.opener;
+                    parent_win.services_callback(data.data);
+                    //2.重定向到编辑页面
+                    jump('{{:web_url('/seller/services/editor')}}?id='+data.data.id);
+                }else{
+                    msg(data.desc,2);
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                msg("保存失败，请检查网络后重试",2);
+            }
+        });
+    });
+
+
+});
+
+//图片
+function imgInput() {
+    var can = true;
+    $('.img_input').on('click',function (e) {
+        if(can){
+            can = false;
+            var input = $(this).find('.input');
+            input.trigger("click");
+            can = true;
+        }
+    });
+    $('.img_input').on('change','.input',function () {
+        var parent = $(this).parent();
+        var objUrl = getObjectURL(this.files[0]) ;
+        if (objUrl) {
+            parent.find('img').attr("src", objUrl) ; //将图片路径存入src中，显示出图片
+        }
+    });
+}
+
+
+</script>
+</body>
+</html>

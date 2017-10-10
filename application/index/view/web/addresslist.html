@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <style>
+        a,a:hover,a:active{
+            text-decoration: none !important;
+            text-decoration-color: #fff;
+        }
+
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        .mui-bar-nav~.mui-content {
+            padding-top: 64px;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+</head>
+
+<body>
+{{eq name="is_app" value="102"}}
+{{include file="web/h5_view_head" /}}
+{{else/}}
+<header class="mui-bar mui-bar-nav" style="padding-top: 20px;height: 64px;">
+    <a id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left mainColor"><span class="ltext"></span></a>
+    <h1 class="mui-title">{{$title}}</h1>
+</header>
+{{/eq}}
+
+<div class="mui-content contentList">
+    <ul class="mui-table-view nav_wrap">
+        <li class="mui-table-view-cell mui-media">
+            <a href="javascript:;" class="nav_btn" data-lat="{{$data.lat}}" data-lng="{{$data.lng}}" data-title="{{$data.title}}">
+                <div class="mui-media-body">
+                    {{$data.title}}
+                    <p class="mui-ellipsis"></p>
+                </div>
+            </a>
+        </li>
+        {{volist name="park" id="vo"}}
+        <li class="mui-table-view-cell mui-media">
+            <a href="javascript:;" class="nav_btn" data-lat="{{$vo.lat}}" data-lng="{{$vo.lng}}" data-title="{{$vo.title}}">
+                <div class="mui-media-body">
+                    {{$vo.title}}
+                    <p class="mui-ellipsis">{{eq name="vo.touring" value="101"}}可以停房车{{else/}}不能停房车{{/eq}}</p>
+                </div>
+            </a>
+        </li>
+        {{/volist}}
+    </ul>
+</div>
+<script src="__PUBLIC__/js/mui.min.js"></script>
+
+<!--<script src="http://api.map.baidu.com/getscript?v=2.0&ak=2RkiVAwfHTyPv0Mmf3ontULNh5Zws99H&services=&t=2017072813205"></script>-->
+
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script>
+    var sd = new shiDianCommon();
+    var token   = sd.token('{{$token}}');
+    var baseUrl = '{{$baseUrl}}';
+    var pulicS  = '__PUBLIC__/img/';
+    mui.ready(function() {
+        mui('.nav_wrap').on('tap','.nav_btn',function(){
+            nav(0,0,this.dataset.lat,this.dataset.lng,this.dataset.title);
+        });
+
+    });
+
+    function nav(lat,lng,lat2,lng2,title) {
+        //1.获取
+        var url = 'https://m.amap.com/navigation/carmap/daddr='+lng2+','+lat2+','+title;
+        window.location = baseUrl+'index/web/mapwrap.html?is_web=101&url='+url;
+//        window.location = 'https://m.amap.com/navigation/carmap/saddr='+lng+','+lat+'&daddr='+lng2+','+lat2+'&saddr_typecode=&daddr_typecode=150500&saddr_poiid=&daddr_poiid=&maddr=&sort=&addPassing=remove'
+    }
+
+    function startgps() { //gps得到当前经纬度
+        var gps = navigator.geolocation;
+        if (gps) {
+            gps.getCurrentPosition(changeGps, function(error) {
+                changeGps();
+            }, {
+                maximumAge: 3000,
+                timeout: 80000,
+                enableHighAccuracy: true
+            }); // timeout——指定获取地理位置的超时时间，默认不限时。单位为毫秒。maximumAge——最长有效期，在重复获取地理位置时，此参数指定多久再次获取位置。默认为0，表示浏览器需要立刻重新计算位置。
+        } else {
+
+            changeGps();
+        }
+    }
+    //转换成百度经纬度,没有就采用浏览器和ip定位
+    function changeGps(position) {
+        if (position) {
+            lng = position.coords.longitude;
+            lat = position.coords.latitude;
+
+            var gpsPoint = new BMap.Point(lng, lat);
+            var convertor = new BMap.Convertor();
+            var pointArr = [];
+            pointArr.push(gpsPoint);
+            convertor.translate(pointArr, 1, 5, function(point) {
+                lng = point.points[0].lng;
+                lat= point.points[0].lat;
+            })
+        } else {
+            //浏览器
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r) {
+                if (this.getStatus() == 0) {
+                    lng = r.point.lng;
+                    lat = r.point.lat;
+                } else {
+                    console.log('浏览器failed'+this.getStatus());
+                }
+            }, {
+                enableHighAccuracy: true
+            })
+        }
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html style="background-color: #fff;">
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="full-screen" content="yes">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/bootstrap.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/swiper.min.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+    <style type="text/css">
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        body{
+            background-attachment: scroll;
+        }
+        .mui-content{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .floatL {
+            float: left;
+        }
+        .clearB {
+            clear: both;
+        }
+        .posR {
+            position: relative;
+        }
+
+        .the_top{
+            position: relative;
+            width: 100%;
+            height: 220px;
+            text-align: center;
+            background-color: #ffffff;
+        }
+        .the_top img{
+            flex: 1;
+        }
+        .top_desc{
+            position: absolute;
+            height: 22px;
+            color: white;
+            font-size: 20px;
+            margin: auto;
+            top: 0; left: 0; bottom: 0; right: 0;
+        }
+
+        .chanel_wrap{
+            background-color: #ffffff;
+            padding:10px;
+        }
+        .chanel_item{
+            padding-top: 14px;
+            text-align: center;
+        }
+        .chanel_item:nth-child(n+5){
+            margin-top:20px;
+        }
+        .chanel_img{
+            width: 33px;
+            height: 25px;
+            object-fit: contain;
+        }
+        .chanel_title{
+            font-size: 12px;
+            color: #b3b3b3;
+            background-color: #ffffff;
+        }
+
+        .the_content{
+            background-color: #fff;
+        }
+        .scroll_art{
+            margin-top: 5px;
+            background-color: #ffffff;
+            padding: 10px;
+            padding-top: 12px;
+        }
+        .scroll_art_title{
+            font-size: 13px;
+            color: black;
+            /*font-weight:bold;*/
+        }
+        .scroll_art_a{
+            padding: 0 !important;
+            width: 145px !important;
+            line-height: 16px !important;
+            font-size: 10px;
+            text-align: left !important;
+            color: #adadad;
+
+        }
+        .item_user{
+            line-height: 18px;
+            height: 18px;
+            vertical-align:middle;
+
+        }
+        .item_user_head_wrap{
+            height: 18px;
+            line-height: 18px;
+            display: inline-block;
+            vertical-align:middle;
+        }
+        .item_user_name{
+
+            height: 18px;
+            line-height: 18px;
+        }
+
+
+        .grey{
+            color: #b3b3b3 !important;
+        }
+        .art_title{
+            font-size: 14px !important;
+            color: black;
+        }
+        .art_user_head{
+            height:30px !important;
+            width:30px !important;
+            border-radius:15px;
+        }
+
+        .p_line_clamp_4{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            white-space:normal;
+        }
+        .mui-table-view:before{
+            display: none;
+        }
+        .shortVLine {
+            height: 1em;
+            width: 8px;
+            background-color: #F8CD20;
+            margin-right: 10px;
+        }
+        .item_a{
+            padding: 0 !important;
+        }
+        .item_a::after{
+            display: none;
+        }
+        .subTitle {
+            font-size: 14px;
+            color: #F8CD20;
+            text-align: right;
+            padding-right: 10px;
+            width: 90px;
+        }
+        .floatL {
+            float: left;
+        }
+        .floatR {
+             float: right;
+        }
+        .arrow::after {
+            right: 0px;
+            content: '\e583';
+            font-family: Muiicons;
+            font-size: inherit;
+            line-height: 1;
+            position: absolute;
+            top: 40%;
+            display: inline-block;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+            text-decoration: none;
+            color: #f4a51d;
+            -webkit-font-smoothing: antialiased;
+        }
+        .more_btn{
+            display: block;
+            margin: 0 auto;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        .hot_question_list_wrap::after{
+            display: none;
+        }
+        .item_title{
+
+            overflow: hidden;
+            height: 16px;
+        }
+        .art_title.item_title{
+            margin-bottom: 5px;
+        }
+
+        .item_li{
+            padding-bottom: 20px;
+            padding-top: 20px;
+        }
+        .mui-table-view-cell:after {
+
+            left: 0;
+
+        }
+        .mui-table-view-cell:last-child:after {
+            display: none;
+        }
+
+        /************ 横向滚 ******************/
+        .scroll_art_a{
+            display: block;
+        }
+        .scroll_wrap_header{
+            width: 100%;
+            height: 30px;
+            padding: 10px;
+            background-color: #fff;
+        }
+        .grey_5{
+
+            height: 15px;
+            width: 100%;
+        }
+        .grey_6{
+            margin: 7px 0;
+            height: 2px;
+            border-top: 1px solid #E5E6E6;
+            width: 100%;
+        }
+        .swiper-container{
+            height: 145px;
+            width: 100%;
+        }
+        .height_160{
+            height: 160px;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+        .swiper-slide{
+            width: 145px !important;
+        }
+        .scroll_art_img,.foods_map_img{
+            object-fit: cover;
+            overflow: hidden;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        .mui-content {
+            background-color: #ffffff;
+        }
+        .line_btn {
+            position: fixed;
+            right: 25px;
+            top: 25px;
+            width: 65px;
+            font-size: 12px;
+            height: 25px;
+            padding-top: 3px;
+            padding-left: 10px;
+            color: #6B6B6B;
+            border-radius: 15px;
+            text-align: left;
+            background: white;
+            box-shadow:1px 2px 2px 1px gray;
+            z-index: 2;
+        }
+        .mui-off-canvas-wrap {
+            position: fixed;
+            z-index: 3;
+        }
+        .mui-btn-outlined.mui-btn-warning, .mui-btn-outlined.mui-btn-yellow{
+            color: #F8CD20;
+        }
+        .mui-btn-warning, .mui-btn-yellow {
+
+            border: 1px solid #F8CD20;
+
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+        .aside{
+            position:absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            right: 0;
+            z-index: 5;
+
+        }
+
+        #raside{
+            width: 50%;
+            height: 100%;
+            background: #ffffff;
+            float:left ;
+            overflow:scroll;
+            position: relative;
+
+        }
+
+        #laside{
+            width: 50%;
+            height:100%;
+            background: rgba(0,0,0,0.4);
+            overflow:hidden;
+            float:left ;
+            position: relative;
+
+        }
+        .maincss{
+            position:fixed;
+        }
+         .headd {
+            text-align: left;
+            font-weight: bold;
+            height: 60px;
+            padding-top: 30px;
+            padding-left:65px;
+            background: #FFFFFF;
+            font-size: 19px;
+            color: #999999 !important;
+            position: relative;
+            border-bottom: 1px solid #F2F2F2;
+            left: 0px !important;
+            list-style:none
+        }
+        .mui-table-view-chevron .mui-table-view-cell>a:not(.mui-btn) {
+            margin-right: -120px;
+        }
+        .lazyloaded {
+            width: 20px;
+            height: 20px;
+
+        }
+   .mui-icon{
+       color: #F8CD20;
+   }
+
+    .glyphicon-plus{
+        font-size: 25px;
+        color: #F8CD20;
+        font-weight: bold;
+    }
+     .glyphicon-minus{
+        font-size: 25px;
+        color: #F8CD20;
+         font-weight: bold;
+     }
+     a:hover{
+         text-decoration:none
+     }
+    </style>
+</head>
+
+<body style="background-color: #fff;" class="mui-fullscreen">
+<div id="offCanvasWrapper" class="aside" style="display: none">
+    <div id="laside"></div>
+    <div id="raside">
+    <li class="mui-table-view-cell headd">路线&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
+    <ul id="slider_content" class="mui-table-view mui-table-view-chevron "></ul>
+        <div style="margin: 5px 10px;color: gray;font-size: 1.0em">
+            在“线路制定”中选择城市，此后收藏景点、餐饮、酒店等地点，会自动归属到相应的城市下。
+        </div>
+    </div>
+</div>
+
+<!--路线导航-->
+<div class="mui-content" id="main">
+    {{eq name="is_app" value="102"}}
+    {{include file="web/h5_view_head" /}}
+    {{/eq}}
+    <!-- banner图 -->
+    <div class="banner the_top" style="height:189px;overflow: hidden;display: flex;">
+        <a class="top_desc" href="{{$address_select_url}}">{{$info.name}}</a>
+        <img style="height:100%;min-width: 100%;object-fit: cover;" class="lazyload" src="__PUBLIC__/img/yuantiao.jpg" data-src="{{$info.img_url}}"/>
+    </div>
+
+    <div class="the_content">
+        <!-- 栏目 -->
+        <div class="mui-row chanel_wrap">
+            {{volist name="chanel" id="vo"}}
+            <div class="chanel_item mui-media mui-col-xs-3 mui-col-sm-3">
+                <a href="{{:web_url('table',['type'=>$vo['jump']['type'],'sub_type'=>$vo['jump']['sub_type'],'token'=>$token,'is_web'=>'101','location_name'=>$location_name,'location_value'=>$location_value,'lat'=>$lat,'lng'=>$lng])}}">
+                    <img class="chanel_img" src="{{$vo.img_url}}">
+                    <div class="mui-media-body chanel_title">{{$vo.title}}</div>
+                </a>
+            </div>
+            {{/volist}}
+        </div>
+
+        <div class="grey_6">
+        </div>
+        <div class="scroll_wrap_header">
+            <div class="floatL mui-col-xs-6 mui-col-sm-6 scroll_art_title">
+                热门线路攻略游记
+            </div>
+            <div class="floatL mui-ellipsis mui-col-xs-2 mui-col-sm-2">
+                &nbsp;
+            </div>
+            <div class="floatL mui-ellipsis mui-col-xs-4 mui-col-sm-4">
+                <a href="{{:web_url('table',['type'=>'103','sub_type'=>'101','token'=>$token,'is_web'=>'101','location_name'=>$location_name,'location_value'=>$location_value,'lat'=>$lat,'lng'=>$lng])}}" class="floatR posR mui-col-xs-6 mui-col-sm-6 subTitle arrow">更多</a>
+            </div>
+        </div>
+
+        <div class="swiper-container height_160">
+            <div class="swiper-wrapper">
+                {{volist name="art_101" id="vo"}}
+                <div class="swiper-slide">
+                        <a class="grey scroll_art_a" href="{{:web_url('art',['id'=>$vo['id'],'token'=>$token,'is_web'=>'101'])}}">
+
+                            <!-- {{:web_url('art',['id'=>$vo['id'],'token'=>$token,'is_web'=>'101'])}} -->
+                            <img class="src_img scroll_art_img lazyload" style="height:107px;width:100%;" data-src="{{$vo.img_url}}" src="__PUBLIC__/img/zhanwei.png"/>
+                            <div class="item_title">{{$vo.title}}</div>
+                            <div class="item_user">
+                            <span class="item_user_head_wrap mui-pull-left">
+                                <img class="item_user_head src_head_img lazyload" style="height:18px;width:18px;border-radius:9px;margin-right: 5px;" data-src="{{$vo.user.head_img_url}}" />
+                            </span>
+                                <span class="item_user_name mui-pull-left">{{$vo.user.nick_name}}</span>
+                            </div>
+                        </a>
+                </div>
+                {{/volist}}
+            </div>
+        </div>
+
+        <div class="grey_5"></div>
+        <!-- 美食娱乐地图 -->
+        <div class="scroll_art foodsmap">
+            <p class="scroll_art_title">美食娱乐地图 &nbsp;<span class="grey"><span class="mainColor">33</span>处推荐美食&nbsp;<span class="mainColor">27</span>个推荐景点</span></p>
+            <img style="height:200px;width:100%;" class="foods_map_img lazyload" data-src="__PUBLIC__/img/base/route_map.png">
+        </div>
+
+        <!-- 横向滚动-->
+        <div class="grey_5">
+        </div>
+        <div class="scroll_wrap_header">
+            <div class="floatL mui-col-xs-6 mui-col-sm-6 scroll_art_title">
+                最受欢迎的景点
+            </div>
+            <div class="floatL mui-ellipsis mui-col-xs-2 mui-col-sm-2">
+                &nbsp;
+            </div>
+            <div class="floatL mui-ellipsis mui-col-xs-4 mui-col-sm-4">
+                <a href="{{:web_url('table',['type'=>'104','sub_type'=>'101','token'=>$token,'is_web'=>'101','location_name'=>$location_name,'location_value'=>$location_value,'lat'=>$lat,'lng'=>$lng])}}" class="floatR posR mui-col-xs-6 mui-col-sm-6 subTitle arrow" src="__PUBLIC__/img/zhanwei.png">更多</a>
+            </div>
+        </div>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                {{volist name="place_101" id="vo"}}
+                <div class="swiper-slide">
+                        <a class="grey scroll_art_a" href="{{:web_url('place',['id'=>$vo['id'],'token'=>$token,'is_web'=>'101'])}}">
+                            <img class="src_img scroll_art_img lazyload" style="height:107px;width:100%;" data-src="{{$vo.img_url}}" />
+                            <div class="item_title">{{$vo.title}}</div>
+                        </a>
+                </div>
+                {{/volist}}
+            </div>
+        </div>
+
+        <!--横向滚动-->
+        <div class="grey_5">
+        </div>
+        <div class="scroll_wrap_header">
+            <div class="floatL mui-col-xs-6 mui-col-sm-6 scroll_art_title">
+                最受欢迎的酒店
+            </div>
+            <div class="floatL mui-ellipsis mui-col-xs-2 mui-col-sm-2">
+                &nbsp;
+            </div>
+            <div class="floatL mui-ellipsis mui-col-xs-4 mui-col-sm-4">
+                <a href="{{:web_url('table',['type'=>'104','sub_type'=>'103','token'=>$token,'is_web'=>'101','location_name'=>$location_name,'location_value'=>$location_value,'lat'=>$lat,'lng'=>$lng])}}" class="floatR posR mui-col-xs-6 mui-col-sm-6 subTitle arrow">更多</a>
+            </div>
+        </div>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                {{volist name="place_103" id="vo"}}
+                <div class="swiper-slide">
+                        <a class="grey scroll_art_a" href="{{:web_url('place',['id'=>$vo['id'],'token'=>$token,'is_web'=>'101'])}}">
+                            <img class="src_img scroll_art_img lazyload" style="height:107px;width:100%;" data-src="{{$vo.img_url}}" src="__PUBLIC__/img/zhanwei.png"/>
+                            <div class="item_title">{{$vo.title}}</div>
+                        </a>
+                </div>
+                {{/volist}}
+            </div>
+        </div>
+
+        <!-- 横向滚动-->
+        <div class="grey_5">
+        </div>
+        <div class="scroll_wrap_header">
+            <div class="floatL mui-col-xs-6 mui-col-sm-6 scroll_art_title">
+                最受欢迎的美食
+            </div>
+            <div class="floatL mui-ellipsis mui-col-xs-2 mui-col-sm-2">
+                &nbsp;
+            </div>
+            <div class="floatL mui-ellipsis mui-col-xs-4 mui-col-sm-4">
+                <a href="{{:web_url('table',['type'=>'104','sub_type'=>'102','token'=>$token,'is_web'=>'101','location_name'=>$location_name,'location_value'=>$location_value,'lat'=>$lat,'lng'=>$lng])}}" class="floatR posR mui-col-xs-6 mui-col-sm-6 subTitle arrow">更多</a>
+            </div>
+        </div>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                {{volist name="place_102" id="vo"}}
+                <div class="swiper-slide">
+                        <a class="grey scroll_art_a" href="{{:web_url('place',['id'=>$vo['id'],'token'=>$token,'is_web'=>'101'])}}">
+                            <img class="src_img scroll_art_img lazyload" style="height:107px;width:100%;"  data-src="{{$vo.img_url}}" src="__PUBLIC__/img/zhanwei.png"/>
+                            <div class="item_title">{{$vo.title}}</div>
+                        </a>
+                </div>
+                {{/volist}}
+            </div>
+        </div>
+
+        <div class="grey_5"></div>
+        <div class="scroll_art">
+        <p class="scroll_art_title"><span class="shortVLine">&nbsp;</span>热门问答</p>
+        <ul class="mui-table-view  clearB hot_question_list_wrap">
+            {{volist name="art_103" id="vo"}}
+            <li class="mui-table-view-cell mui-media item_li">
+                <a href="{{:web_url('art',['id'=>$vo['id'],'token'=>$token,'is_web'=>'101'])}}" class="item_a" >
+                    <p class="art_title item_title">{{$vo.title}}</p>
+                    <img class="mui-media-object mui-pull-left art_user_head" data-lazyload="{{$vo.user.head_img_url}}">
+                    <p class=" p_line_clamp_4 item_content">{{$vo.content_text}}</p>
+                    <p class="mui-pull-right">{{$vo.comments_count}}回答，{{$vo.read_count}}浏览</p>
+                </a>
+            </li>
+            {{/volist}}
+        </ul>
+            <a href="{{:web_url('table',['type'=>'103','sub_type'=>'103','token'=>$token,'is_web'=>'101','location_name'=>$location_name,'location_value'=>$location_value])}}" type="button" class="mui-btn mui-btn-warning mui-btn-outlined more_btn">
+                查看更多
+            </a>
+        </div>
+    </div>
+
+</div >
+<a id="offCanvasBtn"  class="line_btn"><span>线路</span><img style="width: 18px;height: 16px;position: absolute;right: 9px;top: 5px" src="__PUBLIC__/img/online.png"></a>
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/jquery.3.2.1.js"></script>
+<script src="__PUBLIC__/js/lazysizes.min.js"></script>
+<script src="__PUBLIC__/js/swiper.jquery.min.js"></script>
+<script src="__PUBLIC__/js/swiper.min.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script type="text/javascript">
+    $("#offCanvasWrapper").hide();
+    var sd = new shiDianCommon({});
+    var token   = sd.token('{{$token}}');
+    var baseUrl = '{{$baseUrl}}';
+    var pulicS = '__PUBLIC__/img/';
+    var location_name = '';
+    var location_value = '';
+    var ch_status = true;
+
+    var s=""
+    $("#offCanvasBtn").click(function(){//开启侧滑菜单
+
+        flushSliderMenu();
+
+        s= $("body").scrollTop();
+        $("#offCanvasWrapper").show();
+        $('#main').addClass("maincss");
+        var b=-s+"px";
+        $("#main").css("top",b) ;
+
+///
+       // $('body').css('overflow', 'hidden');
+    })
+
+    $("#laside").click(function(){//关闭侧滑
+
+
+        $("#offCanvasWrapper").hide();
+        $('#main').removeClass("maincss");
+       // $('body').css('overflow', 'auto');
+        $("#main").css("top",null);
+        $('body').animate({scrollTop:s},1 );
+
+    })
+
+    mui.init({
+        swipe: true,
+        drag: true
+    });
+
+    mui.ready(function() {
+        $('img').on('error',function (e) {
+            console.log('图片加载错误');
+        });
+
+        var screen_width = window.screen.width;
+
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            width:145,
+            spaceBetween: 10,
+            freeMode: true,
+            slidesOffsetBefore:10,
+            slidesOffsetAfter:-1*(screen_width - 155)
+        });
+
+        $('.foodsmap').on('tap',function(){
+            //点击跳转自定义协议
+            shidian('foodsmap',{});
+        });
+
+        //和shidianAPP交互
+        function shidian($action, $param) {
+            if (typeof($param != "string")){
+                $param = JSON.stringify($param);
+            }
+            self.location='shidian://'+$action+'?jp='+$param;
+        }
+
+        flushSliderMenu();
+
+        mui("#slider_content").on("tap",".menu",function(){
+            mClick($(".menu").index($(this)));
+        })
+
+        //nav_li
+        mui("#offCanvasWrapper").on("tap","a.nav_li",function(){
+            window.location = ($(this).attr('href'))+'&is_web=101';
+        })
+    });
+
+
+
+    function mClick(jq){//切换选项
+
+        if($(".glyphicon").eq(jq).attr("status")==1){
+
+            $(".glyphicon").eq(jq).removeClass("glyphicon-minus");
+            $(".glyphicon").eq(jq).addClass("glyphicon-plus");
+            $(".glyphicon").eq(jq).attr("status","0");
+        }
+        else {
+
+            $(".glyphicon").eq(jq).removeClass("glyphicon-plus");
+            $(".glyphicon").eq(jq).addClass("glyphicon-minus");
+            $(".glyphicon").eq(jq).attr("status","1");
+        }
+    }
+    //刷新侧滑菜单
+    function flushSliderMenu() {
+        if(ch_status){
+            ch_status = false;
+            $.ajax({
+                url:"{{:web_url('/linecollect')}}",
+                type:'GET',
+                data:{token:token},
+                success:function(data){
+                    ch_status = true;
+                    if(200 != data.code){
+                        if(data.code == 401){
+                            sd.app('login',{});
+                        }
+                        alert(data.desc,2);
+                    }else{
+                        $('#slider_content').html(formatSliderData(data.data));
+                    }
+                },
+                error:function(e){
+                    ch_status = true;
+                }
+            });
+        }
+    }
+
+    //侧滑菜单
+    function formatSliderData(data) {
+        var place_url = "{{:web_url('place')}}"+"?token="+token+"&id=";
+        return data.map(function (item) {
+            var dom;
+            dom = '<li class="menu mui-table-view-cell mui-collapse mui-active" >'+
+                      '<a  href="#" style="height: 40px;" ><span class="mui-icon mui-icon-back"></span><span class="">'+item.title+
+                      '</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span status="1" class="glyphicon glyphicon-minus"></span></a>'+
+                      '<ul class="mui-table-view mui-table-view-chevron" style="background:none;">';
+            dom += item.sub.map(function (s) {
+                return '<li class="mui-table-view-cell" style="height: 40px;">'+
+                        '<a class="nav_li" href="'+place_url+s.id+'">'+s.title+'</a>'+
+                        '</li>';
+            }).join('');
+            dom += '</ul></li>';
+            return dom;
+        }).join('');
+    }
+    
+    function jump() {
+        console.log('ok');
+    }
+
+    function listData( dom, data, relation, itemDom) {
+        var jq_obj = $(itemDom);
+        var temp = [];
+        for (item in data){
+            temp[item] = jq_obj.clone();
+            for (j in relation){
+                var key = j.split("_");
+                var fact_key = relation[j];
+                var fact_key_arr = fact_key.split(".");
+                var value = data[item];
+                for (value_item in fact_key_arr){
+                    value = value[fact_key_arr[value_item]];
+                }
+                if('src' == key[0]){
+                    temp[item].find('.'+j).attr('src',value);
+                }else{
+                    temp[item].find('.'+j).text(value);
+                }
+            }
+        }
+        dom.append(temp);
+    }
+
+    var topS = (function () {
+        var t = {};
+       t.init = function (top,content) {
+           var header = top || document.querySelector('.banner');
+           var container = content || document.querySelector('body');
+           var top_height = header.offsetHeight;
+           var top_width = header.offsetWidth;
+           container.addEventListener('touchstart',function (event) {
+
+               var touch = event.touches[0];
+               startY = touch.pageY;
+               clientY = touch.clientY;
+               header.style.transition = 'none';
+           });
+           container.addEventListener('touchmove',function  (event) {
+               console.log('滑动中');
+               var touchs = event.touches[0];
+               //向上滚动,直接返回
+               if (touchs.pageY - startY <= 0 ) {
+                   return ;
+               }
+               //不相等,说明屏幕已经向上翻动,image不需要放大效果
+               if(startY != clientY){
+                   return ;
+               }
+                if(header.offsetHeight > (top_height)+200){
+                    return ;
+                }
+               //图片底部的容器高度+拖动的高度
+               header.style.height = top_height  + touchs.pageY - startY +'px';
+               //图片放大比例
+               //图片放大
+               header.style.height =  (touchs.pageY - startY ) + top_height;
+               var scale = ((touchs.pageY - startY ) / top_height ) +1;
+
+
+           });
+           container.addEventListener('touchend',function  (event) {
+               //event.preventDefault();
+               var touch = event.changedTouches[0];
+               header.style.height = top_height +'px';
+//               header.style.width = top_width +'px';
+               header.style.transform = "1s cubic-bezier(.1, .57, .1, 1);";
+               header.style.transition = 'all 0.25s ease-in-out';
+               console.log("滑动结束");
+           });
+       };
+       return t;
+    }());
+    topS.init();
+
+    function stopDrop() {
+        var lastY; //最后一次y坐标点
+        $("#main").on('touchstart', function(event) {
+            lastY = event.originalEvent.changedTouches[0].clientY; //点击屏幕时记录最后一次Y度坐标。
+        });
+        $("#main").on('touchmove', function(event) {
+            var y = event.originalEvent.changedTouches[0].clientY;
+            var st = $(this).scrollTop(); //滚动条高度
+            if (y >= lastY && st <= 10) { //如果滚动条高度小于0，可以理解为到顶了，且是下拉情况下，阻止touchmove事件。
+                lastY = y;
+                console.log('阻止...');
+                event.preventDefault();
+            }
+            lastY = y;
+        });
+    }
+   // 调用 不过效果不是很彻底
+
+</script>
+</body>
+
+</html>

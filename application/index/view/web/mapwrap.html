@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <style>
+        a,a:hover,a:active{
+            text-decoration: none !important;
+            text-decoration-color: #fff;
+        }
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        .mui-bar-nav~.mui-content {
+            padding-top: 64px;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+</head>
+
+<body style="height: 100%;">
+{{eq name="is_app" value="102"}}
+{{include file="web/h5_view_head"/}}
+{{else/}}
+<header class="mui-bar mui-bar-nav" style="padding-top: 20px;height: 64px;">
+    <a id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left mainColor"><span class="ltext"></span></a>
+    <h1 class="mui-title">{{$title}}</h1>
+</header>
+{{/eq}}
+<div class="mui-content" style="height: 100%;">
+    <iframe style="width: 100%;height: 100%;border: none;" src="{{$url}}"></iframe>
+</div>
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script>
+    var sd = new shiDianCommon();
+    var token   = sd.token('{{$token}}');
+    var baseUrl = '{{$baseUrl}}';
+    var pulicS  = '__PUBLIC__/img/';
+    mui.ready(function() {
+
+    });
+
+
+</script>
+</body>
+
+</html>

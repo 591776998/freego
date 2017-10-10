@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>推首</title>
+    <link href="__PUBLIC__/temp/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <link href="__PUBLIC__/temp/css/dropload.css" rel="stylesheet">
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 80%;
+                margin:0 auto;
+
+
+            }
+            .comment{
+                width: 100%;
+                font-size:0.8em;
+                color: #666666;
+
+            }
+
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+            .comm{
+                width: 100%;
+
+            }
+            .comb{
+                width: 95%;
+                text-align: center;
+                margin: 5px auto;
+                padding: 10px 5px;
+                border-bottom: 1px solid #DDDDDD;
+            }
+            .header{
+                left: 0px;
+            }
+
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.2em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+
+            }
+            .comb{
+                width: 95%;
+                text-align: center;
+                margin: 5px auto;
+                padding: 10px 5px;
+                border-bottom: 1px solid #DDDDDD;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+                font-size: 0.8em;
+            }
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.3em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+
+            }
+            .comb{
+                width: 95%;
+                text-align: center;
+                margin: 5px auto;
+                padding: 10px 5px;
+                border-bottom: 1px solid #DDDDDD;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+                font-size: 0.8em;
+            }
+        }
+        .header{
+            width: 100%;
+
+            color: #FFCC00;
+            font-weight: bold;
+            position: fixed;
+            top: 0px;
+            z-index: 99999;
+
+        }
+        .menu{
+            width: 92%;
+            background: #FFFFFF;
+            font-size: 0.8em;
+            font-weight:normal;
+            margin: 7px 0;
+        }
+        .btn1{
+            border: none;
+            background: #F9F9F9;
+        }
+        .btn11{
+            border: none;
+            background: #FFFFFF;
+            color:#FFCC00;
+        }
+
+        .btn2{
+            border:1px solid #FFCC00;
+
+            background: #FFFFFF;
+            color: #FFCC00;
+            width: 17%;
+            padding: 3px 0;
+            margin:0 -5px;
+        }
+        .btn3{
+            border:1px solid #FFCC00;
+            background:#FFFFFF;
+            width:17%;
+            border-radius: 6px 0 0 6px ;
+            padding: 3px 0;
+            margin: 0;
+        }
+        .btn4{
+            border:1px solid #FFCC00;
+            background:#FFFFFF;
+            width:17%;
+            border-radius:0 6px 6px 0;
+            padding: 3px 0;
+            margin: 0;
+
+        }
+        .btn5{
+            border: none;
+            background:#FFFFFF;
+            font-size: 1.0em;
+            font-weight: bold;
+            color: #FFCC00;
+            padding: 15px 5px 15px 0;
+        }
+        .btn6{
+            width: 250px;
+            font-size: 0.7em;
+            padding: 5px 5px;
+        }
+        .btn7{
+            border: none;
+            background: #F9F9F9;
+            width:100%;
+            padding: 3px 5px;
+        }
+        .span1{
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+        .img-rounded{
+            width: 100px;
+            height: 100px;
+        }
+        .hrline{
+            width: 100%;
+            height: 2px;
+            border-top:1px solid #DDDDDD ;
+        }
+        .col-xs-10{
+            color: #999999;
+            text-align: left;
+        }
+        .col-xs-2{
+
+        }
+        .span1{
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .span2{
+            font-size: 0.7em;
+        }
+        .span3{
+            margin-right: 4px;
+            color: #FFCC00;
+            font-size: 0.8em;
+        }
+        .span4{
+            color: #999999;
+        }
+        button{
+            outline: 0;
+        }
+        .cbtn{
+
+            background:#FFFFFF;
+            font-weight:normal;
+            color:#FFCC00;
+        }
+        .cbtn.btn_active{
+            background:#FFCC00;
+            font-weight:bold;
+            color:#FFFFFF;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <div class="comment">
+                <div class="header">
+                    <div class="row" style=" background: #F9F9F9; padding: 7px 0 10px 0; border-bottom: 1px solid #DDDDDD">
+                        <div class="col-xs-4 col-md-4" style="text-align: left;padding: 0">
+                            <button class="btn1">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </button>
+                        </div>
+                        <div class="col-xs-4 col-md-4" style="color: #080808;margin-left: -10px; text-align: center;padding: 0">
+                            <button class="btn1">首页申请</button></div>
+                    </div>
+                    <div class="menu" id="menu">
+                        <button class="btn3 cbtn btn_active" >游记</button>
+                        <button class="btn2 cbtn" >精彩影像</button>
+                        <button class="btn2 cbtn" >问答</button>
+                        <button class="btn2 cbtn" >活动</button>
+                        <button class="btn2 cbtn" >认证</button>
+                        <button class="btn4 cbtn" >全部</button>
+                    </div>
+                </div>
+            </div>
+            <div class="comment" style="margin: 70px 0">
+                <div class="comm" id="comentpage">
+                    <div class="list" page="1"></div>
+                    <div class="list" page="1"></div>
+                    <div class="list" page="1"></div>
+                    <div class="list" page="1"></div>
+                    <div class="list" page="1"></div>
+                    <div class="list" page="1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content" style="text-align: center">
+                <div id="content" style="height: 100px;margin-top: 30px">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="__PUBLIC__/temp/js/jquery.min.js"> </script>
+<script src="__PUBLIC__/temp/js/bootstrap.js"></script>
+<script type="text/javascript" src="__PUBLIC__/temp/js/dropload.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/branch.js"></script>
+<script type="text/javascript">
+
+    var url_art = "{{:web_url('/branch/art/index')}}";
+    var url_photo = "{{:web_url('/branch/photo/index')}}";
+    var common_param = {page:1,page_size:10};
+    var page_param = [
+        {
+            url:url_art,
+            type:1,
+            param:{page:common_param.page,page_size:common_param.page_size,type:101}
+        },
+        {
+            url:url_photo,
+            type:2,
+            param: {page:common_param.page,page_size:common_param.page_size}
+        },
+        {
+            url:url_art,
+            type:3,
+            param:{page:common_param.page,page_size:common_param.page_size,type:103}
+        },
+        {
+            url:url_art,
+            type:4,
+            param:{page:common_param.page,page_size:common_param.page_size,type:102}
+        },
+        {
+            url:url_art,
+            type:5,
+            param:{page:common_param.page,page_size:common_param.page_size,type:105}
+        },
+        {
+            url:url_art,
+            type:6,
+            param:{page:common_param.page,page_size:common_param.page_size,type:0}
+        }
+    ];
+
+    //选项卡按钮
+    var menu    = $('#menu');
+    var btn_tab = $('#menu .cbtn');
+    var active_index = 0;
+
+    //list页面
+    var data_wrap = $('#comentpage');
+    var data_list = data_wrap.children('.list');
+
+    //切换 选项卡
+    function changeTab(index) {
+        btn_tab.removeClass('btn_active');
+        btn_tab.eq(index).addClass('btn_active');
+    }
+
+    //切换页面的数据
+    function iniData(index,call_back,cover) {
+        listShow(data_list.eq(index));
+        ajaxData(page_param[index].url,page_param[index].param,function (data) {
+            if(200 == data.code){
+                data = data.data;
+                renderList(index,page_param[index].type,data,cover);
+            }else{
+                msg(data.desc,2);
+            }
+            page_param[index].param.page++;
+            call_back();
+        },function () {
+            msg('加载失败，请稍后再试',2);
+            call_back();
+        });
+    }
+
+    //获取数据
+    function flushPage() {
+        data_wrap.dropload({
+            autoLoad:false,
+            loadUpFn:function (me) {
+                page_param[active_index].param.page = 1;
+                iniData(active_index,function () {
+                    console.log(me);
+                    me.unlock();
+                    me.resetload();
+                },true);
+            },
+            loadDownFn : function(me){
+                iniData(active_index,function () {
+                    console.log(me);
+                    me.unlock();
+//                    me.noData(false);
+                    me.resetload();
+                },false);
+            }
+        });
+    }
+
+    //使用ajax获取数据
+    function ajaxData(url,param,success,error) {
+        $.ajax({
+            type: 'POST',
+            url: url,
+            dataType: 'json',
+            data:param,
+            success: success,
+            error: error
+        });
+    }
+
+    //根据index 控制列表的显示和隐藏
+    function listShow(object) {
+        object.siblings().hide();
+        object.show();
+    }
+
+    //渲染列表
+    function renderList(index,type,data,cover) {
+        var now_list = data_list.eq(index);
+        if(cover){
+            now_list.empty();
+        }
+        now_list.append(data.map(function (item,index) {
+            return getDom(type,item);
+        }).join(''));
+    }
+
+    //获取单个item的dom
+    function getDom(type,data) {
+        switch (type){
+            case '2':
+                //精彩影像
+                return '<div class="row comb">' +
+                        '<div class="col-xs-9">' +
+                        '<span class="span1">' + data.title + '</span><br>' +
+                        '<span class="span2">' + data.user.nick_name + '</span>' +
+                        '<span class="span3">' +
+                        '</span>' +
+                        '</div>' +
+                        '<div class="col-xs-3"><button class="btn5" onclick="put(' + data.id + ')">推</button><button class="btn5" onclick="perfect(' + data.id + ')">精</button></div>' +
+                        '</div>';
+                break;
+            default:
+                return '<div class="row comb">' +
+                        '<div class="col-xs-9">' +
+                        '<span class="span1">' + data.title + '</span><br>' +
+                        '<span class="span2">' + data.user.nick_name + '</span>' +
+                        '<span class="span3">' +
+                        '<span class="glyphicon glyphicon-eye-open"></span> <span class="span4">' + data.read_count + '</span>' +
+                        '<span class="glyphicon glyphicon-thumbs-up"></span> <span class="span4">' + data.like_count + '</span>' +
+                        '<span class="glyphicon glyphicon-comment"></span> <span class="span4">' + data.comment_count + '</span>' +
+                        '</span>' +
+                        '</div>' +
+                        '<div class="col-xs-3"><button class="btn5" onclick="put(' + data.id + ')">推</button><button class="btn5" onclick="perfect(' + data.id + ')">精</button></div>' +
+                        '</div>';
+        }
+    }
+
+    //置顶
+    function put(a){
+        var putData={};
+        putData.id = a;
+//            putData.exp_time = 24;
+        $.ajax({
+            type: "POST",
+            url: "{{:web_url('/branch/top/save')}}",
+            dataType: "json",
+            data:putData,
+            success: function (data) {
+                if(data.code=200) {
+                    $("#content").text("操作成功");
+                    $('#myModal').modal('toggle');
+                }
+                if(data.code=201){
+                    $("#content").text(data.desc);
+                    $('#myModal').modal('toggle');
+
+                }
+            },
+            error: function (data) {
+                $("#content").text(data.desc);
+                $('#myModal').modal('toggle');
+            }
+        })
+    }
+
+    //加精
+    function perfect(a){
+        var perfectData={};
+        perfectData.id=a;
+        $.ajax({
+            type: "POST",
+            url: "{{:web_url('/branch/best/save')}}",
+            dataType: "json",
+            data:perfectData,
+            success: function (data) {
+                if(data.code=200) {
+                    $("#content").text("操作成功");
+                    $('#myModal').modal('toggle');
+                }
+                if(data.code=201){
+                    $("#content").text(data.desc);
+                    $('#myModal').modal('toggle');
+
+                }
+            },
+            error: function (data) {
+                $("#content").text(data.desc);
+                $('#myModal').modal('toggle');
+            }
+        })
+    }
+
+    $().ready(function(){
+        //获取被选中的选项卡的type
+        var now_tab = menu.children('.btn_active');
+        if(now_tab){
+            active_index = btn_tab.index(now_tab);
+        }
+
+        //绑定上下拉加载数据
+        flushPage();
+
+        //刷新一次数据
+        iniData(active_index,function () {},true);
+
+        //切换数据
+        $('#menu').on('click','.cbtn',function () {
+            var btn = $(this);
+            active_index = btn_tab.index(btn);
+            changeTab(active_index);
+            //如果是第一页，就加载一次，否则，就数据不变
+            if(page_param[active_index].param.page == 1){
+                iniData(active_index,function () {},false);
+            }
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/setting.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/indexedlist.css">
+    <style type="text/css">
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        .title{
+            height: 300px;
+        }
+        .mui-scroll-wrapper, .mui-scroll {
+            background-color: #fff;
+        }
+        .mui-table-view {
+            margin-top: 0;
+        }
+        .aside_title{
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .mar5{
+            height: 10px;
+            background-color: #f6f6f6;
+        }
+        .mui-pages {
+            top: 0;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        html, body {
+            overflow: auto;
+        }
+        body{
+            background-color: #white;
+            padding-top: {{$h}}px;
+        }
+        .mui-fullscreen {
+            background-color: white;
+        }
+        .mui-popup-button{
+            color: #f4a51d !important;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+        .mui-popup {
+
+            top: 60%;
+          
+        }
+    </style>
+</head>
+<body class="mui-fullscreen">
+<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-slide-in">
+    <!--菜单部分-->
+    <aside id="offCanvasSide" class="mui-off-canvas-right">
+        <div id="offCanvasSideScroll" class="mui-scroll-wrapper siders">
+            <div id="aside_content" class="mui-scroll mui-table-view">
+
+            </div>
+        </div>
+    </aside>
+    <div class="mui-inner-wrap">
+        <!--页面主结构开始-->
+        <div id="app" class="mui-views">
+            <div class="mui-view">
+                <!--<div class="mui-navbar">-->
+                <!--</div>-->
+                <div class="mui-pages">
+                </div>
+            </div>
+        </div>
+        <!--页面主结构结束-->
+        <!--单页面开始-->
+        <div id="setting" class="mui-page">
+            <!--页面标题栏开始-->
+            <!--<div class="mui-navbar-inner mui-bar mui-bar-nav">-->
+                <!--<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">-->
+                    <!--<span class="mui-icon mui-icon-left-nav"></span>-->
+                <!--</button>-->
+                <!--<h1 class="mui-center mui-title">选择品牌</h1>-->
+                <!--<a id="offCanvasBtn1" href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-right"></a>-->
+            <!--</div>-->
+            <!--页面标题栏结束-->
+            <!--页面主内容区开始-->
+            <div class="mui-page-content">
+                <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                        <div id='list1' class="mui-indexed-list">
+                            <div class="mui-indexed-list-search mui-input-row mui-search" style="visibility: hidden;    display: none;">
+                                <input type="search" class="mui-input-clear mui-indexed-list-search-input" placeholder="搜索">
+                            </div>
+                            <div class="mui-indexed-list-bar">
+                                <a>A</a>
+                                <a>B</a>
+                                <a>C</a>
+                                <a>D</a>
+                                <a>E</a>
+                                <a>F</a>
+                                <a>G</a>
+                                <a>H</a>
+                                <a>I</a>
+                                <a>J</a>
+                                <a>K</a>
+                                <a>L</a>
+                                <a>M</a>
+                                <a>N</a>
+                                <a>O</a>
+                                <a>P</a>
+                                <a>Q</a>
+                                <a>R</a>
+                                <a>S</a>
+                                <a>T</a>
+                                <a>U</a>
+                                <a>V</a>
+                                <a>W</a>
+                                <a>X</a>
+                                <a>Y</a>
+                                <a>Z</a>
+                            </div>
+                            <div class="mui-indexed-list-alert"></div>
+                            <div class="mui-indexed-list-inner ">
+                                <div class="mui-indexed-list-empty-alert">没有数据</div>
+                                <ul id="chwrap" class="mui-table-view offCanvasSideUl" style="margin-top: 0; ">
+                                    {{volist name="data" id="vo"}}
+                                    {{notempty name="vo"}}
+                                    <li data-group="{{$key}}" class="mui-table-view-divider mui-indexed-list-group">{{$key}}</li>
+                                    {{volist name="vo" id="v"}}
+                                    <li data-value="{{$v.id}}" data-tags="AKeSu" class="mui-table-view-cell mui-indexed-list-item offCanvasSideLi" id="{{$v.id}}"><a>{{$v.title}}</a></li>
+                                    {{/volist}}
+                                    {{/notempty}}
+                                    {{/volist}}
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--页面主内容区结束-->
+        </div>
+        <!--单页面结束-->
+
+        <!--<div class="mui-off-canvas-backdrop"></div>-->
+    </div>
+</div>
+</body>
+<!--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>-->
+
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/mui.view.js"></script>
+<script src="__PUBLIC__/js/jquery.3.2.1.js"></script>
+<script src="__PUBLIC__/js/indexedlist.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+
+<script>
+
+    var sd = new shiDianCommon();
+
+    var token = sd.token('{{$token}}');
+    mui.init();
+    mui.ready(function() {
+
+        //侧滑容器父节点
+        var offCanvasWrapper = mui('#offCanvasWrapper');
+        //主界面容器
+        var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+        //菜单容器
+        var offCanvasSide = document.getElementById("offCanvasSide");
+        var mui_offCanvasSide = mui("#offCanvasSide");
+
+        var data_cache = {{$all_json}};
+
+        var sub_list_content = document.getElementById("sub_list_content");
+        var sub_list_index = document.getElementById("sub_list_index");
+
+        var car_model       = 0;
+        var car_model_title = '';
+        var car_type_title  = '';
+        var car_brand_title = '';
+        var car_name        = '';
+
+        //初始化单页view
+        var viewApi = mui('#app').view({
+            defaultPage: '#setting'
+        });
+        //初始化单页的区域滚动
+        mui('.mui-scroll-wrapper.siders').scroll();
+//			mui('#list1  .mui-indexed-list-inner').scroll();
+
+        var oldBack = mui.back,
+                view = viewApi.view,
+                list1 = document.getElementById('list1'),
+                list2 = document.getElementById('list2'),
+                listsH = document.body.offsetHeight + 'px';
+        mui.back = function() {
+            if(mui_offCanvasSide.offCanvas().isShown()){
+                mui_offCanvasSide.offCanvas().close();
+            }else{
+                if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+                    viewApi.back();
+                } else { //执行webview后退
+                    oldBack();
+                }
+            }
+        };
+        //处理view的后退与webview后退
+        //监听页面切换事件方案1,通过view元素监听所有页面切换事件，目前提供pageBeforeShow|pageShow|pageBeforeBack|pageBack四种事件(before事件为动画开始前触发)
+        //第一个参数为事件名称，第二个参数为事件回调，其中e.detail.page为当前页面的html对象
+        view.addEventListener('pageBeforeShow', function(e) {
+
+            mui_offCanvasSide.offCanvas().close();
+
+            sub_list_content.style.height=listsH;
+            sub_list_index.style.height=listsH;
+
+
+        });
+
+        view.addEventListener('pageShow', function(e) {
+//            sub_list_content.style.height=listsH;
+
+        });
+        view.addEventListener('pageBeforeBack', function(e) {
+            console.log(e.detail.page.id + ' beforeBack');
+        });
+        view.addEventListener('pageBack', function(e) {
+            console.log(e.detail.page.id + ' back');
+        });
+
+        //aside_content
+        mui('#aside_content').on('tap','.car_model',function(e){
+            car_model = this.getAttribute("id");
+            car_model_title = this.innerText;
+            car_type_title = this.dataset.type_title;
+            msg();
+        });
+
+        //列表1
+        list1.style.height = listsH;
+        window.indexedList = new mui.IndexedList(list1);
+
+        bindCH(mui_offCanvasSide,'.offCanvasSideUl','.offCanvasSideLi');
+
+        offCanvasSide.addEventListener('shown',function (event) {
+//            console.log(event);
+            console.log(10);
+
+        });
+
+
+        function bindCH( $wrap, $ul, $li) {
+            mui($ul).on('tap',$li,function(e){
+                var id = this.getAttribute("id");
+                console.log(id);
+                if (typeof(data_cache[id]) == "undefined") {
+                    //抛出错误
+                    error_show('该分类不存在！');
+                }else{
+                    car_brand_title = this.querySelector('a').innerText;
+                    showCeHua($wrap, data_cache[id], this.innerText);
+                }
+            });
+        }
+
+        function showCeHua( $wrap, $data, $title) {
+            console.log($data);
+            if (typeof($data == "undefined")){
+                var content = document.getElementById('aside_content');
+                var html = '<div class=" aside_title">'+$title+'</div><div class="mar5"></div><li class="mui-table-view-cell">全部车系</li>';
+                for ($d in $data['sub']){
+                    html += '<li data-group="'+$data['sub'][$d].title+'" class="mui-table-view-divider mui-indexed-list-group">'+$data['sub'][$d].title+'</li>';
+                    for ($sub in $data['sub'][$d]['sub']){
+                        html += '<li class="mui-table-view-cell car_model" data-type_title="'+$data['sub'][$d].title+'" id="'+$data['sub'][$d]['sub'][$sub].id+'">'+$data['sub'][$d]['sub'][$sub].title+'</li>';
+                    }
+                }
+                content.innerHTML = html;
+                $wrap.offCanvas().show();
+            }else{
+                error_show('没有更多了！');
+            }
+        }
+        
+        //弹出输入框
+        function msg() {
+            mui.prompt('','如“3.0T”或“45TFSI”','填写一个车款（选填）',['确定','取消'],function (e) {
+                var car_info = {car_model_id:car_model,car_name:e.value,car_full_name:car_brand_title+car_model_title+' '+e.value};
+                //这里是选择了一个车型
+                if(window.parent.handle_carinfo){
+                    window.parent.handle_carinfo(car_info);
+                }
+                shidian('car',car_info);
+            },'div')
+        }
+
+        //和shidianAPP交互
+        function shidian($action, $param) {
+            if (typeof($param != "string")){
+                $param = JSON.stringify($param);
+            }
+            self.location='shidian://'+$action+'?jp='+$param;
+        }
+
+
+        function error_show($msg) {
+            mui.toast($msg)
+        }
+    })
+
+    var deviceType = CCisModels(),
+    initPageHeight = $(window).height();
+    if(deviceType.split('_')[1] == 'android') {
+        $('body').on('focus','.mui-popup.mui-popup-in input',function () {
+            resize();//$('.mui-popup.mui-popup-in').css('padding-bottom','500px');
+        });
+        $('body').on('blur','.mui-popup.mui-popup-in input',function () {
+            resize2();//$('.mui-popup.mui-popup-in').css('padding-bottom','500px');
+        });
+
+    }
+
+    function resize(){
+        $('.mui-popup.mui-popup-in').css('padding-bottom','200px');
+    }
+    function resize2(){
+        //更具css 还原
+        $('.mui-popup.mui-popup-in').css('padding-bottom','0px');
+    }
+    //判断ios安卓及浏览器
+    function CCisModels() {
+        var ua = navigator.userAgent.toLowerCase();
+        if(/micromessenger/.test(ua)) {
+            if(/android/i.test(ua)) {
+                return 'WX_android';
+            } else {
+                return 'WX_Ios';
+            }
+        } else if(/qq/.test(ua)) {
+            if(/android/i.test(ua)) {
+                return 'qq_android';
+            } else {
+                return 'qq_Ios';
+            }
+        } else {
+            if(/android/i.test(ua)) {
+
+                return 'Y_android';
+            } else {
+                return 'Y_Ios';
+            }
+        }
+    }
+</script>
+
+</html>

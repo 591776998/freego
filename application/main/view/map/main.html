@@ -1,0 +1,239 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <title>单击获取点击的经纬度</title>
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+
+        #allmap{
+            width: 100%;
+            height: 300px;
+        }
+        #menu{
+            color: #FFCC00;
+            font-weight: bold;
+            font-size: 1.6em;
+            text-align: center;
+            border-bottom: 1px solid #DDDDDD;
+            padding: 15px 15px;
+        }
+        #main{
+            text-align:left;
+            overflow-y: scroll;
+            height: 250px;
+        }
+        .route{
+            padding: 5px 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        span:hover{
+            cursor: pointer;;
+        }
+        label {
+            max-width: none;
+        }
+        #search{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <input id="search" type="search" onkeydown="entersearch()"/>
+    <div id="allmap" ></div>
+    <div class="row" id="menu">
+        <div class="col-xs-6"><span class="glyphicon glyphicon-plus" id="submit">&nbsp提交路线</span></div>
+        <div class="col-xs-6"><span class="glyphicon glyphicon-minus" id="moveadd">&nbsp删除地点</span></div>
+    </div>
+    <div  id="main"> </div>
+</div>
+</body>
+</html>
+<script src="__PUBLIC__/js/jquery.min.js"> </script>
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=NhstEjFcNQ51G88LUPScyWqUSReyxDK0"></script>
+<script type="text/javascript">
+
+    //全部的点
+    var points = {#$data|json_encode};
+
+    var mark   = [];
+
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    map.addControl(new BMap.NavigationControl());
+    //可以向地图添加多个控件。在本例中我们向地图添加一个平移缩放控件、一个比例尺控件和一个缩略图控件。在地图中添加控件后，它们即刻生效。
+    map.addControl(new BMap.NavigationControl());
+    map.addControl(new BMap.ScaleControl());
+    map.addControl(new BMap.OverviewMapControl());
+    map.addControl(new BMap.MapTypeControl());
+    map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+    map.enableContinuousZoom();
+
+    //搜索
+    var local = new BMap.LocalSearch(map, {
+        renderOptions:{map: map}
+    });
+
+    var point = new BMap.Point(102.727172,32.968147);
+    map.centerAndZoom(point,5);
+    var geoc = new BMap.Geocoder();
+    //单击获取点击的经纬度
+    map.addEventListener("click",function(e){
+        var pt = e.point;
+        geoc.getLocation(pt, function(rs){
+            var addComp = rs.addressComponents;
+            var p       = rs.point;
+            var s = addComp.province + "," + addComp.city + "," + addComp.district + " " + addComp.street + " " + addComp.streetNumber;
+            var l = BD2GCJ(p.lat,p.lng);
+            var p_data = {title:s,lat:l.lat,lng:l.lng,b_lat:p.lat,b_lng:p.lng};
+            addPoint(p_data);
+        });
+    });
+
+    //添加1个点
+    function addPoint(data) {
+        points.push({
+            'title':data.title,
+            'lat':data.lat,
+            'lng':data.lng
+        });
+        renderPoint(data);
+    }
+
+    //渲染点
+    function renderPoint(data,index) {
+
+        var i = 0;
+        if('undefined' != typeof index){
+            i = index;
+        }
+        else{
+            i = (points.length - 1);
+        }
+
+        if(i==0){
+            pre = '起点：';
+        }else{
+            pre ='第'+i+'站：';
+        }
+        mark.push(addMarker({lat:data.b_lat,lng:data.b_lng,title:(pre+data.title)}));
+        $("#main").append(getPointDom(pre,data.title));
+    }
+
+    //移除一个点
+    function delPoint(i) {
+        if('undefined' == typeof i){
+            points.pop();
+            mark.pop().hide();
+            $(".route:last").remove();
+        }else{
+            points.splice(i,1);
+            mark.splice(i,1).hide();
+            $("#main .route").eq(i).remove();
+        }
+    }
+
+    //拼接点的dom
+    function getPointDom(pre,title) {
+        return '<div class="route col-md-3" >'+pre+'<span>'+title+'</span></div>';
+    }
+
+
+    //百度坐标转国测局坐标
+    function BD2GCJ(b_lat,b_lng) {
+        var x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+        var x = b_lng - 0.0065, y = b_lat - 0.006;
+        var z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
+        var theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
+        return {
+            lat: z * Math.sin(theta),
+            lng: z * Math.cos(theta)
+        };
+    }
+
+    function GCJ2BD(lat,lng) {
+        var x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+        var  x = lng, y = lat;
+        var z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);
+        var theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);
+        return {
+            lat: z * Math.sin(theta) + 0.006,
+            lng: z * Math.cos(theta) + 0.0065
+        };
+    }
+
+    //向地图添加点
+    function addMarker(point) {
+        var marker = new BMap.Marker(new BMap.Point(point.lng,point.lat));
+        map.addOverlay(marker);
+        marker.setLabel(new BMap.Label(point.title,{offset:new BMap.Size(20,-10)}));
+        return marker;
+    }
+
+    //搜索
+    function entersearch() {
+        local.search( $("#search").val());
+    }
+
+    //把div改成输入框
+    function div2input(d) {
+        return '<input type="text" value="'+d+'" maxlength="45" />';
+    }
+
+    $(function(){
+        points.map(function (item,index) {
+            var l = GCJ2BD(item.lat,item.lng);
+            item.b_lat = l.lat;
+            item.b_lng = l.lng;
+            renderPoint(item,index);
+        });
+
+        $("#submit").click(function(){
+            //这里是选择了一个车型
+            if(window.opener){
+                if(window.opener.handle_lineinfo(points)){
+                    window.close();
+                }
+            }else{
+                alert('错误，未找到父页面');
+            }
+        });
+        $("#moveadd").click(function(){
+            delPoint();
+        })
+        $('#main').on('click','.route span',function(){
+            //把这里变成输入框
+            var the = $(this);
+            var parent = the.parent();
+            var input = div2input(the.text());
+            the.remove();
+            parent.append(input).find('input').focus().select();
+        });
+        $('#main').on('blur','input',function () {
+            var the = $(this);
+            //修改内容
+            var title = the.val();
+            var parent = the.parent();
+            //判断当前是第几个
+            var index = $('#main .route').index(parent);
+            if(points[index]){
+                points[index].title = title;
+            }
+            if(mark[index]){
+                map.removeOverlay(mark[index].getLabel());
+                mark[index].setLabel(new BMap.Label(title,{offset:new BMap.Size(20,-10)}));
+            }
+
+            the.remove();
+            parent.append('<span>'+title+'</span>');
+
+        })
+
+    });
+
+</script>

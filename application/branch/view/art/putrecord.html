@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>推首记录</title>
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/bootstrap.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 80%;
+                margin:0 auto;
+
+            }
+            .comment{
+                width: 100%;
+                font-size:0.8em;
+                color: #666666;
+
+            }
+
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 15px auto;
+
+            }
+
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.1em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 30px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 15px auto;
+
+            }
+
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.2em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 98%;text-align: center;
+                margin: 15px auto;
+
+            }
+
+        }
+        .header{
+            text-align: center;
+            margin-top: -10px;
+            padding: 16px 0;
+            background: #F9F9F9;
+            color: #FFCC00;
+            font-weight: bold;
+            border-bottom: 1px solid #DDDDDD;
+
+
+        }
+        .btn1{
+            border: none;
+            background: #F9F9F9;
+        }
+
+        .btn2{
+            border: none;
+            background: #F9F9F9;
+            width: 240px;
+            padding: 3px 0;
+        }
+        .btn3{
+            border: none;
+            background: #F9F9F9;
+            width:112px;
+            padding: 3px 0;
+        }
+        .btn4{
+            border-radius: 8px;
+            padding: 3px 12px;
+            font-size: 0.8em;
+            background: #FFFFFF;
+            margin-left:  10px;
+
+        }
+        .btn5{
+            border: none;
+            background:#FFFFFF;
+            width:100%;
+            font-size:1.0em;
+            font-weight: bold;
+            color: #FFCC00;
+            padding: 15px 10px 15px 0;
+        }
+        .btn6{
+            width: 240px;
+            font-size: 0.8em;
+            padding: 3px 0px;
+        }
+        .hrline{
+            width: 100%;
+            height: 2px;
+            border-bottom: 1px solid #DDDDDD;
+        }
+        .col-xs-9{
+           color: #999999;
+            text-align: left;
+        }
+        .col-xs-3{
+            padding: 0;
+        }
+        button{
+            outline: 0;
+        }
+        .select_wrap{
+            width: 250px;
+            height: 120px;
+            margin: 0 auto;
+        }
+        .select_wrap select{
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <div class="comment">
+                <div class="row header">
+
+                    <div class="col-xs-2 col-md-2" style="text-align: left;padding: 0">
+                            <button class="btn1 back"><&nbsp;返回</button>
+                    </div>
+
+                    <div class="col-xs-8 col-md-8">
+                            <span style="color: #080808">头条申请&</span><span></span>
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                     </div>
+                    <div class="col-xs-2 col-md-2" style="text-align: left;padding: 0">
+
+                    </div>
+                </div>
+                <div class="select_wrap">
+
+                    <select class="s"><option>中国</option></select>
+
+
+                </div>
+                <div class="comb">
+                   <button style="padding: 3px 15px" id="seeput">查询</button>
+                </div>
+                <div class="hrline"></div>
+                <h4>头条榜单</h4>
+                <div id="contentData">
+
+                <!--<div class="comb">-->
+                    <!--<div class="row comb">-->
+                        <!--<div class="col-xs-9">-->
+                            <!--<span class="span1">某某游记1</span><br>-->
+                            <!--<span class="span2">喵怼怼</span>-->
+                             <!--于 <span class="span3">2017-8-5 </span>推送-->
+                        <!--</div>-->
+                        <!--<div class="col-xs-3"><button class="btn5">删除</button></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                </div>
+                <div class="hrline"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/js/jquery.3.2.1.js"></script>
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+<script type="text/javascript">
+
+    $('.back').click(function () {
+        window.history.back();  //返回上一页
+    });
+
+    //1.根据id获取下级分会
+    function getSub(dom,object) {
+        $.ajax({
+            type:"POST",
+            url:"{{:web_url('/branch/branch/index')}}",
+            dataType:"json",
+            data:{branch_id:object.branch_id?object.branch_id:'0'},
+            success:function(d){
+                if(d.code == '200'){
+                    var s = '';
+                    if(0 != d.data.length) {
+
+                        if('function' == typeof  dom){
+                            dom = dom();
+                        }
+                        d.data.unshift(object);
+
+                        s = d.data.map(function (data) {
+                            return '<option value="' + data.branch_id + '">' + data.name + '</option>';
+                        }).join('');
+
+                        dom.empty();
+                        dom.append(s);
+                    }else{
+                        if('function' != typeof  dom){
+                            dom.nextAll().remove();
+                            dom.remove();
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    //当某项被选中时，创建下级选择器
+    $('.select_wrap').on('change','select',function () {
+        var the = $(this);
+        var index = $(this).get(0).selectedIndex;
+        if(0 == index)return '';
+        var selected = {branch_id:the.val(),name:the.find("option:selected").text()};
+        if(0 < selected.branch_id){
+            if( 0 == the.next('select').length ){
+                getSub(function() {
+                    $('.select_wrap').append('<select class="s"></select>');
+                    return $('.select_wrap').find('select:last')
+                },selected);
+            }else{
+                getSub($(this).next('select'),selected);
+            }
+        }else{
+            the.nextAll().remove();
+        }
+    });
+
+    function init() {
+        getSub($('.select_wrap').find('select'),{{$branch|json_encode}});
+    }
+    init();
+
+    function getData(id,type,page,page_size){
+        //获取分会推首数据
+        var contentData={
+            branch_id:id,
+            page:page,
+            page_size:page_size
+        };
+        $.ajax({
+            type:"POST",
+            url:"{{:web_url('/branch/top/index')}}",
+            dataType:"json",
+            data:contentData,
+            success:function(data){
+                if(data.code==200){
+                    var s = randerList(data.data);
+                    if(type==1){
+                        $("#contentData").html(s);
+                    }else{
+                        $("#contentData").append(s);
+                    }
+                }
+            }
+        })
+    }
+
+    //输入数据，渲染列表
+    function randerList(data) {
+        return data.map(function (vo) {
+            var id = vo.is_top.id?vo.is_top.id:'0';
+            var c_time = vo.is_top.c_time?vo.is_top.c_time:'0';
+
+           return '<div class="comb record" top_id="'+id+'">'+
+                   '<div class="row comb">'+
+                   '<div class="col-xs-9">'+
+                   '<span class="span1">'+vo.title+'</span><br>'+
+                   '<span class="span2"></span>'+
+                   '于 <span class="span3">'+formatData(c_time)+'</span>推送'+
+                   '</div>'+
+                   '<div class="col-xs-3"><button class="btn5"  onclick="delectData('+id+')">删除</button></div>'+
+                   '</div>'+
+                   '</div>'+
+                   '<div class="hrline"></div>'
+
+        }).join('');
+
+    }
+
+    function delectData(id){//取消数据继续首页
+        var param={
+            id:id
+        };
+        if(confirm('你确定要取消该置顶？')){
+            $.ajax({
+                type:"POST",
+                url:"{{:web_url('/branch/Top/delete')}}",
+                dataType:"json",
+                data:param,
+                success:function(d){
+                    if(d.code==200){
+                        $('.record[top_id='+id+']').remove();
+                    }else{
+                        alert(d.desc);
+                    }
+                }
+            })
+        }
+    }
+
+    //查询
+    $("#seeput").click(function(){
+
+        var select = $('.select_wrap').find('select:last');
+
+        var id = select.val();
+
+        getData(id,1,1,30);
+    });
+
+    function formatData(nS) {
+        return new Date(parseInt(nS) * 1000).toLocaleString().substr(0,17);
+
+
+        console.log(nS);
+        nS = new Date(nS);
+        var year = nS.getFullYear(),
+                month = nS.getMonth() + 1,
+                date = nS.getDate(),
+                hour = nS.getHours(),
+                minute = nS.getMinutes();
+        return year + "-" + month + "-" + date + " " + hour + ":" + minute;
+    }
+
+</script>
+</body>
+</html>

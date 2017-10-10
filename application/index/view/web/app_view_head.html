@@ -1,0 +1,6 @@
+<header class="mui-bar mui-bar-nav" style="padding-top: 20px;height: 64px;">
+    <a id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left mainColor"><span class="ltext"></span></a>
+    <h1 class="mui-title">{{$title|default=""}}</h1>
+    <button class="mui-btn  mui-btn-link mui-pull-right collect_btn mainColor" is_collect="{{present name="data.collect.id"}}{{$data.collect.id}}">取消收藏{{else /}}0">收藏{{/present}}</button>
+    <button class="mui-btn  mui-btn-link mui-pull-right mainColor" id="share_btn">分享</button>
+</header>

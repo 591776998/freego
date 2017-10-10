@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>商户管理</title>
+    <link href="__PUBLIC__/temp/css/bootstrap.css" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 80%;
+                margin:0 auto;
+
+
+            }
+            .comment{
+                width: 100%;
+                font-size:0.8em;
+                color: #999999;
+
+            }
+
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+            .footer{
+                left: 0;
+            }
+
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.5em;
+                color: #999999;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 30px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 25px auto;
+            }
+            .footer{
+                font-size: 1.2em ;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+
+            }
+
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.6em;
+
+                color: #999999;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 25px 25px;
+            }
+            .footer{
+                font-size: 1.3em ;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+
+            }
+
+        }
+        .header{
+
+            /*margin: 0 -15px;*/
+            padding: 10px 0;
+            background: #F9F9F9;
+            color:#FFCC00;
+            text-align: center;
+            font-size: 0.8em;
+
+        }
+        .footer{
+            border-top:1px solid #DDDDDD;
+            padding: 16px 0;
+            background: #F9F9F9;
+            color: #DDDDDD;
+            font-weight: bold;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+
+        }
+        .btn1{
+            border: none;
+            background: #F9F9F9;
+        }
+
+        .btn2{
+            border: none;
+            background: #F9F9F9;
+            width: 100%
+        }
+        .btn3{
+            border: none;
+            padding: 4px 0;
+        }
+        .btn4{
+            border: none;
+            border-radius: 8px;
+            padding: 3px 5px;
+            font-size: 1.0em;
+            background: #FFFFFF;
+            color:#FFCC00;
+
+        }
+        .btn5{
+            border: none;
+            background:#F2F2F2;
+            width:70%;
+            padding: 3px 15px;
+        }
+        .btn6{
+            border: none;
+            padding: 10px 0;
+            font-size:0.8em;
+            background: #FFFFFF;
+            color:#FFCC00;
+            margin-right: 8px;
+        }
+
+        .btn10{
+            border:none;
+            padding: 5px 0;
+            font-size:1.2em;
+            background: #F9F9F9;
+            color:#FFCC00;
+            font-weight: bold;
+        }
+        .left{
+            width: 65%;
+            float: left;
+            text-align: left;
+            padding-left: 25px;
+        }
+        .right{
+            width: 35%;
+            float: left;
+            text-align: right;
+            padding-right:  25px;
+        }
+        .hrline{
+            width: 100%;
+            height:2px ;
+            border-top: 1px solid #DDDDDD;
+        }
+        .span1{
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+        .span2{
+            font-weight: normal;
+            font-size: 0.7em;
+        }
+        .img-rounded{
+            width: 100%;
+            height:60px
+        }
+        .col-xs-2{
+            padding: 0;
+        }
+        .col-xs-7{
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        .col-xs-4{
+            padding: 0;
+        }
+        .col-xs-3{
+            padding: 0;
+        }
+        .col-xs-6{
+            padding: 0 5px;
+        }
+        button{
+            outline: 0;
+        }
+
+        .header .item{
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .header .item .btn{
+            border-color: #FFCC00;
+            color: #FFCC00;
+        }
+        .header .item .btn.active{
+            background-color: #FFCC00;
+            color: white;
+        }
+        .mainColor{
+            color: #FFCC00;
+        }
+        a,a:hover{
+            color: #FFCC00;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .content_list{
+            display: flex;
+            flex-direction: column;
+            color: #666;
+            font-size: 16px;
+        }
+        .content_list .item{
+            width: 100%;
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .content_list .item_row{
+            font-weight: bold;
+            display: flex;
+            flex-direction: row;
+        }
+        .content_list .sub_row{
+            color: #999;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .content_list .item_row span{
+            width: 100%;
+        }
+
+        .content_list .item_row span:last-child{
+            text-align: right;
+            width: 100px;
+        }
+        .content_list .item_row span:first-child{
+            text-align: left;
+            flex: 1;
+        }
+        .content_list .item_footer{
+            text-align: center;
+            height: 30px;
+        }
+        .content_list .item:not(:last-child):after{
+            content: '';
+            background-color: #bcbcbc;
+            height: 1px;
+            width: 100%;
+        }
+
+        .btn-group{width: 100%;}
+        .btn-group a{ flex: 1; padding: 0; margin: 0;   height: 30px; line-height: 30px; width: 24%;}
+
+        .order_info{
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .order_info .wrap{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 26px;
+            color: #333;
+        }
+        .order_info .wrap .title_wrap{
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+
+        }
+        .order_info .wrap .title_wrap span:first-child{
+            flex: 1;
+            text-align: left;
+        }
+        .order_info .wrap .title_wrap span:last-child{
+            width: 100px;
+            text-align: right;
+        }
+        .order_info .wrap .item{
+            text-align: left;
+        }
+        .order_info .wrap .item .item_content{
+            display: flex;
+            flex-direction: row;
+        }
+        .order_info .wrap .item .item_content span:first-child{
+            flex: 1;
+            text-align: left;
+        }
+        .order_info .wrap .item .item_content span:last-child{
+            width: 100px;
+            text-align: right;
+        }
+
+        .order_info .wrap .line{
+            height:1px;
+            background: #e3e3e3;
+        }
+        .order_info .wrap .time_wrap{
+            color: #777;
+        }
+        .order_info .wrap .time_wrap{
+            text-align: left;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <div class="row" style="padding-bottom: 100px">
+        <div class="col-xs-12 col-md-8 main">
+
+            <div class="row footer">
+                <div class="col-xs-3 col-md-3" style="  border-right: 2px solid #DDDDDD;"><button id="order" class="btn2 cbtn">订单</button></div>
+                <div class="col-xs-3 col-md-3" style="  border-right: 2px solid #DDDDDD;"><button id="scan" class="btn2 cbtn">验票</button></div>
+                <div class="col-xs-3 col-md-3" style="  border-right: 2px solid #DDDDDD;"><button id="wallet" class="btn2 cbtn">钱包</button></div>
+                <div class="col-xs-3 col-md-3"><button id="manage" class="btn2 cbtn">管理</button></div>
+            </div>
+
+            <div id="orderpage" class="comment page_item">
+                <div class="header row">
+                        <div class="col-xs-2" style="padding-right: 0">
+                            <!--<a class="glyphicon glyphicon-chevron-left mainColor"></a>-->
+                        </div>
+
+                        <div class="col-xs-8 item" style="padding-right: 0;display: flex; flex-direction: row;">
+                            <div id="head_btn_group" class=" btn-group" role="group" style="display: flex; flex-direction: row;">
+                                <a class="btn btn-default active" type="101">待确认<span class="span"></span></a>
+                                <a class="btn btn-default" type="102">待使用<span class="span"></span></a>
+                                <a class="btn btn-default" type="103">未付款<span class="span"></span></a>
+                                <a class="btn btn-default" type="104">已完成<span class="span"></span></a>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-2" style="padding-left: 0">
+                        <!--<a class="btn10" >搜索</a>-->
+                    </div>
+            </div>
+
+                <div class="content_list_wrap">
+
+                    <div class="content_list" style="text-align: left">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="scanpage" class="comment">
+            <div class="header">
+                <form class="verify_code_form">
+                    <input type="search" class="btn5 verify_code_input" placeholder="输入订单下的凭证" />
+                    <a class="verify_code_input_btn">确定</a>
+                </form>
+            </div>
+            <div class="order_info"></div>
+        </div>
+
+        <div id="walletpage" class="comment">
+
+
+            <div class="comb">
+                <div class="row">
+                    <div class="left">现金总收入：</div>
+                    <div class="right"><span class="btn3" id="totalmoney">0</span>￥</div>
+                </div>
+            </div>
+            <div class="comb">
+                <div class="row">
+                    <div class="left">积分总收入：</div>
+                    <div class="right"><span class="btn3" id="totalpoint">0</span>分</div>
+                </div>
+            </div>
+            <div class="comb">
+                <div class="hrline"></div>
+            </div>
+            <div class="comb">
+                <div class="row">
+                    <div class="left">本月现金收入：</div>
+                    <div class="right"><span class="btn3" id="monthmoney">0</span>￥</div>
+                </div>
+            </div>
+            <div class="comb">
+                <div class="row">
+                    <div class="left">本月积分收入：</div>
+                    <div class="right"><span class="btn3" id="monthpoint">0</span>分</div>
+                </div>
+            </div>
+            <div class="comb">
+                <div class="hrline"></div>
+            </div>
+            <div class="comb">
+                <div class="row">
+                    <div class="left">今日现金收入：</div>
+                    <div class="right"><span class="btn3" id="todaymoney">0</span>￥</div>
+                </div>
+            </div>
+            <div class="comb">
+                <div class="row">
+                    <div class="left">今日积分收入：</div>
+                    <div class="right"><span class="btn3" id="todaypoint">0</span>分</div>
+                </div>
+            </div>
+            <div class="comb">
+                <div class="row">
+                    <div class="left">较上日现金：</div>
+                    <div class="right" style="color: red"><span class="btn3" id="todaymoney_diff" >+0</span><span >￥</span></div>
+                </div>
+            </div>
+            <div class="comb">
+                <div class="row">
+                    <div class="left">较上日积分：</div>
+                    <div class="right" style="color: red"><span class="btn3" id="todaypoint_diff">+0</span><span >分</span></div>
+                </div>
+            </div>
+            <div class="comb">
+                <div class="hrline"></div>
+            </div>
+            <div class="comb">
+                <button class="btn4" id="monthdetail">查看月度营收</button>
+            </div>
+
+        </div>
+
+        <div id="managepage" class="comment">
+            <div class="header">
+                <input type="text" class="btn5" id="key_word" placeholder="搜索商家名称／负责任名称／手机号" />
+                <div class="col-xs-2" style="padding-top: 5px;margin-right: -45px;">
+                    <a class="btn_account" href="{{:web_url('/seller/seller/account')}}">账号</a>
+                </div>
+            </div>
+            <div id="managedata">
+                <div id="lists"></div>
+            </div>
+        </div>
+
+        <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content" style="text-align: center">
+                    <div id="content" style="height: 100px;margin-top: 30px">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="__PUBLIC__/temp/js/jquery.min.js"> </script>
+<script src="__PUBLIC__/temp/js/bootstrap.js"></script>
+<link href="__PUBLIC__/temp/css/dropload.css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/temp/js/dropload.min.js"></script>
+<script src="__PUBLIC__/js/seller.js"> </script>
+
+<script type="text/javascript">
+var manageData={};
+manageData.key_word="";
+manageData.page="";
+manageData.size="";
+var counter = 1;
+var result="";
+function ajaxWallet(){//获取钱包信息
+    $.ajax({
+        type:"GET",
+        url:"{{$baseUrl}}seller/wallet/total",
+        data:"",
+        success:function(data){
+            if(data.code=200){
+                $("#totalmoney").text((data.data.total.money/100).toFixed(2));
+                $("#totalpoint").text(data.data.total.point);
+                $("#monthmoney").text((data.data.month.money/100).toFixed(2));
+                $("#monthpoint").text(data.data.month.point);
+                $("#todaymoney").text((data.data.today.money/100).toFixed(2));
+                $("#todaypoint").text(data.data.today.point);
+                $("#todaymoney_diff").text((data.data.today.money_diff/100).toFixed(2));
+                $("#todaypoint_diff").text(data.data.today.point_diff);
+            }else{
+
+                $("#content").text(data.desc);
+                $('#myModal').modal('toggle');
+            }
+        },
+        error:function(data){
+            $("#content").text(data.desc);
+            $('#myModal').modal('toggle');
+        }
+    })
+}
+
+function ajaxmanage(){//加载商家管理
+    manageData.key_word=$("#key_word").val();
+    manageData.page=1;
+    manageData.size=4;
+    var bussdata="";
+    $.ajax({
+        type:"POST",
+        url:"{{$baseUrl}}seller/place/index",
+        dataType:"json",
+        data:manageData,
+        success:function(data){
+            if(200 == data.code){
+                bussdata = data.data.map(function (item) {
+                    return'<div class="comb" style="padding-left: 12px">'+
+                            '<div class="row">'+
+                            '<div class="col-xs-2"> <img class="img-rounded" src="'+item.img_url+'"></div>'+
+                            '<div class="col-xs-6" style="text-align: left">'+
+                            '<span class="span1">'+item.title+'</span><br>'+
+                            '<span class="span2" >负责人：</span><span class="span2">'+item.boss+'</span>'+
+                            '</div>'+
+                            '<div class="col-xs-4"><a href="{{:web_url('/seller/place/editor')}}?id='+item.id+'" class="btn6">编辑查看</a>' +
+                            '<br /><a target="_blank" href="../qrcode/show" class="btn6">扫码付款</a></div>'+
+                            '</div>'+
+                            '</div>';
+                }).join('');
+                $('#lists').html(bussdata);
+            }else{
+                $("#content").text(data.desc);
+                $('#myModal').modal('toggle');
+            }
+
+        },
+        error:function(data){
+            $("#content").text(data.desc);
+            $('#myModal').modal('toggle');
+        }
+    })
+}
+
+//输入data返回dom
+function renderList(data,status) {
+    return data.map(function (item) {
+        //判断状态 ，
+        var footer_btn = '';
+        switch (status+''){
+            case '101':
+                footer_btn = '<div class="item_footer"><a class="btn1 footer_btn can_order" id="'+item.id+'">确认可以预定</a>/<a class="btn1 footer_btn cannt_order" id="'+item.id+'">不可以预定</a></div>';
+                break;
+            case '102':
+                footer_btn = '<div class="item_footer"><a class="btn1 footer_btn can_end" id="'+item.id+'">确认订单已完成</a></div>';
+                break;
+            case '103':
+                footer_btn = '<div class="item_footer"><a class="btn1 footer_btn can_end" id="'+item.id+'">确认订单已付款并完成</a></div>';
+                break;
+            default:
+        }
+        var content =item.order_item.map(function (sub) {
+            var time_dom = '';
+            var title_dom = '';
+            if(sub.time_str){
+                time_dom = '<div class="sub_row"><span>6-10</span></div>';
+            }
+            if(sub.item_type != 100){
+                title_dom = sub.title+' x '+sub.num;
+            }else{
+                title_dom = sub.title;
+            }
+
+            return '<div class="item_row">'+
+                    '<span>'+title_dom+'</span>'+
+                    time_dom+
+                    '</div>';
+        }).join('');
+
+        var user = !!item.user.nick_name?item.user.nick_name:'';
+
+        return '<div class="item">'+
+                '<div class="item_row">'+
+                '<span>'+item.title+'</span>'+
+                '<span>￥'+(parseInt(item.total_price)/100).toFixed(2)+'</span>'+
+                '</div>'+
+                content+
+                '<div class="item_row">'+
+                '<span>'+user+'</span></div>'+
+                footer_btn+
+                '</div>';
+    }).join('');
+}
+
+$(function(){
+    var status_o=0;
+    var status_s=0;
+    var status_w=0;
+    var status_m=0;
+    $("#monthdetail").click(function(){//跳转月度营收
+        location.href="{{:web_url('seller/wallet/month')}}"
+    });
+
+    $("#key_word").change(function(){//关键字查询
+        ajaxmanage();
+    });
+
+    $(".comment").hide();
+    $("#orderpage").show();
+    $(".cbtn").css("color","#999999");
+    $("#order").css("color","#FFCC00");
+
+    $("#order").click(function(){
+        $(".comment").hide();
+        $("#orderpage").show();
+        $(".cbtn").css("color","#999999");
+        $("#order").css("color","#FFCC00");
+    })
+
+    $("#scan").click(function(){//扫码
+        $(".comment").hide();
+        $("#scanpage").show();
+        $(".cbtn").css("color","#999999");
+        $("#scan").css("color","#FFCC00");
+    })
+
+    $("#wallet").click(function(){//钱包
+        $(".comment").hide();
+        $("#walletpage").show();
+        $(".cbtn").css("color","#999999");
+        $("#wallet").css("color","#FFCC00");
+        if(status_w==0){
+            ajaxWallet();
+            status_w+=1;
+        }
+
+    })
+
+    $("#manage").click(function(){//管理
+        $(".comment").hide();
+        $("#managepage").show();
+        $(".cbtn").css("color","#999999");
+        $("#manage").css("color","#FFCC00");
+        ajaxmanage();
+        // 每页展示4个
+        if(status_m==1){
+            $('#managedata').dropload({
+                scrollArea : window,
+                domUp : {
+                    domClass   : 'dropload-up',
+                    domRefresh : '<div class="dropload-refresh">↓下拉刷新-自定义内容</div>',
+                    domUpdate  : '<div class="dropload-update">↑释放更新-自定义内容</div>',
+                    domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>'
+                },
+                domDown : {
+                    domClass   : 'dropload-down',
+                    domRefresh : '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
+                    domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>',
+                    domNoData  : '<div class="dropload-noData">暂无数据-自定义内容</div>'
+                },
+                loadUpFn : function(me){
+                    manageData.page=1;
+                    manageData.size=4;
+                    manageData.key_word=$("#key_word").val();
+                    $.ajax({
+                        type: 'GET',
+                        url: '{{$baseUrl}}seller/place/index',
+                        dataType: 'json',
+                        data:manageDate,
+                        success: function(data){
+                            result = '';
+                            for(var i = 0; i < data.data.length; i++){
+                                result +=  '<div class="comb">'+
+                                        '<div class="row">'+
+                                        '<div class="col-xs-2"> <img class="img-rounded" src="'+data.data[i].img_url+'"></div>'+
+                                        '<div class="col-xs-6" style="text-align: left">'+
+                                        '<span class="span1">'+data.data[i].title+'</span><br>'+
+                                        '<span class="span2" >负责人：</span><span class="span2">'+data.data[i].boss+'</span>'+
+                                        '</div>'+
+                                        '<div class="col-xs-4"><button class="btn6" value="'+ data.data[i].id+'">编辑查看</button></div>'+
+                                        '</div>'+
+                                        '</div>'+
+                                        '<div class="comb">'+
+                                        '<div class="row">'+
+                                        '<div class="col-xs-2"> <img class="img-rounded" src="'+data.data[i].img_url+'"></div>'+
+                                        '<div class="col-xs-6" style="text-align: left">'+
+                                        '<span class="span1">'+data.data[i].title+'</span><br>'+
+                                        '<span class="span2" >负责人：</span><span class="span2">'+data.data[i].boss+'</span>'+
+                                        '</div>'+
+                                        '<div class="col-xs-4"><button class="btn6" value="'+ data.data[i].id+'">编辑查看</button></div>'+
+                                        '</div>'+
+                                        '</div>';
+                            }
+                            // 为了测试，延迟1秒加载
+                            setTimeout(function(){
+                                $('#lists').html(result);
+                                // 每次数据加载完，必须重置
+                                me.resetload();
+                                // 重置索引值，重新拼接more.json数据
+                                counter = 0;
+                                // 解锁
+                                me.unlock();
+                                me.noData(false);
+                            },10000);
+                        },
+                        error: function(xhr, type){
+                            alert('Ajax error!');
+                            // 即使加载出错，也得重置
+                            me.resetload();
+                        }
+                    });
+                },
+                loadDownFn : function(me){
+                    counter++;
+                    manageData.page=counter;
+                    manageData.size=4;
+                    manageData.key_word=$("#key_word").val();
+                    $.ajax({
+                        type: 'GET',
+                        url: '{{$baseUrl}}seller/place/index',
+                        dataType: 'json',
+                        data:manageData,
+                        success: function(data){
+                            for(var i = 0; i < data.data.length; i++){
+                                result +=  '<div class="comb">'+
+                                        '<div class="row">'+
+                                        '<div class="col-xs-2"> <img class="img-rounded" src="'+data.data[i].img_url+'"></div>'+
+                                        '<div class="col-xs-6" style="text-align: left">'+
+                                        '<span class="span1">'+data.data[i].title+'</span><br>'+
+                                        '<span class="span2" >负责人：</span><span class="span2">'+data.data[i].boss+'</span>'+
+                                        '</div>'+
+                                        '<div class="col-xs-4"><button class="btn6" value="'+ data.data[i].id+'">提交审核</button></div>'+
+                                        '</div>'+
+                                        '</div>'+
+                                        '<div class="comb">'+
+                                        '<div class="row">'+
+                                        '<div class="col-xs-2"> <img class="img-rounded" src="'+data.data[i].img_url+'"></div>'+
+                                        '<div class="col-xs-6" style="text-align: left">'+
+                                        '<span class="span1">'+data.data[i].title+'</span><br>'+
+                                        '<span class="span2" >负责人：</span><span class="span2">'+data.data[i].boss+'</span>'+
+                                        '</div>'+
+                                        '<div class="col-xs-4"><button class="btn6" value="'+ data.data[i].id+'">提交审核</button></div>'+
+                                        '</div>'+
+                                        '</div>';
+                                if((i + 1) >= data.lists.length){
+                                    // 锁定
+                                    me.lock();
+                                    // 无数据
+                                    me.noData();
+                                    break;
+                                }
+                            }
+                            // 为了测试，延迟1秒加载
+                            setTimeout(function(){
+                                $('#lists').append(result);
+                                // 每次数据加载完，必须重置
+                                me.resetload();
+                            },10000);
+                        },
+                        error: function(xhr, type){
+                            alert('Ajax error!');
+                            // 即使加载出错，也得重置
+                            me.resetload();
+                        }
+                    });
+                },
+                threshold : 50
+            })
+            status_m+=1;
+        };
+
+    })
+
+    /******************* 订单 *******************************/
+    //顶部切换按钮
+    var tab_1_param = {type:101,page:1,page_size:1000};
+
+    //初始化执行
+    //刷新列表
+    flushList();
+
+    //顶部切换按钮
+    $("#head_btn_group").on('click','a',function () {
+        var the = $(this);
+        tab_1_param.type = the.attr('type');
+        toggleBtn(the);
+        flushList();
+    });
+
+    //控制顶部按钮的切换
+    function toggleBtn(object) {
+        object.addClass('active');
+        object.siblings().map(function () {
+            $(this).removeClass('active');
+        });
+    }
+
+    //刷新列表数据
+    function flushList(temp_data) {
+        var param = tab_1_param;
+        if('undefined' != typeof temp_data){
+            param.assign(temp_data);
+        }
+        $.ajax({
+            url:"{{:web_url('/seller/order/index')}}",
+            data:param,
+            success:function (data) {
+                if(200 != data.code){
+                    msg(data.desc,2);
+                }else{
+                    $('.content_list').html( renderList(data.data,param.type));
+                }
+            },
+            error:function () {
+                msg('网络错误，请稍后再试',2);
+            }
+        });
+    }
+
+    //确认预定按钮
+    $(".content_list_wrap").on('click','.footer_btn',function () {
+        var the = $(this);
+        if(the.hasClass('can_order')){
+            $.ajax({
+                url:"{{:web_url('/seller/order/update')}}",
+                data:{status:101,id:the.attr('id')},
+                success:function (data) {
+                    if(200 != data.code){
+                        msg(data.desc,2);
+                    }else{
+                        msg('设置成功');
+                        flushList();
+                    }
+                },
+                error:function () {
+                    msg('网络错误，请稍后再试',2);
+                }
+            });
+        }else if(the.hasClass('can_end')){
+            $.ajax({
+                url:"{{:web_url('/seller/order/update')}}",
+                data:{use_time:(Date.parse(new Date()))/1000,id:the.attr('id')},
+                success:function (data) {
+                    if(200 != data.code){
+                        msg(data.desc,2);
+                    }else{
+                        msg('设置成功');
+                        flushList();
+                    }
+                },
+                error:function () {
+                    msg('网络错误，请稍后再试',2);
+                }
+            });
+        }else if(the.hasClass('cannt_order')){
+            $.ajax({
+                url:"{{:web_url('/seller/order/update')}}",
+                data:{status:100,id:the.attr('id')},
+                success:function (data) {
+                    if(200 != data.code){
+                        msg(data.desc,2);
+                    }else{
+                        msg('设置成功');
+                        flushList();
+                    }
+                },
+                error:function () {
+                    msg('网络错误，请稍后再试',2);
+                }
+            });
+        }
+    });
+
+    /******************** 订单结束 *********************************/
+
+    /******************* 验票 **************************/
+    //点确定
+    $('.verify_code_form').on('click','.verify_code_input_btn',function () {
+        var code  = $(this).parents('form').find('input').val();
+        searchVerifyCode(code);
+    });
+    //回车提交
+    $(".verify_code_form").on('submit',function(e){
+        var code  = $(this).find('input').val();
+        searchVerifyCode(code);
+        return false;
+    });
+
+    //确认可预订 do_order
+    $('#scanpage').on('click','.do_order',function () {
+        $.ajax({
+            url:"{{:web_url('/seller/order/update')}}",
+            data:{id:$(this).attr('order_id'),status:101},
+            success:function (data) {
+                if(200 != data.code){
+                    msg(data.desc,2);
+                }else{
+                    $('.order_info .footer_wrap').remove().append('<p>已确认可预订</p>');
+                }
+            },
+            error:function () {
+                msg('网络错误，请稍后再试',2);
+            }
+        });
+    });
+
+    $('#scanpage').on('click','.do_use',function () {
+        $.ajax({
+            url:"{{:web_url('/seller/order/update')}}",
+            data:{id:$(this).attr('order_id'),use_time:(Date.parse(new Date()))/1000},
+            success:function (data) {
+                if(200 != data.code){
+                    msg(data.desc,2);
+                }else{
+                    $('.order_info .footer_wrap').remove().append('<p>该订单已确认完成</p>');
+                }
+            },
+            error:function () {
+                msg('网络错误，请稍后再试',2);
+            }
+        });
+    });
+    /******************* 验票结束 **************************/
+
+    //
+
+});
+
+//响应验票码的输入
+function searchVerifyCode(code) {
+    $.ajax({
+        url:"{{:web_url('/seller/order/show')}}",
+        data:{code:code},
+        type: 'GET',
+        dataType: 'json',
+        success:function (data) {
+            if(200 != data.code){
+                msg(data.desc,2);
+            }else{
+
+                $('.order_info').html(orderDom(data.data));
+            }
+        },
+        error:function () {
+            msg('网络不稳定，请稍后再试',2);
+        }
+    });
+}
+
+//渲染订单
+function orderDom(data){
+    var item_dom = getItemDom(data.order_item);
+    var time_str_arr_str = data.time_str_arr.map(function (item) {
+        return '<p>'+item+'</p>';
+    }).join('');
+    var footer_btn = '';
+    if(0 == data.pay_time){
+        if((101 == data.verify)){
+            if(102 == data.status){
+                footer_btn = '<a class="do_order" order_id="'+data.id+'">确认该订单可预订</a>' +
+                        '<a class="do_order_refuse" order_id="'+data.id+'">/订单不可预订</a>';
+            }else if(100 == data.status){
+                footer_btn = '<p>该订单不可预定</p><a class="do_order" order_id="'+data.id+'">修改为可预订</a>';
+            }else{
+                footer_btn = '<p>待付款</a>';
+            }
+        }else{
+            footer_btn = '<p>订单未支付</p>';
+        }
+    }else {
+        if(0 != data.refund_time){
+            footer_btn = '<p>订单已退款</p>';
+        }else if(0 != data.use_time){
+            footer_btn = '<p>该订单已经于'+getLocalTime(data.use_time)+'使用并确认完成</p>';
+        }else {
+            footer_btn = '<a class="do_use" order_id="'+data.id+'">点击确认完成订单</a>';
+        }
+    }
+    return '<div class="wrap"> ' +
+            '<div class="title_wrap"> ' +
+            '<span>'+data.title+'</span> ' +
+            '<span>￥'+(data.total_price/100).toFixed(2)+'</span> ' +
+            '</div>'+
+            item_dom+
+            '<div class="line"></div><div class="time_wrap">' +
+            time_str_arr_str+
+            '</div>'+
+            '<div class="footer_wrap">' +
+            footer_btn+
+            '</div>'+
+            '</div>';
+}
+
+//输入订单子项的data渲染出dom
+function getItemDom(data) {
+    return data.map(function (item) {
+        var title = '';
+        if(100 != item.item_type){
+            title = item.title+'x'+item.num;
+        }else{
+            title = item.title
+        }
+        return '<div class="item">'+
+                '<div class="item_content">'+
+                '<span>'+title+'</span>'+
+                '<span>返'+item.back_points+'积分</span></div>'+
+                '<div class="item_content">'+
+                '<span>'+item.time_str+'</span>'+
+                '</div>'+
+                '</div> ';
+
+    }).join('');
+}
+
+//格式化时间戳
+function getLocalTime(nS) {
+    return new Date(parseInt(nS) * 1000).toLocaleString().substr(0,17)
+}
+
+</script>
+
+</body>
+</html>

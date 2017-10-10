@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <title>H5写攻略</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="__PUBLIC__/css/h5_skin.css?r={{:mt_rand(1,9999999)}}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="wrapper">
+    <div class="box_l">
+        <div id="carea">
+            <div id="domlist" data="100000">
+                <div class="a" id="t_100000">
+					<span class="aa" onclick="opentool(this)" data="100000">
+					</span>
+                    <ul class="ab" id="t_j_10000" style="display:block;">
+                        <li class="aba" onclick="adddom(1,100000)">
+                            <i>
+                            </i>
+                            文字
+                        </li>
+                        <li class="abb" onclick="adddom(2,100000)">
+                            <i>
+                            </i>
+                            照片
+                        </li>
+                        <li class="abc" onclick="adddom(3,100000)">
+                            <i>
+                            </i>
+                            视频
+                        </li>
+                        <li class="abd" onclick="adddom(4,100000)">
+                            <i>
+                            </i>
+                            标题
+                        </li>
+                    </ul>
+                </div>
+                <div id="modarea_100000">
+                </div>
+                <div id="viewarea_100000">
+                </div>
+            </div>
+        </div>
+        <div class="bk100">
+        </div>
+        <div class="bk100">
+        </div>
+        <div class="stool">
+			<span class="a" onclick="savedom(1,0)">
+				保存草稿
+			</span>
+            <span class="b" onclick="savedom(2,0)">
+				发表攻略
+			</span>
+        </div>
+        <div class="bk100">
+        </div>
+    </div>
+</div>
+<div class="bk10">
+</div>
+<div id="loading">
+</div>
+<script type="text/javascript">
+    //定义变量
+    var type = '{{$type}}';
+    var id   = '{{$id}}';
+    var createPara = '{{:web_url('/index/artpara/save')}}';
+    var par = {};
+    {{eq name="type" value="103"}}
+    par.art_id          = '{{$id}}';
+    {{else /}}
+    par.services_id     = '{{$id}}';
+    {{/eq}}
+
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/h5_skin.js?r={{:mt_rand(1,9999999)}}"></script>
+<script src="__PUBLIC__/js/seller.js"></script>
+<script type="text/javascript">
+
+
+
+
+</script>
+</body>
+</html>

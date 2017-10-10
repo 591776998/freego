@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="__PUBLIC__/css/flatpickr.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/ie.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+    <style>
+        @media (min-width:992px) {
+            .row{
+                width: 60%;
+                margin: 0 auto;
+                border-right: 2px solid #DDDDDD;
+                border-left: 2px solid #DDDDDD;
+            }
+            .imgCom{
+                width: 100%;
+                height:135px;
+                margin: 10px 0;
+                background: #F2F2F2 ;
+            }
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+
+        }
+        @media (max-width:376px){
+            .comment{
+                font-size:7px;
+                padding-top: 10px;
+                color: #979797;
+                font-weight:bold;
+            }
+        }
+        @media (min-width:410px){
+            .comment{
+                font-size:1.1em;
+                padding-top: 10px;
+                letter-spacing:0.5px;
+                color: #979797;
+                font-weight:bold;
+            }
+        }
+        a:hover{
+            cursor: pointer;
+        }
+        .main{
+            padding: 10px 8px;
+
+        }
+
+        .span1{
+            background: #D8D8D8;
+
+            padding: 3px 10px;
+            margin:0 10px;
+            font-weight:normal;
+            border: none;
+            height: 25px;
+            width: 140px;
+        }
+        .span2{
+
+            padding: 6px 10px;
+            font-size: 1.0em;
+            font-weight: normal;
+
+        }
+        .btn{
+            border-radius: 7px;
+            margin-left:5px ;
+            font-size: 0.9em;
+            margin-bottom:5px ;
+            padding: 2px;
+            color: #979797;
+            height: 28px;
+            background: #FFFFFF;
+            border: 1px solid #DDDDDD;
+
+        }
+        .btn1{
+            border-radius: 7px;
+            margin-left:5px ;
+            font-size: 0.9em;
+            margin-bottom:5px ;
+            padding: 2px 5px ;
+            color: #0000ff;
+            height: 28px;
+            background: #FFFFFF;
+            border:none;
+
+        }
+
+        select{
+            width: 60%;
+            height: 20px;
+            color: #000000;
+            font-size: 15px;
+        }
+        a{
+            color:#0000ff;
+            margin: 0 10px;
+        }
+        .imgCom{
+            width: 100%;
+            height: 60px;
+            margin: 10px 0;
+            background: #F2F2F2 ;
+        }
+        textarea{
+            background: #F2F2F2;
+            width: 100%;
+            border:none;
+        }
+        .comm{
+            margin:25px 0px;
+        }
+    </style>
+    <!--/script-->
+</head>
+<body>
+<div class="container">
+    <form id="main_form" enctype="multipart/form-data" method="post" >
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <h2 style="font-weight: bolder">地点（商家）</h2>
+            <div class="comment">
+                <div class="comm">负责人手机号<input type="text" class="span1" /><button type="button" class="btn">设置负责人登陆密码</button></div>
+                <div class="comm"><label><input type="checkbox" /><span class="span2">新增订单时通知负责人</span></label></div>
+                <div class="comm">响应者手机号<input type="text" class="span1" /><button type="button" class="btn">设置响应者登陆密码</button> </div>
+                <div class="comm"> 发展组织<input type="text" class="span1" style="width: 280px" placeholder="请输入组织名" /></div>
+                <div class="comm">地点名称<input type="text" name="title" style="width: 280px" class="span1" placeholder="输入名称" /></div>
+                <div class="comm">
+                地点分类
+                <select name="type" class="type_select">
+                    <option value="0">-请选择-</option>
+                    <option value="101">景点</option>
+                    <option value="102">美食</option>
+                    <option value="103">酒店</option>
+                    <option value="104">娱乐</option>
+                    <option value="105">购物</option>
+                    <option value="106">租车</option>
+                    <option value="107">保险</option>
+                    <option value="108">证照</option>
+                    <option value="109">折扣</option>
+                    <option value="110">汽车服务</option>
+                    <option value="111">道路救援</option>
+                    <option value="112">积分兑换</option>
+                </select>
+                </div>
+                <div class="comm">
+                地点标签
+                <select class="tag_select">
+                    <option value="0">-请选择-</option></select>
+                <button type="button" class="btn add_tag_btn">添加标签</button>
+                </div>
+                <div class="tag_wrap"></div>
+               </div>
+                <div class="comm">
+                封面图片<br />
+                <div class="col-xs-12 img_input_cover">
+                    <img src="" class="imgCom" style="width: 90px;height: 90px;">
+                    <input name="img" class="input hide" type="file" hidden />
+                </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <div class="comment col-xs-12 col-md-12 img_wrap" >
+
+                商家可以上传8张图片<br />
+                <div class="col-xs-3 img_input">
+                    <img class="imgCom">
+                    <input name="album[]" class="input hide" type="file" hidden />
+                </div>
+
+            </div>
+            <div class="comment">
+                <div>
+                    <div class="comm">扫码给用户打的折扣<input name="discount" class="span1" placeholder="输入范围0-10" />折</div>
+                    <!--<div class="comm">平台提成百分比&nbsp&nbsp<input name="" class="span1" placeholder="输入范围0-100" />%</div>-->
+                    <div class="comm">
+                    地点的简介：
+                    <textarea name="content" ></textarea>
+                   </div>
+
+                </div>
+                <div>
+                    <div class="comm">营业时间：<input name="run_s_time" type="time" class="span1 flatpickr" style="width: 100px" />到<input name="run_e_time" type="time" class="span1 flatpickr" style="width: 100px" /></div>
+                    <div class="comm">联系电话（座机）：<input name="landline" type="text" class="span1" style="width: 200px"/></div>
+                    <div class="comm">联系电话（手机）：<input name="phone" type="text" class="span1" style="width: 200px"/></div>
+                </div>
+                <br>
+                <div>
+                    商家地址：<br />
+                    <div class="comm">详细地址：<input name="address" value=""  type="text" class="span1" style="width: 100px"  /></div>
+                    <div class="comm">经度：<input name="bd_lng" class="span1" style="width: 100px" placeholder="最低小数点六位" /> 纬度:<input name="bd_lat" class="span1" style="width:100px"  placeholder="最低小数点六位" /></div>
+                    <div class="park_wrap">
+
+                    </div>
+                    <a class="add_park_btn">添加一个停车地点</a><a class="park_del_btn">删除最后一个停车点</a>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row">
+            <button id="submit" type="button">提交</button>
+
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/jquery.3.2.1.js"> </script>
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+<script src="__PUBLIC__/js/flatpickr.min.js"></script>
+<script src="__PUBLIC__/js/seller.js"></script>
+
+<script type="text/javascript">
+    var all_tag = {{$tag|json_encode}};
+</script>
+<script type="text/javascript">
+$(function(){
+
+    //标签
+    tagSelect();
+
+    //图片
+    imgInput();
+
+    //封面图
+    imgCoverInput();
+
+    //停车
+    park();
+
+    //异步提交表单
+    $('#submit').on('click',function () {
+        var formData = new FormData(document.querySelector('#main_form'));
+        $.ajax({
+            type: "POST",
+            url: "{{:web_url('/seller/Place/save')}}",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if(200 == data.code){
+                    msg('保存成功 ！！',1);
+                    jump("{{:web_url('/seller/place/editor')}}?id="+data.data.id);
+                }else{
+                    msg(data.desc,2);
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                msg("保存失败，请检查网络后重试",2);
+            }
+        });
+    });
+
+    var tag_select = $('.tag_select');
+    $('.type_select').on('change',function(){
+        //替换
+        flushTagSelect(tag_select,all_tag,$(this).val());
+    });
+
+    flatpickr(".flatpickr", {
+        enableTime: true,
+        noCalendar: true,
+        enableSeconds: false,
+        time_24hr: true,
+        dateFormat: "H:i",
+        defaultHour: 12,
+        defaultMinute: 0
+    });
+
+
+});
+
+//更换select内的内容
+function flushTagSelect($dom,data,t) {
+    var html = [];
+    data.map(function (e,i) {
+        if(t == e.sub_type){
+            html += '<option value="'+e.id+'">'+e.tag_name+'</option>';
+        }
+    });
+    $dom.find('option').remove();
+    $dom.append(html);
+}
+
+//设置标签新增 和删除
+function tagSelect() {
+    var tag_select = $('.tag_select');
+    var tag_wrap = $('.tag_wrap');
+    $('.add_tag_btn').on('click',function () {
+        //如果选择了已经存在的标签
+        var the_vaue = tag_select.val();
+        var has = tag_wrap.find("input[value='"+the_vaue+"']");
+        if(!has[0]){
+            var dom = '<div><input name="tag[]" value="'+the_vaue+'" hidden/>'+tag_select.find("option:selected").text()+'<button class="btn btn1 tag_del_btn">删除</button></div>';
+            tag_wrap.append(dom);
+        }else {
+            msg('已经有了');
+        }
+    });
+
+    //绑定删除按钮的事件
+    tag_wrap.on('click','.tag_del_btn',function(){
+        $(this).parent().remove();
+    })
+
+}
+
+//封面图片
+function imgCoverInput() {
+    var can = true;
+    $('.img_input_cover').on('click',function (e) {
+        if(can){
+            can = false;
+            var input = $(this).find('.input');
+            input.trigger("click");
+            can = true;
+        }
+    });
+    $('.img_input_cover').on('change','.input',function () {
+        var parent = $(this).parent();
+        var objUrl = getObjectURL(this.files[0]) ;
+        if (objUrl) {
+            parent.find('img').attr("src", objUrl) ; //将图片路径存入src中，显示出图片
+        }
+    });
+}
+
+
+//相册
+function imgInput() {
+    var can = true;
+    var img_wrap = $('.img_wrap');
+    img_wrap.on('click','.img_input',function (e) {
+        if(can){
+            console.log(can);
+            can = false;
+            var the_div = $(this);
+            var input = the_div.find('input');
+            input.trigger("click");
+            can = true;
+        }
+    });
+    img_wrap.on('change','.input',function () {
+        var parent = $(this).parent();
+        var objUrl = getObjectURL(this.files[0]) ;
+        if (objUrl) {
+            parent.find('img').attr("src", objUrl) ; //将图片路径存入src中，显示出图片
+            //如果被点击的是最后一个元素，
+            var next_num  = parent.nextAll().length;
+            var total_num = parent.parent().children('div').length;
+            if(0 == next_num && 8 > total_num){
+                var dom = '<div class="col-xs-3 img_input"><img class="imgCom"><input name="album[]" class="input hide" type="file" hidden /></div>';
+                img_wrap.append(dom);
+            }
+        }
+    });
+}
+
+//停车
+function park() {
+    var park_wrap = $('.park_wrap');
+    $('.add_park_btn').on('click',function () {
+        //当前有多少个停车点
+        var num = park_wrap.find('.park_item_wrap').length;
+        if(3 > num){
+
+            var dom = '<div class="park_item_wrap">停车地点：<br />'+
+                    ' <div class="comm">名称：<input name="park['+num+'][title]" type="text" class="span1" style="width: 100px"  /><label><input park['+num+'][touring]" value="101" type="checkbox" />是否可以停房车</label></div>'+
+                    ' <div class="comm">精度：<input park['+num+'][bd_lng]" class="span1" style="width: 100px"  placeholder="最低小数点六位" /> 纬度:<input park['+num+'][bd_lat]" class="span1" style="width:100px"  placeholder="最低小数点六位" /></div>' +
+                    '</div>';
+            park_wrap.append(dom);
+        }
+    });
+    $('.park_del_btn').on('click',function () {
+        park_wrap.children('.park_item_wrap:last-child').remove();
+    });
+}
+
+
+</script>
+<a href="#to-top" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+<!---->
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <style>
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        html
+        {
+            background: #fff;
+            font-size:80%;
+            font-family:  Helvetica,Verdana ,新宋体, Sans-Serif;
+            margin: 0;
+            padding: 0;
+            border:0;
+            height:100%;
+            max-height:100%;
+            overflow:hidden;
+        }
+        body
+        {
+            height:100%;
+            max-height:100%;
+            overflow:hidden;
+            background:#eee;
+            padding:0px;
+            margin:0px;
+            border:0px;
+        }
+        .mui-bar-nav{
+            height: 64px;
+            padding-top: 20px;
+        }
+        #main
+        {
+            width:100%;
+            position:absolute;
+            display: flex;
+            flex-direction: column;
+            height:100%;
+            overflow:auto;
+            background-color: #fff;
+        }
+        .item{
+            display: block;
+            height: 210px;
+            padding: 10px;
+            position: relative;
+        }
+        .item img{
+            display: block;
+            width: 100%;
+            height: 190px;
+        }
+        .item span{
+            color: #fff;
+            height: 20px;
+            width: 100%;
+            text-align: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        .mui-bar .mui-title {
+            right: 40px !important;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+</head>
+
+<body>
+{{eq name="is_app" value="102"}}
+{{include file="web/h5_view_head"/}}
+{{else/}}
+<header class="mui-bar mui-bar-nav">
+    <a href="javascript:;" id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left mainColor"><span class="ltext"></span></a>
+    <h1 class="mui-title">{{$title}}</h1>
+</header>
+{{/eq}}
+<div class="list_content" id="main" style="padding-top: 64px;">
+    {{volist name="data" id="vo"}}
+        <div class="item " >
+            <a class="a" href="{{:web_url('photo',['token'=>$token,'location_name'=>$vo['code_name'],'location_value'=>$vo['code_value'],'is_web'=>'101'])}}" >
+            <img src="__PUBLIC__/img/zhanwei.png" class="lazyload" data-src="__PUBLIC__/img/base/U9551P1433DT20140305084330.jpg"/>
+            <span>{{$vo.name}}</span>
+            </a>
+        </div>
+    {{/volist}}
+</div>
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/lazysizes.min.js"></script>
+<script src="__PUBLIC__/js/jq.1.6.1.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+
+<script>
+    var sd = new shiDianCommon();
+    var token   = sd.token('{{$token}}');
+    mui.ready(function() {
+        //返回
+//        var pop_btn = document.getElementById("pop");
+//        if(null != pop_btn){
+//            pop_btn.addEventListener("tap",function () {
+//                shidian('pop',{});
+//            });
+//        }
+//        var back_btn = document.getElementById("back");
+//        if(null != back_btn){
+//            back_btn.addEventListener("tap",function () {
+//                shidian('back',{});
+//            });
+//        }
+
+
+        $('a').click(function (e) {
+            self.location = this.href;
+        });
+
+    });
+    //和shidianAPP交互
+    function shidian($action, $param) {
+        if (typeof($param != "string")){
+            $param = JSON.stringify($param);
+        }
+        self.location='shidian://'+$action+'?jp='+$param;
+    }
+
+</script>
+</body>
+
+</html>

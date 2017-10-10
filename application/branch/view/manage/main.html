@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>商户管理</title>
+    <link href="__PUBLIC__/temp/css/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/temp/css/my.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 80%;
+                margin:0 auto;
+
+
+            }
+            .comment{
+                width: 100%;
+                font-size:0.8em;
+                color: #999999;
+
+            }
+
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 100%;text-align: center;
+                margin: 15px auto;
+                padding: 10px 0;
+                border-bottom: 1px solid #DDDDDD;
+            }
+            .footer{
+                left: 0;
+            }
+
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.3em;
+                color: #999999;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 30px auto;
+            }
+            .comb{
+                width: 100%;text-align: center;
+                margin: 15px auto;
+                padding: 10px 0;
+                border-bottom: 1px solid #DDDDDD;
+            }
+            .footer{
+                font-size: 1.2em ;
+            }
+
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.4em;
+
+                color: #999999;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 100%;text-align: center;
+                margin: 15px auto;
+                padding: 10px 0;
+                border-bottom: 1px solid #DDDDDD;
+            }
+            .footer{
+                font-size: 1.3em ;
+            }
+
+        }
+        .header{
+
+            padding: 15px 0;
+            background: #F9F9F9;
+            color:#FFCC00;
+            text-align: center;
+            font-size: 1.0em;
+
+        }
+
+        .btn1{
+            border: none;
+            background: #F9F9F9;
+        }
+
+        .btn2{
+            border: none;
+            background: #F9F9F9;
+            width: 100%;
+            text-align: center;
+        }
+        .btn3{
+            border:1px solid #101010;
+            background: #FFFFFF;
+            font-size: 0.9em;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .btn4{
+            border: none;
+            border-radius: 8px;
+            padding: 3px 5px;
+            font-size: 1.0em;
+            background: #FFFFFF;
+            color:#FFCC00;
+
+        }
+        .btn5{
+            border: none;
+            background:#F2F2F2;
+            width:100%;
+            padding: 3px 0px;
+        }
+        .btn6{
+            border: none;
+            padding: 15px 0px;
+            font-size:0.9em;
+            background: #FFFFFF;
+            color:#FFCC00;
+            margin-right: 8px;
+        }
+        .btn7{
+            border: none;
+            padding: 3px 0px;
+            font-size:0.8em;
+            background: #FFFFFF;
+            color:#FFCC00;
+            margin-left: 8px;
+        }
+        .left{
+            width: 65%;
+            float: left;
+            text-align: left;
+            padding-left: 25px;
+        }
+        .right{
+            width: 35%;
+            float: left;
+            text-align: right;
+            padding-right:  25px;
+        }
+        .hrline{
+            width: 100%;
+            height:2px ;
+            border-top: 1px solid #DDDDDD;
+        }
+        .span1{
+            font-size: 1.0em;
+            font-weight: bold;
+        }
+        .span2{
+            font-weight: normal;
+            font-size: 0.7em;
+        }
+        .img-rounded{
+            width: 100%;
+            height:60px
+        }
+        .col-xs-2{
+            padding: 0 10px;
+        }
+        .col-xs-7{
+            padding-left: 15px;
+
+        }
+        .col-xs-4{
+            padding: 0;
+        }
+        .col-xs-3{
+            padding: 0;
+        }
+        .col-xs-6{
+            padding: 0 15px;
+        }
+        button{
+            outline: 0;
+        }
+        .modal .form-group{
+            padding: 0 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row header">
+        <div class="col-xs-3" style="text-align: left">
+            <button class="btn1 back_btn">
+                <span class="glyphicon glyphicon-chevron-left"></span>后退
+            </button>
+        </div>
+        <div class="col-xs-6 " style="color: #999999;font-size: 1.0em; text-align: center;">
+            <span class="btn1">{{$data.name}}</span>
+        </div>
+        <div class="col-xs-3" style=" text-align: right;">
+            <button class="btn1 create_btn">创建</button>
+        </div>
+    </div>
+
+    <div class="comb">
+        {{volist name="u" id="vo"}}
+        {{eq name="vo.role" value="101"}}
+            <div class="row">
+                <div class="col-xs-3">{{$vo.name}}</div>
+                <div class="col-xs-6" style="text-align: left">
+                    <input type="text" value="{{$vo.phone}}" class="btn2 " disabled="disabled">
+                </div>
+                <div class="col-xs-3">
+                    <button class="btn3 update_pwd_btn" login_id="{{$vo.id}}">修改密码</button>
+                </div>
+            </div>
+        {{/eq}}
+        {{/volist}}
+    </div>
+
+    <div class="comb">
+        {{volist name="u" id="vo"}}
+            {{eq name="vo.role" value="102"}}
+                <div class="row">
+                    <div class="col-xs-8" style="text-align: left">
+                        <p class="span1">{{$vo.name}} - 论坛管理员</p>
+                        <input type="text" class="btn2" value="{{$vo.phone}}" disabled="disabled">
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn6 update_pwd_btn" login_id="{{$vo.id}}">修改</button>
+                        <button class="btn6 delete_admin_btn" login_id="{{$vo.id}}">删除</button>
+                    </div>
+                </div>
+            {{/eq}}
+        {{/volist}}
+    </div>
+
+    <div class="comb">
+        {{volist name="u" id="vo"}}
+        {{eq name="vo.role" value="103"}}
+        <div class="row">
+            <div class="col-xs-8" style="text-align: left">
+                <p class="span1">{{$vo.name}} - 商家管理员</p>
+                <input type="text" class="btn2" value="{{$vo.phone}}" disabled="disabled">
+            </div>
+            <div class="col-xs-4">
+                <button class="btn6 update_pwd_btn" login_id="{{$vo.id}}">修改</button>
+                <button class="btn6 delete_admin_btn" login_id="{{$vo.id}}">删除</button>
+            </div>
+        </div>
+        {{/eq}}
+        {{/volist}}
+    </div>
+    
+    <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content" style="text-align: center">
+                <div id="content" style="margin-top: 30px">
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/temp/js/jquery.min.js"> </script>
+<script src="__PUBLIC__/temp/js/bootstrap.js"></script>
+<script type="text/javascript" src="__PUBLIC__/temp/js/md5.js"> </script>
+<script type="text/javascript" src="__PUBLIC__/js/branch.js"> </script>
+<script type="application/javascript">
+
+    $(function () {
+        //返回按钮
+        $('.back_btn').on('click',function () {
+            window.history.back();
+        });
+
+        //修改按钮，弹出对话框， 输入新的密码
+        $('body').on('click','.update_pwd_btn',function () {
+            showPwdModal(1,{id:$(this).attr('login_id')});
+        });
+
+        //输入新密码后确认修改
+        $('body').on('click','.update_confirm_btn',function () {
+            //确认修改
+            var pwd = $(this).parents('#content').find('input').val();
+            var id = $(this).attr('login_id');
+            if(!pwd){
+                return msg('请填写新密码',2);
+            }
+            pwd = (hex_md5("ShiDianAdmin"+pwd)).toUpperCase();
+
+            $.ajax({
+                url:"{{:web_url('/branch/branch/update')}}",
+                data:{id:id,pwd:pwd},
+                dataType:"json",
+                success:function (data) {
+                    if(200 != data.code){
+                        //错误
+                        msg(data.desc,2);
+                    }else{
+                        hideModal();
+                        msg('修改成功',1);
+                    }
+                },
+                error:function () {
+                    msg('网络错误，请稍后再试');
+                }
+            });
+
+        });
+
+        //创建按钮
+        $('body').on('click','.create_btn',function(){
+            var dom ='<div>' +
+            '<div class="form-group"><label for=" ">输入手机号</label>'+
+            '<input type="text" name="phone" class="form-control phone_input" placeholder="手机号"> </div>' +
+            '<div class="form-group"><label for=" ">输入密码</label>'+
+            '<input type="password" name="pwd" class="form-control pwd_input" placeholder="密码"> </div>' +
+            '<div class="form-group">' +
+            '<label for=" ">选择类型</label>'+
+            '<select name="role" class="form-control role_select"><option value="102">论坛管理员</option><option value="103">商家管理员</option></select>'+
+            '<button class="create_confirm_btn btn btn-default" type="button" branch_id="{{$data.branch_id}}">创建</button>' +
+            '</div></div>';
+            showModal(dom);
+        });
+
+        //输入手机号密码后创建
+        $('body').on('click','.create_confirm_btn',function(){
+            var id = $(this).attr('branch_id');
+            var parent = $(this).parents('#content');
+            var role = parent.find('.role_select').val();
+            var phone = parent.find('.phone_input').val();
+
+            var pwd   = parent.find('.pwd_input').val();
+            pwd = (hex_md5("ShiDianAdmin"+pwd)).toUpperCase();
+
+            var param = {phone:phone,pwd:pwd,branch_id:id,role:role};
+
+            $.ajax({
+                type:'post',
+                url:"{{:web_url('/branch/branch/save')}}",
+                data:param,
+                dataType:"json",
+                success:function (data) {
+                    if(200 != data.code){
+                        //错误
+                        msg(data.desc,2);
+                    }else{
+                        hideModal();
+                        msg('创建成功',1);
+                        location.reload();
+                    }
+                },
+                error:function () {
+                    msg('网络错误，请稍后再试');
+                }
+            });
+        });
+
+        //删除管理员按钮
+        $('body').on('click','.delete_admin_btn',function () {
+            var dom = $(this).parents('.row');
+            var id = $(this).attr('login_id');
+            //删除管理员
+            $.ajax({
+                url:"{{:web_url('/branch/branch/delete')}}",
+                data:{id:id},
+                success:function (data) {
+                    if(200 != data.code){
+                        msg(data.desc,2);
+                    }else{
+                        //同步删除当前DOM
+                        dom.remove();
+                    }
+                },
+                error:function () {
+                    msg('网络错误，请稍后再试');
+                }
+            });
+        });
+    });
+
+    //显示修改密码的对话框
+    function showPwdModal(type,param) {
+        var dom  = '';
+        if(1 == type){
+            dom ='<div>' +
+                    '<div class="form-group"><label for=" ">输入新密码</label>'+
+                    '<input type="password" name="pwd" class="form-control" placeholder="密码"> </div>' +
+                    '<div class="form-group">' +
+                    '<button class="update_confirm_btn btn btn-default" type="button" login_id="'+param.id+'">修改</button>' +
+                    '</div></div>';
+        }
+        showModal(dom);
+    }
+
+    //切换对话框的显示和隐藏
+    function toggleModal(dom) {
+        $('#myModal #content').html(dom);
+        $('#myModal').modal('toggle');
+    }
+
+    //显示
+    function showModal(dom) {
+        $('#myModal #content').html(dom);
+        $('#myModal').modal('show');
+    }
+
+    //关闭
+    function hideModal() {
+        $('#myModal').modal('hide');
+    }
+</script>
+</body>
+</html>

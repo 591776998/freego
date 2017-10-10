@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/index2.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/art.css">
+    <style type="text/css">
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        body{
+            background-color: #fff;
+            font-size: 16px;
+        }
+        .mui-content{
+            background-color: #fff;
+        }
+        .banner{
+            height:220px;
+            overflow: hidden;
+            margin-top:64px;
+        }
+        .banner img{
+            height:100%;
+            min-width: 100%;
+        }
+        .row{
+            position: relative;
+            /*display: block;*/
+            padding-right: 15px;
+            padding-bottom: 10px;
+            padding-left: 15px;
+            padding-top: 10px;
+        }
+        .row:after {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 1px;
+            content: '';
+            -webkit-transform: scaleY(.5);
+            transform: scaleY(.5);
+            background-color: #c8c7cc;
+        }
+        .row:last-child:after{
+            display: none;
+        }
+        .item_img{
+            height: 44px;
+            width: 60px;
+            margin-right: 10px;
+        }
+        .row_item{
+            /*height: 44px;*/
+            line-height: 22px;
+            white-space : nowrap;
+            overflow:hidden;
+        }
+        .row_item p{
+            line-height: 22px;
+            margin-bottom: 0;
+         }
+        .right_text{
+            text-align:right;
+            color: #f49700;
+        }
+        .right_text p {
+            color: #f49700;
+        }
+        .star{
+            height: 16px;
+            width: 16px;
+        }
+        .item_text{
+            width: 100%;
+            white-space:normal;
+        }
+        .footer{
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            height: 60px;
+            color: #f49700;
+            background-color: #fff;
+        }
+        .footer a{
+            display: block;
+            padding: 20px;
+            color: #f49700;
+        }
+        .footer a:first-child{
+            border-right: 1px solid #c8c7cc;
+        }
+        .center{
+            text-align: center;
+        }
+        .yellow {
+            color: #f49700;
+        }
+        .mui-bar .mui-btn-link {
+            color: #f49700;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        .list_item{
+
+
+        }
+
+        .radius_btn{
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            border: 1px solid rgb(255,169,0);
+            line-height: 16px;
+            text-align: center;
+        }
+        .num_btn_wrap span{
+            display: inline-block;
+            text-align: center;
+            font-size: 16px;
+            color: rgb(255,169,0);
+            margin-left: 10px;
+        }
+        .num_btn_wrap a{
+            text-align: center;
+            font-size: 16px;
+            color: rgb(255,169,0);
+            margin-left: 10px;
+        }
+        .num_btn_wrap .num{
+            width: 32px;
+            font-size: 14px;
+        }
+        img{
+            max-width: 100%;
+        }
+        .mui-table-view-cell:after {
+            display: none !important;
+        }
+        .black40{
+            height: 40px;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+</head>
+<body>
+<div class="mui-content">
+    {{eq name="is_app" value="102"}}
+    {{include file="web/h5_view_head" /}}
+    {{else/}}
+    {{include file="web/app_view_head" /}}
+    {{/eq}}
+
+    <!-- banner图 -->
+    <div class="banner the_top">
+        <img style="object-fit: cover;" src="{{$data.img_url}}" />
+    </div>
+    <div class="goods_wrap">
+        <div class="row">
+            {{$title}}
+            <p class="mui-pull-right">共{{$data.joined_count}}人选择</p>
+        </div>
+
+        {{volist name="data.plan" id="vo"}}
+        <div class="row list_item" style="height: 84px;">
+            <div class="list_item_top" style="height: 44px;">
+                <div class="bar-item mui-pull-left row_item">
+                    <img class="item_img" src="{{$vo.img_url}}" />
+                </div>
+                <div class="bar-item mui-pull-left row_item">
+                    {{$vo.title}}
+                    <p>{{$vo.content}}</p>
+                </div>
+                <div class="bar-item mui-pull-right row_item right_text">
+                    <p>{{$vo.discount}}折</p>
+                    <p>返{{$vo.back_points}}积分</p>
+                </div>
+            </div>
+            <div style="height: 20px;">
+                数量
+                <div class="mui-pull-right num_btn_wrap {{eq name="vo.plan_type" value="101"}}radio_btn{{/eq}}" style="">
+                    <a class="radius_btn" data-num="-1">-</a>
+                    <span class="num plan_item"  plan_id="{{$vo.id}}" plan_type="{{$vo.plan_type}}"  {{eq name="vo.has_max_num" value="101"}}data-max_num="{{$vo.stock}}"{{/eq}} {{eq name="vo.plan_type" value="102"}}data-min_num="1">1{{else/}}>0{{/eq}}</span>
+                    <a class="radius_btn" data-num="1">+</a>
+                </div>
+            </div>
+        </div>
+        {{/volist}}
+
+        <div class="row comment_list_btn" style="height: 37px;">
+            <div class="mui-pull-left">
+                <img src="__PUBLIC__/img/base/star.png" class="star" >
+                <img src="__PUBLIC__/img/base/star.png" class="star" >
+                <img src="__PUBLIC__/img/base/star.png" class="star" >
+                <img src="__PUBLIC__/img/base/star.png" class="star" >
+                <img src="__PUBLIC__/img/base/star.png" class="star" >
+            </div>
+            <div class="bar-item mui-pull-right row_item right_text">
+                 共{{$data.comments_count}}条点评&nbsp;>
+            </div>
+        </div>
+
+        <div class="row item_text">
+            详细介绍
+            <ul id="list" class=" mui-table-view-chevron">
+            {{volist name="data.content" id="vo"}}
+            {{switch name="vo.para_type"}}
+            {{case value="101" break="1"}}
+            <div class="mui-table-view-cell  article noline" id="content_{{$vo.id}}">
+                <div class="b">
+                    {{$vo.content}}
+                </div>
+            </div>
+            {{/case}}
+
+            {{case value="102" break="1"}}
+            <div style="width: 100%;" class="pad0 posR mui-table-view-cell  lineCenter mui-ellipsis imgs noline" id="content_{{$vo.id}}">
+                <img style="width: 100%;height: 100%;" data-lazyload="{{$vo.img_url}}" src="__PUBLIC__/img/zhanwei.png"/>
+            </div>
+            {{/case}}
+
+            {{case value="103" break="1"}}
+            <div class="mui-table-view-cell loc noline place_btn mainColor" place_url="{{:web_url('place',['id'=>$vo['id']])}}" id="content_{{$vo.id}}">
+                <div class="t mui-ellipsis posR">
+                    <img class="posA" class=" data-lazyload="__PUBLIC__/img/zhanwei.png" src="__PUBLIC__/img/base/place.png"/>
+                    {{$vo.content}}
+                </div>
+            </div>
+            {{/case}}
+
+            {{case value="104" break="1"}}
+            <div class="mui-table-view-cell  article noline" id="content_{{$vo.id}}">
+                <div class="b">
+                    {{$vo.content}}
+                </div>
+            </div>
+            {{/case}}
+
+            {{case value="105" break="1"}}
+            <div class="mui-table-view-cell  article noline" id="content_{{$vo.id}}">
+                <div class="t mui-ellipsis">
+                    {{$vo.content}}
+                </div>
+            </div>
+            {{/case}}
+
+            {{case value="106" break="1"}}
+            <div class="mui-table-view-cell  video noline" id="content_{{$vo.id}}">
+                <div class="b">
+                    <div class="videoBg" style="width: 100%;height: 210px;position: absolute;z-index: 1111;line-height: 210px;text-align: center;">
+                        <img style="width: 32px;height: 32px;" data-lazyload="{{$vo.img_url}}" src="__PUBLIC__/img/zhanwei.png"/>
+                    </div>
+                    <video style="width: 100%;height: 100%;" id="my-video" webkit-playsinline="false" playsinline="false" onclick="clicks()" class="video-js " preload="preload" width="100%" height="210" poster="" data-setup="{}"  >
+                        <source src="#" data-lazyload_video="{{$vo.video_url}}" type='video/mp4'>
+                    </video>
+                    <div class="hide" style="position: absolute;z-index: 10000;width: 100px;height: 100px;left: 0;top: 10px;"> </div>
+                </div>
+            </div>
+            {{/case}}
+
+            {{case value="107" break="1"}}
+            <div class="mui-table-view-cell loc noline" id="content_{{$vo.id}}">
+                <div class="t mui-ellipsis posR">
+                    <img class="posA" class=" data-lazyload="__PUBLIC__/img/zhanwei.png" src="__PUBLIC__/img/base/place.png"/>
+                    {{$vo.content}}
+                </div>
+            </div>
+            {{/case}}
+
+            {{default /}}{{$vo.content}}
+            {{/switch}}
+            {{/volist}}
+                <div class="black40"></div>
+                </ul>
+        </div>
+        <div style="height: 62px;"></div>
+    </div>
+</div>
+<div class="footer mui-row">
+    <a class="mui-col-sm-4 mui-col-xs-4 center" href="tel:{{$data.phone}}">
+        电话
+    </a>
+    <a class="mui-col-sm-8 mui-col-xs-8 center" id="buy">
+        立即购买
+    </a>
+</div>
+</body>
+<script src="__PUBLIC__/js/mui.min.js"></script>
+
+<script src="__PUBLIC__/js/mui.lazyload.js"></script>
+<script src="__PUBLIC__/js/mui.lazyload.img.js"></script>
+<script src="__PUBLIC__/js/jq.1.6.1.js"></script>
+<script src="__PUBLIC__/js/videoJs.js"></script>
+<script src="__PUBLIC__/js/_publicCom2.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script>
+    var sd = new shiDianCommon({share_data:{{$data.share|json_encode}}});
+    var token = sd.token('{{$token}}');
+    var baseUrl = '{{$baseUrl}}';
+    var pulicS = '__PUBLIC__/img/';
+
+
+    //返回按钮
+    mui.ready(function(){
+        //图片懒加载
+        mui(document).imageLazyload({
+            placeholder: '__PUBLIC__/img/zhanwei.png'
+        });
+
+        //收藏
+        sd.listen('.collect_btn','tap',function(e){
+            var url = baseUrl+'collect';
+            var this_btn = e.target;
+            var type = '';
+            var param = {token:token};
+            console.log(this_btn);
+            var is_collect = this_btn.getAttribute('is_collect');
+            if(0 < is_collect){
+                //取消
+                type = 'DELETE';
+                url += '/'+is_collect+'?token='+param.token;
+            }else{
+                type = 'POST';
+                url += '/?type=106&target_id={{$data.id}}&token='+param.token;
+            }
+            $.ajax({
+                url:url,
+                type:type,
+                data:param,
+                success:function(data){
+                    console.log(data);
+                    var desc = '';
+                    if(200 != data.code){
+                        popTitle(data.desc,2);
+                    }else{
+                        if(0 < is_collect){
+                            popTitle('取消收藏成功',1);
+                            this_btn.setAttribute('is_collect',0);
+                            this_btn.innerHTML = '收藏';
+                        }else{
+                            popTitle('收藏成功',1);
+                            this_btn.setAttribute('is_collect',data.data.id);
+                            this_btn.innerHTML = '取消收藏';
+                        }
+                    }
+                },
+                error:function(e){
+                    popTitle('出错了，请稍后再试！',2)
+                }
+            });
+        });
+
+        //数量加减
+        var radio_btn = document.querySelectorAll('.radio_btn');
+        mui('.goods_wrap').on('tap','.radius_btn',function(){
+            var wrap = this.parentNode;
+            var dom = wrap.querySelector('.num');
+            var min = parseInt(dom.dataset.min_num);//('undefined' != typeof dom.dataset.min_num)?dom.dataset.min_num:0;
+            var max = parseInt(dom.dataset.max_num);//('undefined' != typeof dom.dataset.max_num)?dom.dataset.max_num:false;
+            numBtn(dom,this.dataset.num,isNaN(max)?false:max,isNaN(min)?0:min);
+            if(0 <　this.dataset.num){
+                if(hasClass(wrap,'radio_btn')) {
+                    for (var i=0;i<radio_btn.length;i++) {
+                        !(radio_btn[i]==wrap)?radio_btn[i].querySelector('.num').innerText='0':'';
+                    }
+                }
+            }
+        });
+        function numBtn(dom,num,max,min) {
+            var result = parseInt(parseInt(dom.innerText)) + parseInt(num);
+            if(result < min)result = min;
+            if(false !== max &&　result > max)result = max;
+            dom.innerText = parseInt(result);
+        }
+        function hasClass(obj, cls) {
+            return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+        }
+
+        //购买
+        var buy = document.querySelector('#buy');
+        if(null != buy){
+            var is_submit = false;
+            buy.addEventListener('tap',function () {
+                if(!is_submit){
+                    //1.组织参数
+                    var url = '{{:web_url('confirmorder',[],true)}}';
+                    var all_plan = document.querySelectorAll('.plan_item');
+                    var plan = [];
+
+                    var bixuan_count = 0;
+                    var has_bixuan = false;
+                    for (var x in all_plan){
+                        if(!isNaN(x)){
+                            var p         = all_plan[x];
+                            var plan_type = p.getAttribute('plan_type');
+                            var num       = parseInt(p.innerText);
+                            if(101 == plan_type)has_bixuan = true;
+                            if(0 < num){
+                                if(101 == plan_type ){
+                                    bixuan_count += 1;
+                                }
+                                plan.push({
+                                    id:p.getAttribute('plan_id'),
+                                    plan_type:plan_type,
+                                    num:num
+                                });
+                            }else if(102 == plan_type){
+                                return popTitle('请至少添加1个附加套餐！',2);
+                            }
+                        }
+                    }
+                    if(1 < bixuan_count){
+                        return popTitle('只能选择1种单选商品或服务！',2);
+                    }
+                    if(has_bixuan && 0 == bixuan_count){
+                        return popTitle('请至少选择1种必须商品或服务！',2);
+                    }
+                    //组织参数
+                    var param = {
+                        token:token,
+                        type:101,
+                        art_id:'{{$data.id}}',
+                        services_id:'{{$data.id}}',
+                        plan:plan,
+                        is_web:101
+                    };
+                    self.location = url+'?'+$.param(param);
+                }
+            });
+        }
+
+        //********************** hud *************************
+        //data显示的文字.action:0loading，1.正确，2.错误
+        function popTitle(data,action){
+            if(action==0){
+                iosTooltip(data,pulicS+'oval.svg',300,pulicS+'cenel.png',0.1);
+            }else if(action==1){
+                iosTooltip(data,pulicS+'ok.png',300,'',0);
+            }else if(action == 2){
+                iosTooltip(data,pulicS+'cenel.png',300,'',0);
+            }
+        }
+        function iosTooltip(content, url, animateTime, close, showAddTime) {
+            console.log($);
+            $('#Prompt').attr('id')?$('#Prompt').remove():'';
+            $('#Prompt_z_index').attr('id')?$('#Prompt_z_index').remove():'';
+            !showAddTime?showAddTime = 0:'';
+            var html = '<div class=" " id="Prompt_z_index" style="opacity: 0;z-index: 1110; min-height: 95px; position: absolute; width: 100px; height: 100px;background: black;"></div><div id="Prompt" style="z-index: 1110; min-height: 95px; position: absolute; top: 36%;">'+
+                    '<div class="PromptBody" style="z-index: 1111; width: 100%; height: 100%;">'+
+                    '<div class="yesPrompttool" style="position: absolute;left: -8px;top: -8px;"> <img id="PromptColse" onclick="closeIosTooltip()" class="hide" style="width: 24px;height: 24px;" src="' + close + '"></div>'+
+                    '<div class="yesPrompttop" style="height: 60px;    text-align: center;"><img class="PromptBodyImg" style="height: 32px;width: 32px;margin-top: 18px " src="' + url + '"></div>'+
+                    '<div class="yesPrompttop" style="color: white;font-size: 14px;text-align: center;letter-spacing:2px;padding:0 15px 5px 15px;">' + content +'</div>'
+            '</div>'+
+            '</div>'
+            $('body').children().eq(0).before(html);
+            var domW = $('#Prompt').width();
+            var domCanW = $('body').width()*0.8;
+            var winW =  $('body').width();
+            if(domW>=domCanW){
+                $('#Prompt,#Prompt_z_index').css('width',domCanW+'px').css('left',$('body').width()*0.1).css('right',$('body').width()*0.1);
+            }else if(domW<=110){
+                $('#Prompt,#Prompt_z_index').css('left',parseInt(winW-110)/2+'px').css('right',parseInt(winW-110)/2+'px');
+            }
+            else{
+                $('#Prompt,#Prompt_z_index').css('left',parseInt(winW-domW)/2+'px').css('right',parseInt(winW-domW)/2+'px');
+            }
+            $("body,html").css({"overflow":"hidden"});
+            $('#Prompt,#Prompt_z_index').css('top',$(window).height()*0.36+$(window).scrollTop());
+            $('#Prompt_z_index').css('height',$('#Prompt').height());
+            $('#Prompt_z_index').css('width',$('#Prompt').width());
+            if(close) {
+                show_mask('', 0.1);
+                $('#PromptColse').removeClass('hide');
+            }
+            $("#Prompt_z_index").animate({
+                opacity: 0.85
+            },animateTime);
+            $("#Prompt").animate({
+                opacity: 1
+            },animateTime+100);
+            if(!close){
+                setTimeout(function(){
+                    $("#z-index").remove();
+                    hide_mask();
+                    $("#Prompt,#Prompt_z_index").animate({opacity: 0}, 300,function(){
+                        $("#Prompt").remove();
+                        $("#Prompt_z_index").remove();
+
+                    });
+                },animateTime+1000+showAddTime)
+            }
+        }
+
+        //隐藏遮罩
+        function hide_mask() {
+            $("#z-index").hide();
+            $("#z-index,.z-index").remove();
+        }
+
+        //显示遮罩
+        function show_mask(top, opacity, anmit) {
+            if(!top) {
+                top = 0;
+            }
+            if(!opacity) {
+                opacity = 0.6;
+            }
+            if(!anmit) {
+                anmit = 700;
+            }
+            var html = '<div id="z-index" class="z-index" style="position: fixed;height: 100%;width: 100%;background: #919191;z-index: 100;opacity: 0;top: ' + top + 'px;left:0"></div>	'
+            $('body').children().eq(0).before(html);
+            $("#z-index").animate({
+                opacity: opacity,
+            }, anmit);
+        }
+
+        //视频播放
+        var video_arr = document.getElementsByTagName("video");
+        if(video_arr.length) {
+            var player = videojs('my-video', {
+            }, function() {
+                this.height(210);
+                this.width(document.body.clientWidth);
+                var iosOrandrod = _publicCom.CCisModels();
+
+                try {
+                    this.enterFullScreen();
+                } catch(error) {
+                    console.log('进入全屏错误！');
+                } finally {
+
+                }
+
+                iosOrandrod == '苹果App'?$('.videoBg').addClass('hide'):'';
+            })
+        }else{
+        }
+        var isOpen = false;
+        if(player){
+            player.on('play', function() {
+                isOpen = true;
+                console.log("开始/恢复播放");
+            });
+            player.on('pause', function() {
+                isOpen = false;
+                console.log('暂停播放');
+            });
+        }
+
+        $('.videoBg').click(function() {
+            console.log('点击了');
+            if(isOpen) {
+                $('.videoBg').removeClass('hide');
+                player.pause();
+            } else {
+                $('.videoBg').addClass('hide');
+                player.play();
+            }
+        })
+
+        //comment_list_btn
+        var comment_list_btn = document.querySelector(".comment_list_btn");
+        if(comment_list_btn){
+            comment_list_btn.addEventListener("tap",function () {
+                sd.app('commentlist',{type:'104',main_id:'{{$data.id}}'});
+            });
+        }
+    });
+</script>
+</html>

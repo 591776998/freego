@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/setting.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/indexedlist.css">
+    <style type="text/css">
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        .title{
+            height: 300px;
+        }
+        .mui-scroll-wrapper, .mui-scroll {
+            background-color: #fff;
+        }
+        .mui-table-view {
+            margin-top: 0;
+        }
+        .aside_title{
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .mar5{
+            height: 10px;
+            background-color: #f6f6f6;
+        }
+        .mui-pages{
+            top:64px !important;
+            padding-top: 64px;
+        }
+        .mui-navbar{
+            height: 64px !important;
+        }
+        .headerH64{
+              height: 64px;
+              padding-top: 20px;
+          }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+         .mui-table-view{
+             padding-top: 10px;
+         }
+    </style>
+</head>
+<body class="mui-fullscreen">
+
+<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-slide-in">
+    <!--菜单部分-->
+    <aside id="offCanvasSide" class="mui-off-canvas-right">
+        <div id="offCanvasSideScroll" class="mui-scroll-wrapper siders">
+            <div id="aside_content" class="mui-scroll mui-table-view">
+
+            </div>
+        </div>
+    </aside>
+    <div class="mui-inner-wrap">
+        <!--页面主结构开始-->
+        <div id="app" class="mui-views">
+            <div class="mui-view">
+                <div class="mui-navbar">
+                </div>
+                <div class="mui-pages">
+                </div>
+            </div>
+        </div>
+        <!--页面主结构结束-->
+        <!--单页面开始-->
+        <div id="setting" class="mui-page">
+            <!--页面标题栏开始-->
+            {{eq name="is_app" value="102"}}
+            {{include file="web/h5_view_head" /}}
+            {{else/}}
+                <div class="mui-navbar-inner mui-bar mui-bar-nav headerH64">
+                    <a id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left mainColor"><span class="ltext"></span></a>
+                    <h1 class="mui-center mui-title ">{{$title}}</h1>
+                </div>
+            {{/eq}}
+            <!--页面标题栏结束-->
+            <!--页面主内容区开始-->
+            <div class="mui-page-content">
+                <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                        <div id='list1' class="mui-indexed-list">
+                            <div class="mui-indexed-list-search mui-input-row mui-search">
+                                <input type="search" class="mui-input-clear mui-indexed-list-search-input" placeholder="搜索">
+                            </div>
+                            <div class="mui-indexed-list-bar">
+                                <a>定</a>
+                                <a>近</a>
+                                <a>海</a>
+                                <a>A</a>
+                                <a>B</a>
+                                <a>C</a>
+                                <a>D</a>
+                                <a>E</a>
+                                <a>F</a>
+                                <a>G</a>
+                                <a>H</a>
+                                <a>I</a>
+                                <a>J</a>
+                                <a>K</a>
+                                <a>L</a>
+                                <a>M</a>
+                                <a>N</a>
+                                <a>O</a>
+                                <a>P</a>
+                                <a>Q</a>
+                                <a>R</a>
+                                <a>S</a>
+                                <a>T</a>
+                                <a>U</a>
+                                <a>V</a>
+                                <a>W</a>
+                                <a>X</a>
+                                <a>Y</a>
+                                <a>Z</a>
+                            </div>
+                            <div class="mui-indexed-list-alert"></div>
+                            <div class="mui-indexed-list-inner ">
+                                <div class="mui-indexed-list-empty-alert">没有数据</div>
+                                <ul id="chwrap" class="mui-table-view offCanvasSideUl" style="margin-top: 0; ">
+                                    <li data-group="定" class="mui-table-view-divider mui-indexed-list-group">定</li>
+                                    <li data-group="近" class="mui-table-view-divider mui-indexed-list-group">近</li>
+                                    <li data-group="海" class="mui-table-view-divider mui-indexed-list-group">热</li>
+                                    <li data-value="AKU" data-tags="AKeSu" class="mui-table-view-cell mui-indexed-list-item">
+                                        <a href="#country">海外</a>
+                                    </li>
+                                    {{volist name="data" id="vo"}}
+                                        {{notempty name="vo"}}
+                                            <li data-group="{{$key}}" class="mui-table-view-divider mui-indexed-list-group">{{$key}}</li>
+                                            <!--<button class="mui-icon mui-icon-bars chuabtn"></button>-->
+                                            {{volist name="vo" id="v"}}
+                                            <li data-value="{{$v.p_code}}" data-tags="AKeSu" class="mui-table-view-cell mui-indexed-list-item offCanvasSideLi" p_code="{{$v.p_code}}">{{$v.name}}</li>
+                                            {{/volist}}
+                                        {{/notempty}}
+                                    {{/volist}}
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--页面主内容区结束-->
+        </div>
+        <!--单页面结束-->
+        <div id="country" class="mui-page">
+            <div class="mui-navbar-inner mui-bar mui-bar-nav mainColor">
+                <button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+                    <span class="mui-icon mui-icon-left-nav mainColor"></span>
+                </button>
+                <h1 class="mui-center mui-title">选择地点</h1>
+                <a id="offCanvasBtn" href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-right mainColor"></a>
+            </div>
+            <div class="mui-page-content">
+                <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                        <div id='list2' class="mui-indexed-list">
+                            <div class="mui-indexed-list-search mui-input-row mui-search">
+                                <input type="search" class="mui-input-clear mui-indexed-list-search-input" placeholder="搜索机场">
+                            </div>
+                            <div id="sub_list_index" class="mui-indexed-list-bar">
+                                <a>定2</a>
+                                <a>近2</a>
+                                <a>海2</a>
+                                <a>A</a>
+                                <a>B</a>
+                                <a>C</a>
+                                <a>D</a>
+                                <a>E</a>
+                                <a>F</a>
+                                <a>G</a>
+                                <a>H</a>
+                                <a>I</a>
+                                <a>J</a>
+                                <a>K</a>
+                                <a>L</a>
+                                <a>M</a>
+                                <a>N</a>
+                                <a>O</a>
+                                <a>P</a>
+                                <a>Q</a>
+                                <a>R</a>
+                                <a>S</a>
+                                <a>T</a>
+                                <a>U</a>
+                                <a>V</a>
+                                <a>W</a>
+                                <a>X</a>
+                                <a>Y</a>
+                                <a>Z</a>
+                            </div>
+                            <div class="mui-indexed-list-alert"></div>
+                            <div id="sub_list_content" class="mui-indexed-list-inner" style="height: 100% !important; ">
+                                <div class="mui-indexed-list-empty-alert">没有数据</div>
+                                <ul class="mui-table-view">
+                                    <li data-group="定" class="mui-table-view-divider mui-indexed-list-group">定</li>
+                                    <li data-group="近" class="mui-table-view-divider mui-indexed-list-group">近</li>
+
+                                    <li data-group="A" class="mui-table-view-divider mui-indexed-list-group">A</li>
+                                    <li data-value="AKU" data-tags="AKeSu" class="mui-table-view-cell mui-indexed-list-item">阿克苏机场</li>
+                                    <li data-value="BPL" data-tags="ALaShanKou" class="mui-table-view-cell mui-indexed-list-item">阿拉山口机场</li>
+                                    <li data-value="AAT" data-tags="ALeTai" class="mui-table-view-cell mui-indexed-list-item">阿勒泰机场</li>
+                                    <li data-value="NGQ" data-tags="ALiKunSha" class="mui-table-view-cell mui-indexed-list-item">阿里昆莎机场</li>
+                                    <li data-value="AQG" data-tags="AnQingTianZhuShan" class="mui-table-view-cell mui-indexed-list-item">安庆天柱山机场</li>
+                                    <li data-value="MFM" data-tags="AoMenGuoJi" class="mui-table-view-cell mui-indexed-list-item">澳门国际机场</li>
+                                    <li data-group="B" class="mui-table-view-divider mui-indexed-list-group">B</li>
+                                    <li data-value="BSD" data-tags="BaoShan" class="mui-table-view-cell mui-indexed-list-item">保山机场</li>
+                                    <li data-value="BAV" data-tags="BaoTou" class="mui-table-view-cell mui-indexed-list-item">包头机场</li>
+                                    <li data-value="BHY" data-tags="BeiHaiFuCheng" class="mui-table-view-cell mui-indexed-list-item">北海福成机场</li>
+                                    <li data-value="NAY" data-tags="BeiJingNanYuan" class="mui-table-view-cell mui-indexed-list-item">北京南苑机场</li>
+                                    <li data-value="PEK" data-tags="BeiJingShouDuGuoJi" class="mui-table-view-cell mui-indexed-list-item">北京首都国际机场</li>
+                                    <li data-group="C" class="mui-table-view-divider mui-indexed-list-group">C</li>
+                                    <li data-value="NBS" data-tags="ChangBaiShan" class="mui-table-view-cell mui-indexed-list-item">长白山机场</li>
+                                    <li data-group="D" class="mui-table-view-divider mui-indexed-list-group">D</li>
+                                    <li data-value="DLU" data-tags="DaLi" class="mui-table-view-cell mui-indexed-list-item">大理机场</li>
+                                    <li data-value="DLC" data-tags="DaLianZhouShuiZiGuoJi" class="mui-table-view-cell mui-indexed-list-item">大连周水子国际机场</li>
+                                    <li data-value="DQA" data-tags="DaQingSaErTu" class="mui-table-view-cell mui-indexed-list-item">大庆萨尔图机场</li>
+                                    <li data-value="DAT" data-tags="DaTongDongWangZhuang" class="mui-table-view-cell mui-indexed-list-item">大同东王庄机场</li>
+                                    <li data-value="DAX" data-tags="DaZhouHeShi" class="mui-table-view-cell mui-indexed-list-item">达州河市机场</li>
+                                    <li data-value="DDG" data-tags="DanDongLangTou" class="mui-table-view-cell mui-indexed-list-item">丹东浪头机场</li>
+                                    <li data-value="LUM" data-tags="DeHongMangShi" class="mui-table-view-cell mui-indexed-list-item">德宏芒市机场</li>
+                                    <li data-value="DIG" data-tags="DiQingXiangGeLiLa" class="mui-table-view-cell mui-indexed-list-item">迪庆香格里拉机场</li>
+                                    <li data-value="DOY" data-tags="DongYing" class="mui-table-view-cell mui-indexed-list-item">东营机场</li>
+                                    <li data-value="DNH" data-tags="DunHuang" class="mui-table-view-cell mui-indexed-list-item">敦煌机场</li>
+                                    <li data-group="E" class="mui-table-view-divider mui-indexed-list-group">E</li>
+                                    <li data-value="DSN" data-tags="EErDuoSi" class="mui-table-view-cell mui-indexed-list-item">鄂尔多斯机场</li>
+                                    <li data-value="ENH" data-tags="EnShiXuJiaPing" class="mui-table-view-cell mui-indexed-list-item">恩施许家坪机场</li>
+                                    <li data-value="ERL" data-tags="ErLianHaoTeSaiWuSuGuoJi" class="mui-table-view-cell mui-indexed-list-item">二连浩特赛乌苏国际机场</li>
+                                    <li data-group="F" class="mui-table-view-divider mui-indexed-list-group">F</li>
+                                    <li data-value="FUG" data-tags="FuYangXiGuan" class="mui-table-view-cell mui-indexed-list-item">阜阳西关机场</li>
+                                    <li data-value="FOC" data-tags="FuZhouChangLeGuoJi" class="mui-table-view-cell mui-indexed-list-item">福州长乐国际机场</li>
+                                    <li data-group="G" class="mui-table-view-divider mui-indexed-list-group">G</li>
+                                    <li data-value="KOW" data-tags="GanZhouHuangJin" class="mui-table-view-cell mui-indexed-list-item">赣州黄金机场</li>
+                                    <li data-value="GOQ" data-tags="GeErMu" class="mui-table-view-cell mui-indexed-list-item">格尔木机场</li>
+                                    <li data-value="GYU" data-tags="GuYuanLiuPanShan" class="mui-table-view-cell mui-indexed-list-item">固原六盘山机场</li>
+                                    <li data-value="GYS" data-tags="GuangYuanPanLong" class="mui-table-view-cell mui-indexed-list-item">广元盘龙机场</li>
+                                    <li data-value="CAN" data-tags="GuangZhouBaiYunGuoJi" class="mui-table-view-cell mui-indexed-list-item">广州白云国际机场</li>
+                                    <li data-value="KWL" data-tags="GuiLinLiangJiangGuoJi" class="mui-table-view-cell mui-indexed-list-item">桂林两江国际机场</li>
+                                    <li data-value="KWE" data-tags="GuiYangLongDongBaoGuoJi" class="mui-table-view-cell mui-indexed-list-item">贵阳龙洞堡国际机场</li>
+                                    <li data-group="H" class="mui-table-view-divider mui-indexed-list-group">H</li>
+                                    <li data-value="HRB" data-tags="HaErBinTaiPingGuoJi" class="mui-table-view-cell mui-indexed-list-item">哈尔滨太平国际机场</li>
+                                    <li data-value="TXN" data-tags="HuangShanTunXiGuoJi" class="mui-table-view-cell mui-indexed-list-item">黄山屯溪国际机场</li>
+                                    <li data-group="J" class="mui-table-view-divider mui-indexed-list-group">J</li>
+                                    <li data-value="TNA" data-tags="JiNanYaoQiangGuoJi" class="mui-table-view-cell mui-indexed-list-item">济南遥墙国际机场</li>
+                                    <li data-value="JNG" data-tags="JiNingQuFu" class="mui-table-view-cell mui-indexed-list-item">济宁曲阜机场</li>
+                                    <li data-value="JXA" data-tags="JiXiXingKaiHu" class="mui-table-view-cell mui-indexed-list-item">鸡西兴凯湖机场</li>
+                                    <li data-value="JMU" data-tags="JiaMuSiDongJiao" class="mui-table-view-cell mui-indexed-list-item">佳木斯东郊机场</li>
+                                    <li data-value="JGN" data-tags="JiaYuGuan" class="mui-table-view-cell mui-indexed-list-item">嘉峪关机场</li>
+                                    <li data-value="JNZ" data-tags="JinZhouXiaoLingZi" class="mui-table-view-cell mui-indexed-list-item">锦州小岭子机场</li>
+                                    <li data-value="JDZ" data-tags="JingDeZhen" class="mui-table-view-cell mui-indexed-list-item">景德镇机场</li>
+                                    <li data-value="JGS" data-tags="JingGangShan" class="mui-table-view-cell mui-indexed-list-item">井冈山机场</li>
+                                    <li data-value="JIU" data-tags="JiuJiangLuShan" class="mui-table-view-cell mui-indexed-list-item">九江庐山机场</li>
+                                    <li data-value="JZH" data-tags="JiuZhaiHuangLong" class="mui-table-view-cell mui-indexed-list-item">九寨黄龙机场</li>
+                                    <li data-group="K" class="mui-table-view-divider mui-indexed-list-group">K</li>
+                                    <li data-value="KHG" data-tags="KaShi" class="mui-table-view-cell mui-indexed-list-item">喀什机场</li>
+                                    <li data-value="KRY" data-tags="KeLaMaYi" class="mui-table-view-cell mui-indexed-list-item">克拉玛依机场</li>
+                                    <li data-value="KCA" data-tags="KuCheGuiZi" class="mui-table-view-cell mui-indexed-list-item">库车龟兹机场</li>
+                                    <li data-value="KRL" data-tags="KuErLe" class="mui-table-view-cell mui-indexed-list-item">库尔勒机场</li>
+                                    <li data-value="KMG" data-tags="KunMingWuJiaBaGuoJi" class="mui-table-view-cell mui-indexed-list-item">昆明巫家坝国际机场</li>
+                                    <li data-group="L" class="mui-table-view-divider mui-indexed-list-group">L</li>
+                                    <li data-value="LXA" data-tags="LaSaGongGa" class="mui-table-view-cell mui-indexed-list-item">拉萨贡嘎机场</li>
+                                    <li data-value="LYA" data-tags="LuoYangBeiJiao" class="mui-table-view-cell mui-indexed-list-item">洛阳北郊机场</li>
+                                    <li data-group="M" class="mui-table-view-divider mui-indexed-list-group">M</li>
+                                    <li data-value="NZH" data-tags="ManZhouLiXiJiao" class="mui-table-view-cell mui-indexed-list-item">满洲里西郊机场</li>
+                                    <li data-value="MIG" data-tags="MianYangNanJiao" class="mui-table-view-cell mui-indexed-list-item">绵阳南郊机场</li>
+                                    <li data-value="OHE" data-tags="MoHeGuLian" class="mui-table-view-cell mui-indexed-list-item">漠河古莲机场</li>
+                                    <li data-value="MDG" data-tags="MuDanJiangHaiLang" class="mui-table-view-cell mui-indexed-list-item">牡丹江海浪机场</li>
+                                    <li data-group="N" class="mui-table-view-divider mui-indexed-list-group">N</li>
+                                    <li data-value="KHN" data-tags="NanChangChangBeiGuoJi" class="mui-table-view-cell mui-indexed-list-item">南昌昌北国际机场</li>
+                                    <li data-group="P" class="mui-table-view-divider mui-indexed-list-group">P</li>
+                                    <li data-value="SYM" data-tags="PuErSiMao" class="mui-table-view-cell mui-indexed-list-item">普洱思茅机场</li>
+                                    <li data-group="Q" class="mui-table-view-divider mui-indexed-list-group">Q</li>
+                                    <li data-value="NDG" data-tags="QiQiHaErSanJiaZi" class="mui-table-view-cell mui-indexed-list-item">齐齐哈尔三家子机场</li>
+                                    <li data-value="JJN" data-tags="QuanZhouJinJiang" class="mui-table-view-cell mui-indexed-list-item">泉州晋江机场</li>
+                                    <li data-group="R" class="mui-table-view-divider mui-indexed-list-group">R</li>
+                                    <li data-value="RKZ" data-tags="RiKaZeHePing" class="mui-table-view-cell mui-indexed-list-item">日喀则和平机场</li>
+                                    <li data-group="S" class="mui-table-view-divider mui-indexed-list-group">S</li>
+                                    <li data-value="SYX" data-tags="SanYaFengHuangGuoJi" class="mui-table-view-cell mui-indexed-list-item">三亚凤凰国际机场</li>
+                                    <li data-group="T" class="mui-table-view-divider mui-indexed-list-group">T</li>
+                                    <li data-value="TEN" data-tags="TongRenFengHuang" class="mui-table-view-cell mui-indexed-list-item">铜仁凤凰机场</li>
+                                    <li data-group="W" class="mui-table-view-divider mui-indexed-list-group">W</li>
+                                    <li data-value="WXN" data-tags="WanZhouWuQiao" class="mui-table-view-cell mui-indexed-list-item">万州五桥机场</li>
+                                    <li data-group="X" class="mui-table-view-divider mui-indexed-list-group">X</li>
+                                    <li data-value="XIY" data-tags="XiAnXianYangGuoJi" class="mui-table-view-cell mui-indexed-list-item">西安咸阳国际机场</li>
+
+                                    <li data-group="Y" class="mui-table-view-divider mui-indexed-list-group">Y</li>
+                                    <li data-value="ENY" data-tags="YanAnErShiLiBao" class="mui-table-view-cell mui-indexed-list-item">延安二十里堡机场</li>
+                                    <li data-value="YNZ" data-tags="YanCheng" class="mui-table-view-cell mui-indexed-list-item">盐城机场</li>
+
+                                    <li data-group="Z" class="mui-table-view-divider mui-indexed-list-group">Z</li>
+                                    <li data-value="ZHA" data-tags="ZhanJiang" class="mui-table-view-cell mui-indexed-list-item">湛江机场</li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--侧滑遮罩-->
+        <!--<div class="mui-off-canvas-backdrop"></div>-->
+    </div>
+</div>
+</body>
+<!--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>-->
+
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/mui.view.js"></script>
+<script src="__PUBLIC__/js/indexedlist.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+
+<script>
+    var sd = new shiDianCommon();
+
+    var token   = sd.token('{{$token}}');
+    mui.init();
+    mui.ready(function() {
+
+        //侧滑容器父节点
+        var offCanvasWrapper = mui('#offCanvasWrapper');
+        //主界面容器
+        var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+        //菜单容器
+        var offCanvasSide = document.getElementById("offCanvasSide");
+        var mui_offCanvasSide = mui("#offCanvasSide");
+
+        var data_cache = {{$all_json}};
+
+        var sub_list_content = document.getElementById("sub_list_content");
+        var sub_list_index = document.getElementById("sub_list_index");
+
+        //初始化单页view
+        var viewApi = mui('#app').view({
+            defaultPage: '#setting'
+        });
+        //初始化单页的区域滚动
+        mui('.mui-scroll-wrapper.siders').scroll();
+//			mui('#list1  .mui-indexed-list-inner').scroll();
+
+        var oldBack = mui.back,
+                view = viewApi.view,
+                list1 = document.getElementById('list1'),
+                list2 = document.getElementById('list2'),
+                listsH = (document.body.offsetHeight - 44) + 'px';
+        mui.back = function() {
+            if(mui_offCanvasSide.offCanvas().isShown()){
+                mui_offCanvasSide.offCanvas().close();
+            }else{
+                if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+                    viewApi.back();
+                } else { //执行webview后退
+                    oldBack();
+                }
+            }
+        };
+        //处理view的后退与webview后退
+        //监听页面切换事件方案1,通过view元素监听所有页面切换事件，目前提供pageBeforeShow|pageShow|pageBeforeBack|pageBack四种事件(before事件为动画开始前触发)
+        //第一个参数为事件名称，第二个参数为事件回调，其中e.detail.page为当前页面的html对象
+        view.addEventListener('pageBeforeShow', function(e) {
+
+
+            mui_offCanvasSide.offCanvas().close();
+
+            sub_list_content.style.height=listsH;
+            sub_list_index.style.height=listsH;
+
+
+        });
+        view.addEventListener('pageShow', function(e) {
+            sub_list_content.style.height=listsH;
+
+        });
+        view.addEventListener('pageBeforeBack', function(e) {
+            console.log(e.detail.page.id + ' beforeBack');
+        });
+        view.addEventListener('pageBack', function(e) {
+            console.log(e.detail.page.id + ' back');
+        });
+
+        //列表1
+        list1.style.height = listsH;
+        window.indexedList = new mui.IndexedList(list1);
+        //列表2
+        list2.style.height = listsH;
+        window.indexedList = new mui.IndexedList(list2);
+
+        bindCH(mui_offCanvasSide,'.offCanvasSideUl','.offCanvasSideLi');
+
+
+        offCanvasSide.addEventListener('shown',function (event) {
+//            console.log(event);
+            console.log(10);
+
+        })
+
+
+        function bindCH( $wrap, $ul, $li) {
+            mui($ul).on('tap',$li,function(e){
+                var p_code = this.getAttribute("p_code");
+                console.log(p_code);
+                if (typeof(data_cache[p_code]) == "undefined") {
+                    //抛出错误
+                    error_show('该分类不存在！');
+                }else{
+                    showCeHua($wrap, data_cache[p_code], this.innerText);
+                }
+            });
+        }
+
+        function showCeHua( $wrap, $data, $title) {
+            console.log($data);
+            if (typeof($data == "undefined")){
+                var content = document.getElementById('aside_content');
+                var html = '<div class=" aside_title">'+$title+'</div><div class="mar5"></div><li class="mui-table-view-cell">选择全省</li>';
+                for ($d in $data){
+                    html += '<li class="mui-table-view-cell"><a href="'+$data[$d].a_url+'">'+$data[$d].name+'</a></li>';
+                }
+                content.innerHTML = html;
+                $wrap.offCanvas().show();
+            }else{
+                error_show('没有更多了！');
+            }
+        }
+
+        function error_show($msg) {
+            mui.toast($msg)
+        }
+    })
+</script>
+
+</html>

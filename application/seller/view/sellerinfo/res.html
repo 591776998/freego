@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>审核中</title>
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 80%;
+                margin:0 auto;
+                border: 2px solid #DDDDDD;
+                padding-bottom:125px ;
+            }
+            .comment{
+                width: 100%;
+                font-size:0.8em;
+                color: #666666;
+
+            }
+
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+                font-size: 1.0em;
+            }
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.2em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 30px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.2em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 98%;text-align: center;
+                margin: 35px auto;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+                font-size: 1.0em;
+            }
+        }
+        .header{
+            margin-top: -10px;
+            padding: 16px 0;
+            background: #F9F9F9;
+            color: #FFCC00;
+            font-weight: bold;
+
+
+        }
+        .btn1{
+            border: none;
+            background: #F9F9F9;
+        }
+
+        .btn2{
+            border: none;
+            background: #F9F9F9;
+            width: 240px;
+            padding: 3px 0;
+        }
+        .btn3{
+            border: none;
+            background: #F9F9F9;
+            width:112px;
+            padding: 3px 0;
+        }
+        .btn4{
+            border-radius: 8px;
+            padding: 3px 12px;
+            font-size: 0.8em;
+            background: #FFFFFF;
+            margin-left:  10px;
+
+        }
+        .btn5{
+            border: none;
+            background: #F9F9F9;
+            width: 220px;
+            padding: 3px 0px;
+        }
+        .btn6{
+            width: 240px;
+            font-size: 0.8em;
+            padding: 3px 0px;
+        }
+        .img-rounded{
+            width: 180px;
+            height:180px;
+        }
+        button{
+            outline: 0;
+        }
+        .col-xs-4{
+            padding: 0px;
+        }
+        .mainColor{
+            color: #FF9D00;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <div class="comment">
+                <div class="row header">
+                    <div class="col-xs-4 col-md-4" style="text-align: left;">
+                        <a class="btn1 mainColor" id="headbtn" href="{{:web_url('seller/session/login')}}">
+                            <&nbsp;首页
+                        </a>
+                    </div>
+                    <div class="col-xs-4 col-md-4" style="color: #080808; text-align: center;">
+                        <button class="btn1">审核结果</button></div>
+                </div>
+                <div class="comm">
+                    <div class="comm" style="margin-top:50px">
+                        <div class="imgCom"><img class="img-rounded" ></div>
+                    </div>
+                </div>
+                <div class="comm">
+                    {{notempty name="data"}}
+                        {{switch name="data.status"}}
+                            {{case value="100" break="1"}}
+                                <p>未审核通过</p>
+                                <p>您的申请没有通过审核</p>
+                                <a class="mainColor" href="{{:web_url('/seller/sellerinfo/editor')}}">重新提交</a>
+                                <p>{{$data.fail_desc}}</p>
+                            {{/case}}
+                            {{case value="101" break="1"}}
+                                <p>已审核通过</p>
+                                {{eq name="has_place" value="101"}}
+                                 <a class="mainColor" href="{{:web_url('/seller/place/editor',['id'=>$place['id']])}}">编辑地点详情信息</a>
+                                {{else /}}
+                                 <p>您的商户正在开通中，请稍等</p>
+                                {{/eq}}
+                            {{/case}}
+                            {{case value="102" break="1"}}
+                            <p>审核中</p>
+                            <p>已提交<span>某某省某某市某某区</span>负责人</p>
+                            {{/case}}
+                            {{default /}}
+
+                        {{/switch}}
+                    {{else /}}
+                    <p>您没有提交资质，请前往提交，然后再查看结果</p>
+                    {{/notempty}}
+                </div>
+                <div class="comm" style="margin-top: 240px">
+                    <div class="comb"><a class="btn1"  href="tel:15597720691" style="font-size: 1.2em;color: #FFCC00;text-decoration: none ;background: #FFFFFF">致电区域负责人</a></div>
+                </div>
+                <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content" style="text-align: center">
+                            <div id="content" style="height: 100px;margin-top: 30px"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="__PUBLIC__/js/jquery.min.js"> </script>
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+<script>
+    $().ready(function(){
+
+    })
+</script>
+</body>
+</html>

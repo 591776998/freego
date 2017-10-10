@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <style>
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        .mui-content{
+
+        }
+        .mui-bar-nav{
+            height: 64px;
+            padding-top: 20px;
+        }
+        .blank_20{
+            height: 20px;
+            width: 100%;
+        }
+        .row{
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 350px;
+            color: grey;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .main_img{
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+        }
+        .map_icon{
+            width: 12px;
+            height: 16px;
+            margin-right: 10px;
+
+        }
+        .head_img{
+            height: 24px;
+            width: 24px;
+            margin-right: 10px;
+            border-radius:12px;
+        }
+        .like_btn{
+
+            height: 12px;
+            width: 16px;
+            margin-left: 10px;
+            margin-top: 4px;
+        }
+        .user_wrap{
+            display: flex;
+            height: 44px;
+            flex-direction: row;
+            padding: 10px;
+        }
+        .info_wrap{
+            display: flex;
+            height: 44px;
+            flex-direction: row;
+            padding: 10px;
+        }
+        .come_from_btn{
+            font-size: 16px;
+            color: rgb(255, 137, 1);
+            line-height: 59px;
+            height: 59px;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .row .info_wrap_1{
+            flex: 3;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+
+        }
+        .row .info_wrap_2{
+            flex: 1;
+            display: flex;
+            flex-direction: row-reverse;
+        }
+        .line{
+            height: 1px;
+            background-color: #c8c7cc;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .mui-bar .mui-title {
+            right: 40px !important;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+    </style>
+</head>
+<body>
+{{eq name="is_app" value="102"}}
+{{include file="web/h5_view_head" /}}
+{{else/}}
+<header class="mui-bar mui-bar-nav">
+    <a href="javascript:;" id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left mainColor"><span class="ltext"></span></a>
+    <h1 class="mui-title">{{$title}}</h1>
+    <button class="mui-btn mui-btn-link mui-pull-right mainColor upload">上传</button>
+</header>
+{{/eq}}
+<div class="blank_20"></div>
+<div class="mui-content">
+    {{volist name="data" id="vo"}}
+    <div class="row">
+        <img class="main_img lazyload" src="__PUBLIC__/img/zhanwei.png" data-src="{{$vo.img_url}}" />
+        <div class="user_wrap">
+            <img class="mui-pull-left head_img lazyload" src="__PUBLIC__/img/zhanwei.png" data-src="{{$vo.user.head_img_url}}" />
+            <span class="mui-pull-left">{{$vo.user.nick_name}}</span>
+        </div>
+        <div class="info_wrap">
+
+            <div class="info_wrap_1 location_btn" place_id="{{$vo.place_id}}" lat="{{$vo.lat}}" lng="{{$vo.lng}}" title="{{$vo.location_str}}"><img class="map_icon" src="__PUBLIC__/img/base/place.png" /><span>{{$vo.location_str}}</span></div>
+
+            <div class="info_wrap_2">
+                <img class="like_btn" is_like="{{present name="vo.like.id"}}{{$vo.like.id}}{{else /}}0{{/present}}" id="{{$vo.id}}" src="__PUBLIC__/img/base/peachHeart.png" />
+                <span>{{$vo.like_count}}</span>
+            </div>
+        </div>
+        <div class="line"></div>
+        <a class="come_from_btn" art_id="{{$vo.art_id}}" art_type="{{$vo.art.type|default=101}}">
+            来源于{{$vo.art_title}}&nbsp;>
+        </a>
+    </div>
+    {{/volist}}
+
+    <form method="post" enctype="multipart/form-data" id="img_form" class="hide" hidden>
+        <input class="hide" name="img" type="file" accept="image/png,image/jpg,image/jpeg" hidden/>
+        <input class="hide" name="location_name" value="{{$location_name}}" hidden/>
+        <input class="hide" name="location_value" value="{{$location_value}}" hidden/>
+        <input class="hide" name="token" value="{{$token}}" hidden/>
+    </form>
+</div>
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/jquery.3.2.1.js"></script>
+<script src="__PUBLIC__/js/lazysizes.min.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script>
+    var sd = new shiDianCommon({});
+    var token   = sd.token('{{$token}}');
+    var baseUrl = '{{$baseUrl}}';
+    mui.ready(function() {
+
+        mui('body').on('tap','.upload',function () {
+            //跳转原生协议
+            //todo 这里没写完
+            sd.app('create_dynamic',{add_photo:'101',location_name:'{{$location_name}}',location_value:'{{$location_value}}'});
+        });
+
+        mui('form#img_form').on('change','input',function () {
+            var data = new FormData(document.querySelector('form#img_form'));
+            data.append('token',token);
+            $.ajax({
+                type: "POST",
+                url: "{{:web_url('/photo/save')}}",
+                data: data,//.serialize(),
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if(200 == data.code){
+                        //把图片id，填入
+                        msg('保存成功，审核成功后将显示在精彩影像中',1);
+                    }else{
+                        msg(data.desc,2);
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    msg("上传失败，请检查网络后重试",2);
+                }
+            });
+        });
+
+        //点赞和取消
+        mui('body').on('tap','.like_btn',function () {
+            console.log('tap');
+            var url = baseUrl+'like';
+            var this_btn = $(this);
+            var count_span = this_btn.parent().find('span');
+            var type = '';
+            var is_like = this_btn.attr('is_like');
+            var id      = this_btn.attr('id');
+            if(0 < is_like){
+                //取消
+                type = 'DELETE';
+                url += '/'+is_like+'?token='+token;
+            }else{
+                type = 'POST';
+                url += '/?like_type=120&target_id='+id+'&token='+token;
+            }
+            $.ajax({
+                url:url,
+                type:type,
+                data:{},
+                success:function(data){
+                    if(200 != data.code){
+                        if(data.code == 401){
+                            sd.app('login',{});
+                        }
+                        alert(data.desc,2);
+                    }else{
+                        if(0 < is_like){
+                            alert('取消点赞成功',1);
+                            this_btn.attr('is_like',0);
+                            count_span.text(parseInt(count_span.text()) - 1);
+                        }else{
+                            alert('点赞成功',1);
+                            this_btn.attr('is_like',data.data.id);
+                            count_span.text(parseInt(count_span.text()) + 1);
+                        }
+                    }
+                },
+                error:function(e){
+                    alert('出错了，请稍后再试！',2)
+                }
+            });
+        });
+
+        //来自于 come_from_btn
+        mui('body').on('tap','.come_from_btn',function () {
+            var this_btn = $(this);
+            var id = this_btn.attr('art_id');
+            var type = this_btn.attr('art_type');
+            if(!!id && 0!= id){
+                if(104 == type){
+                    sd.app('dynamic',{id:id+''});
+                }else{
+                    window.location = "{{:web_url('/index/web/art')}}?id="+id+'is_web=101';
+                }
+            }
+        });
+
+        //位置
+        mui('body').on('tap','.location_btn',function () {
+            var this_btn = $(this);
+            var id = this_btn.attr('place_id');
+            var lat = this_btn.attr('lat');
+            var lng = this_btn.attr('lng');
+            var title = this_btn.attr('title');
+            if(!!id  && 0!= id){
+                window.location = "{{:web_url('/index/web/place')}}?id="+id+'&is_web=101';
+            }else if((0 != lat) && (0 != lng)){
+                sd.app('navigation',[{"title":title+'',"lat":lat+'',"lng":lng+''}]);
+            }
+        });
+
+    });
+
+    function msg(data,type) {
+        sd.msg(data,'',type);
+    }
+
+</script>
+</body>
+
+</html>

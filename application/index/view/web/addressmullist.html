@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+
+    <style type="text/css">
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        .mui-row.mui-fullscreen>[class*="mui-col-"] {
+            height: 100%;
+        }
+        .mui-col-xs-3,
+        .mui-control-content {
+            overflow-y: auto;
+            height: 100%;
+        }
+        .mui-content{
+            padding-top: 64px;
+        }
+        .mui-segmented-control .mui-control-item {
+            line-height: 50px;
+            width: 100%;
+        }
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+            background-color: #fff;
+        }
+
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        .mui-content{
+        padding-top: {{$h}}px;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+</head>
+<body class="mui-fullscreen">
+
+<div class="mui-content mui-row mui-fullscreen">
+    <div class="mui-col-xs-3">
+        <div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+            {{volist name="data" id="vo"}}
+                <a class="mui-control-item" href="#{{$vo.code_name}}{{$vo.code_value}}">{{$vo.name}}</a>
+            {{/volist}}
+            <!--<a class="mui-control-item mui-active" href="#content1">选项1</a>-->
+        </div>
+    </div>
+    <div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;">
+        {{volist name="data" id="vo" key="i"}}
+            <!-- 全体数组 -->
+            <div id="{{$vo.code_name}}{{$vo.code_value}}" class="mui-control-content {{eq name="i" value="1"}}mui-active{{/eq}}">
+            {{notempty name="vo.sub"}}
+                <ul class="mui-table-view">
+                {{volist name="vo.sub" id="v"}}
+                    <!-- 省级 -->
+                    <li class="mui-table-view-cell mui-collapse">
+                        <a class="mui-navigate-right" href="#">{{$v.name}}</a>
+                        <div class="">
+                            {{notempty name="v.sub"}}
+                            <ul class="mui-table-view">
+                                {{volist name="v.sub" id="item"}}
+                                <!-- 市级 -->
+                                    <li class="mui-table-view-cell address_li" location_name="{{$item.code_name}}" location_value="{{$item.code_value}}">{{$item.name}}</li>
+                                {{/volist}}
+                            </ul>
+                            {{/notempty}}
+                        </div>
+                    </li>
+                {{/volist}}
+                </ul>
+            {{/notempty}}
+            </div>
+        {{/volist}}
+
+    </div>
+</div>
+
+</body>
+<!--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>-->
+
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/mui.view.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script>
+
+    var sd = new shiDianCommon();
+
+    var token   = sd.token('{{$token}}');
+    mui.init();
+    mui.ready(function() {
+        mui('#segmentedControlContents').on('tap','.address_li',function(e){
+            console.log('点击');
+            shidian('address',{live_location_name:this.getAttribute("location_name"),live_location_value:this.getAttribute("location_value"),live_location_str:this.innerText});
+        });
+
+        function error_show($msg) {
+            mui.toast($msg)
+        }
+
+        //和shidianAPP交互
+        function shidian($action, $param) {
+            if (typeof($param != "string")){
+                $param = JSON.stringify($param);
+            }
+            self.location='shidian://'+$action+'?jp='+$param;
+        }
+
+    })
+</script>
+
+</html>

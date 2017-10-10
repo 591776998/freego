@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+
+    <style type="text/css">
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        .row{
+            padding: 15px;
+        }
+        .item_title{
+            line-height: 40px;
+        }
+        .item_content{
+            margin-bottom: 40px;
+        }
+        .yellow{
+            color: #f4a51d;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        .mui-bar-nav~.mui-content {
+            padding-top: 64px;
+        }
+        .mui-bar-nav {
+            height: 64px;
+            padding-top: 20px;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+</head>
+
+<body>
+{{eq name="is_app" value="102"}}
+{{include file="web/h5_view_head" /}}
+{{else/}}
+<header class="mui-bar mui-bar-nav">
+    <a id="{{neq name="is_web" value="101"}}back{{else /}}pop{{/neq}}" class="mui-icon mui-icon-left-nav mui-pull-left mainColor"><span class="ltext"></span></a>
+    <h1 class="mui-title">{{$title}}</h1>
+</header>
+{{/eq}}
+
+<div class="mui-content">
+    <div class="mui-row row">
+        <span class="item_title" style=" margin-top: 30px;display: block;">积分获取</span>
+        <p class="item_content">通过游记，问答或者提供顺风车都能获取积分，积分的多少往往和流量以及提供的价值高低有直接关系</p>
+        <a class="item_title mainColor" href="{{$baseUrl}}index/web/table?type=104&sub_type=112">积分兑换></a>
+        <p class="item_content">直接用积分兑换礼品或服务</p>
+        <a class="item_title mainColor">积分兑现金</a>
+        <p class="item_content">直接用积分兑换现金（未开通）</p>
+
+    </div>
+</div>
+
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script>
+    var sd = new shiDianCommon({});
+    var token   = sd.token('{{$token}}');
+    mui.init({
+
+
+
+    });
+
+
+    //和shidianAPP交互
+    function shidian($action, $param) {
+        if (typeof($param != "string")){
+            $param = JSON.stringify($param);
+        }
+        self.location='shidian://'+$action+'?jp='+$param;
+    }
+</script>
+</body>
+
+</html>

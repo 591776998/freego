@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/com.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/activity.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/swiper.min.css">
+    <style>
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        .contentList{
+            position: relative;
+        }
+        .row{
+            position: relative;
+            padding: 15px;
+        }
+        .line_item:after {
+            position: absolute;
+            right: 15px;
+            bottom: 0;
+            left: 15px;
+            height: 1px;
+            content: '';
+            -webkit-transform: scaleY(.5);
+            transform: scaleY(.5);
+            background-color: #c8c7cc;
+        }
+        .row p{
+            line-height: 30px;
+            margin-bottom: 0;
+        }
+        .item{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 70px;
+            padding: 10px;
+        }
+        .item_line{
+            height: 1px;
+            width: 90%;
+            background-color: #c8c7cc;
+            margin: 0 auto;
+        }
+        .item img{
+            width: 70px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        .item_right{
+            flex: 1;
+            height: 50px;
+            display: flex;
+            position: relative;
+        }
+        .item_right_p1{
+            margin-bottom: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .item_right_p2{
+            margin-bottom: 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .item_right_p3{
+            margin-bottom: 0;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+        .item_right_p4{
+            margin-bottom: 0;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+        .item_title{
+            color: #000;
+            height: 21px;
+            overflow: hidden;
+            font-size: 14px;
+        }
+
+        .footerFloat {
+            position: fixed;
+            bottom: 65px;
+            width: 100px;
+            height: 40px;
+            background: white;
+            z-index: 10;
+            border-radius: 30px;
+            left: 50%;
+            margin-left: -55px;
+            box-shadow: 1px 6px 5px gainsboro;
+            padding: 11px 0px 0 16px;
+        }
+        .comment_btn{
+            display: flex;
+            text-align: center;
+        }
+        .comment_btn p{
+            color: #000;
+            flex: 1;
+            height: 45px;
+        }
+        .comment_btn img{
+            margin-right: 25px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .swiper-container {
+            width: 100%;
+            height: 170px;
+            margin: 10px auto;
+            padding-bottom: 1px;
+        }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+        .scroll_art_a{
+            display: block;
+        }
+        .item_user_name{
+            font-size: 14px;
+            color: #000;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        .banner{
+            margin-top: 0;
+            margin-bottom: 0;
+            height:220px;
+        }
+        .mui-bar-nav~.mui-content {
+            padding-top: 0;
+        }
+        .star{
+            height: 16px;
+            width: 16px;
+        }
+        .mui-ell{
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+</head>
+
+<body>
+{{eq name="is_app" value="102"}}
+{{include file="web/h5_view_head" /}}
+{{else/}}
+<header class="mui-bar mui-bar-nav" style="padding-top: 20px;height: 64px;background: none;box-shadow: none;">
+    <a id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left mainColor"><span class="ltext"></span></a>
+    <h1 class="mui-title"></h1>
+    {{present name="data.collect.id"}}
+    <a style="height: 44px;width: 44px;text-align: center;line-height: 44px;" class="mui-pull-right collect_btn" is_collect="{{$data.collect.id}}"><img alt="收藏" style="width: 16px;height: 16px;" src="__PUBLIC__/img/shoucang2.png" /></a>
+        {{else/}}
+    <a style="height: 44px;width: 44px;text-align: center;line-height: 44px;" class="mui-pull-right collect_btn" is_collect="0"><img alt="收藏" style="width: 16px;height: 16px;" src="__PUBLIC__/img/shoucang.png" /></a>
+    {{/present}}
+    <a style="height: 44px;width: 44px;text-align: center;line-height: 44px;" class="mui-pull-right " id="share_btn"><img alt="分享" style="width: 16px;height: 16px;" src="__PUBLIC__/img/fenxiang.png" /></a>
+    <!--<button class="mui-btn  mui-btn-link mui-pull-right collect_btn " is_collect="{{present name="data.collect.id"}}{{$data.collect.id}}">取消收藏{{else /}}0">收藏{{/present}}</button>-->
+    <!--<button class="mui-btn  mui-btn-link mui-pull-right " id="share_btn">分享</button>-->
+</header>
+{{/eq}}
+<div class="mui-content contentList">
+    <!-- Swiper -->
+    <div class="swiper-container banner">
+        <div id="album_wrap" class="swiper-wrapper">
+            {{volist name="data.album" id="vo"}}
+            <div class="swiper-slide album_btn">
+                <img index="{{$i-1}}" style="object-fit: cover;width: 100%;height: 100%;" data-src="{{$vo.url}}" class="swiper-lazy" src="__PUBLIC__/img/zhanwei.png" />
+            </div>
+            {{/volist}}
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="row line_item">
+        <div class="bar-item row_item">
+            <h4>{{$title}}</h4>
+            <p style="color: black">营业时间 {{$data.run_time}} &nbsp;{{$data.id}}<a href="tel:{{$data.phone}}" class="mui-pull-right mainColor">电话></a></p>
+            <p  class="mui-ell">{{$data.content}}</p>
+        </div>
+    </div>
+    <div class="row line_item">
+        <div class="bar-item row_item address_list_btn" id="address_list_btn ">
+                <p style="" class="mainColor">地址&停车<span class="mui-pull-right"></span></p>
+        </div>
+    </div>
+    <div class="row line_item">
+        <div class="bar-item row_item" id="comment_list_btn" style="height: 30px;line-height: 30px;">
+            <div class="mui-pull-left">
+                {{for start="0" end="$data.star"}}
+                <img src="__PUBLIC__/img/base/star.png" class="star" >
+                {{/for}}
+            </div>
+            <div class="bar-item mui-pull-right row_item right_text">
+                <p class="mainColor">共{{$data.comments_count}}条点评&nbsp;></p>
+            </div>
+        </div>
+
+    </div>
+
+    {{notempty name="data.art"}}
+    <div class="scroll_wrap_header" style="height: 30px;line-height:30px;padding-left: 15px;font-size: 14px;">
+        提及的热门游记
+    </div>
+    <div class="swiper-container content_item line_item">
+        <div class="swiper-wrapper">
+            {{volist name="data.art" id="vo"}}
+            <div class="swiper-slide">
+                <div class="scroll_item">
+                    <a class="grey scroll_art_a" href="{{:web_url('art',['id'=>$vo['id'],'token'=>$token,'is_web'=>'101'])}}">
+                        <img class="src_img scroll_art_img " style="height:107px;width:142px;" src="__PUBLIC__/img/zhanwei.png" data-lazyload="{{$vo.img_url}}">
+                        <div class="item_title">{{$vo.title}}</div>
+                        <div class="item_user">
+                            <span class="item_user_head_wrap mui-pull-left">
+                                <img class="item_user_head src_head_img" style="height:18px;width:18px;border-radius:9px;" data-lazyload="{{$vo.user.head_img_url}}">
+                            </span>
+                            <span class="item_user_name mui-pull-left">{{$vo.user.nick_name}}</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {{/volist}}
+        </div>
+    </div>
+    {{/notempty}}
+
+    {{volist name="data.services" id="vo"}}
+    <a class="item" href="{{:web_url('services',['id'=>$vo['id'],'token'=>$token,'is_web'=>'101'])}}">
+        <img src="__PUBLIC__/img/zhanwei.png" data-lazyload="{{$vo.img_url}}">
+        <div class="item_right">
+            <p class="item_right_p1 item_title">{{$vo.title}}</p>
+            <p class="item_right_p2 mainColor">{{$vo.discount}}折</p>
+            <p class="item_right_p3 ">{{$vo.desc}}</p>
+            <p class="item_right_p4 mainColor">{{neq name="vo.back_points" value="0"}}返{{$vo.back_points}}积分{{/neq}}</p>
+        </div>
+    </a>
+    <div class="item_line"></div>
+    {{/volist}}
+
+    <div class="footerFloat comment_btn" id="comment_btn" style="">
+        <p>点评</p> <img src="__PUBLIC__/img/pinglun.png" />
+    </div>
+
+</div>
+
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/mui.lazyload.js"></script>
+<script src="__PUBLIC__/js/mui.lazyload.img.js"></script>
+<script src="__PUBLIC__/js/jq.1.6.1.js"></script>
+<script src="__PUBLIC__/js/_publicCom2.js"></script>
+
+<!--<script src="__PUBLIC__/js/swiper.jquery.min.js"></script>-->
+<script src="__PUBLIC__/js/swiper.min.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+
+<script>
+    {{eq name="$need_delete_table_cache" value="102"}}
+    localStorage.shidian_need_delete_table_cache = 102;
+    {{/eq}}
+
+    var sd = new shiDianCommon({share_data:{{$data.share|json_encode}}});
+    var token = sd.token('{{$token}}');
+    var baseUrl = '{{$baseUrl}}';
+    var pulicS = '__PUBLIC__/img/';
+
+    mui.ready(function() {
+        mui(document).imageLazyload({
+            placeholder: '__PUBLIC__/img/zhanwei.png'
+        });
+        $(".mui-ell").click(function(){
+            mui.alert("{{$data.content}}","介绍")
+        })
+
+        //返回
+        var comment_btn = document.getElementById("comment_btn");
+        if(null != comment_btn){
+            comment_btn.addEventListener("tap",function () {
+                sd.app('commentlist',{type:'106',main_id:'{{$data.id}}'});
+            });
+        }
+        //comment_list_btn
+        var comment_list_btn = document.getElementById("comment_list_btn");
+        if(null != comment_list_btn){
+            comment_list_btn.addEventListener("tap",function () {
+                sd.app('commentlist',{type:'106',main_id:'{{$data.id}}'});
+            });
+        }
+
+        var address_list_btn = document.querySelector(".address_list_btn");
+        if(null != address_list_btn){
+            address_list_btn.addEventListener("tap",function () {
+                $location_arr = [];
+                sd.app('navigation',{{$data.park|json_encode}});
+            });
+        }
+
+        //banner
+        var myBanner = new Swiper ('.banner', {
+            pagination: '.swiper-pagination',
+            preloadImages: false,
+            lazyLoading: true,
+            loop: true,
+            autoplay: 2500,
+            autoplayDisableOnInteraction: true
+        });
+
+        var screen_width = window.screen.width;
+        var mySwiper = new Swiper ('.content_item', {
+//            slidesPerView: 3,
+//            spaceBetween: 30,
+//            freeMode: true,
+//            slidesOffsetBefore:10,
+
+//            pagination: '.swiper-pagination',
+            width:145,
+            spaceBetween: 10,
+            freeMode: true,
+            slidesOffsetBefore:10,
+            slidesOffsetAfter:-1*(screen_width - 155)
+        });
+
+        //收藏或取消
+        $('.collect_btn').click(function () {
+            var url = baseUrl+'collect';
+            var this_btn = $(this);
+            var type = '';
+            var param = {token:token};
+            var is_collect = this_btn.attr('is_collect')
+            if(0 < is_collect){
+                //取消
+                type = 'DELETE';
+                url += '/'+is_collect+'?token='+param.token;
+            }else{
+                type = 'POST';
+                url += '/?type=104&target_id={{$data.id}}&token='+param.token;
+            }
+            $.ajax({
+                url:url,
+                type:type,
+                param:param,
+                success:function(data){
+                    var desc = '';
+                    if(200 != data.code){
+                        popTitle(data.desc,2);
+                    }else{
+                        if(0 < is_collect){
+                            popTitle('取消收藏成功',1);
+                            this_btn.attr('is_collect',0);
+                            this_btn.find('img').attr('src','__PUBLIC__/img/shoucang.png');
+                        }else{
+                            popTitle('收藏成功',1);
+                            this_btn.attr('is_collect',data.data.id);
+                            this_btn.find('img').attr('src','__PUBLIC__/img/shoucang2.png');
+                        }
+                    }
+                },
+                error:function(e){
+                    popTitle('出错了，请稍后再试！',2)
+                }
+            });
+        });
+
+        mui('#album_wrap').on('tap','.album_btn',function (e) {
+            var index = e.target.getAttribute('index');
+            sd.app('album',{index:index+'',imgs:{{$data.album|array_column=###,'url'|json_encode}}});
+        });
+
+    });
+
+    //和shidianAPP交互
+    function shidian($action, $param) {
+        if (typeof($param != "string")){
+            $param = JSON.stringify($param);
+        }
+        self.location='shidian://'+$action+'?jp='+$param;
+    }
+
+    /*********************** hud **********************/
+    //data显示的文字.action:0loading，1.正确，2.错误
+    function popTitle(data,action){
+        if(action==0){
+            iosTooltip(data,pulicS+'oval.svg',300,pulicS+'cenel.png',0.1);
+        }else if(action==1){
+            iosTooltip(data,pulicS+'ok.png',300,'',0);
+        }else if(action == 2){
+            iosTooltip(data,pulicS+'cenel.png',300,'',0);
+        }
+    }
+    function iosTooltip(content, url, animateTime, close, showAddTime) {
+        console.log($);
+        $('#Prompt').attr('id')?$('#Prompt').remove():'';
+        $('#Prompt_z_index').attr('id')?$('#Prompt_z_index').remove():'';
+        !showAddTime?showAddTime = 0:'';
+        var html = '<div class=" " id="Prompt_z_index" style="opacity: 0;z-index: 1110; min-height: 95px; position: absolute; width: 100px; height: 100px;background: black;"></div><div id="Prompt" style="z-index: 1110; min-height: 95px; position: absolute; top: 36%;">'+
+                '<div class="PromptBody" style="z-index: 1111; width: 100%; height: 100%;">'+
+                '<div class="yesPrompttool" style="position: absolute;left: -8px;top: -8px;"> <img id="PromptColse" onclick="closeIosTooltip()" class="hide" style="width: 24px;height: 24px;" src="' + close + '"></div>'+
+                '<div class="yesPrompttop" style="height: 60px;    text-align: center;"><img class="PromptBodyImg" style="height: 32px;width: 32px;margin-top: 18px " src="' + url + '"></div>'+
+                '<div class="yesPrompttop" style="color: white;font-size: 14px;text-align: center;letter-spacing:2px;padding:0 15px 5px 15px;">' + content +'</div>'
+        '</div>'+
+        '</div>'
+        $('body').children().eq(0).before(html);
+        var domW = $('#Prompt').width();
+        var domCanW = $('body').width()*0.8;
+        var winW =  $('body').width();
+        if(domW>=domCanW){
+            $('#Prompt,#Prompt_z_index').css('width',domCanW+'px').css('left',$('body').width()*0.1).css('right',$('body').width()*0.1);
+        }else if(domW<=110){
+            $('#Prompt,#Prompt_z_index').css('left',parseInt(winW-110)/2+'px').css('right',parseInt(winW-110)/2+'px');
+        }
+        else{
+            $('#Prompt,#Prompt_z_index').css('left',parseInt(winW-domW)/2+'px').css('right',parseInt(winW-domW)/2+'px');
+        }
+        $("body,html").css({"overflow":"hidden"});
+        $('#Prompt,#Prompt_z_index').css('top',$(window).height()*0.36+$(window).scrollTop());
+        $('#Prompt_z_index').css('height',$('#Prompt').height());
+        $('#Prompt_z_index').css('width',$('#Prompt').width());
+        if(close) {
+            show_mask('', 0.1);
+            $('#PromptColse').removeClass('hide');
+        }
+        $("#Prompt_z_index").animate({
+            opacity: 0.85
+        },animateTime);
+        $("#Prompt").animate({
+            opacity: 1
+        },animateTime+100);
+        if(!close){
+            setTimeout(function(){
+                $("#z-index").remove();
+                hide_mask();
+                $("#Prompt,#Prompt_z_index").animate({opacity: 0}, 300,function(){
+                    $("#Prompt").remove();
+                    $("#Prompt_z_index").remove();
+
+                });
+            },animateTime+1000+showAddTime)
+        }
+    }
+
+    //隐藏遮罩
+    function hide_mask() {
+        $("#z-index").hide();
+        $("#z-index,.z-index").remove();
+    }
+    //显示遮罩
+    function show_mask(top, opacity, anmit) {
+        if(!top) {
+            top = 0;
+        }
+        if(!opacity) {
+            opacity = 0.6;
+        }
+        if(!anmit) {
+            anmit = 700;
+        }
+        var html = '<div id="z-index" class="z-index" style="position: fixed;height: 100%;width: 100%;background: #919191;z-index: 100;opacity: 0;top: ' + top + 'px;left:0"></div>	'
+        $('body').children().eq(0).before(html);
+        $("#z-index").animate({
+            opacity: opacity,
+        }, anmit);
+    }
+
+</script>
+</body>
+
+</html>

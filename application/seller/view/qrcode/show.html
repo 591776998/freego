@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>二维码</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+
+<style type="text/css">
+    #qrcode{
+        margin-top: 150px;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div id="qrcode"></div>
+
+</div>
+
+<script src="__PUBLIC__/js/jquery.3.2.1.js"></script>
+<script src="__PUBLIC__/js/jquery.qrcode.min.js"></script>
+<script>
+    $('#qrcode').qrcode('shidian://codepay?jp={{$qrcode_data|json_encode|urldecode}}');
+//    var qrcode = new QRCode(document.getElementById("qrcode"), {
+//        text: 'shidian://codepay?jp={{$qrcode_data|json_encode}}',
+//        width: 128,
+//        height: 128,
+//        colorDark : "#000000",
+//        colorLight : "#ffffff",
+//        correctLevel : QRCode.CorrectLevel.H
+//    });
+</script>
+</body>
+</html>

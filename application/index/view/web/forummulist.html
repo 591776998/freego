@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+
+    <style type="text/css">
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        .mui-row.mui-fullscreen>[class*="mui-col-"] {
+            height: 100%;
+        }
+        .mui-col-xs-3,
+        .mui-control-content {
+            overflow-y: auto;
+            height: 100%;
+        }
+        .mui-segmented-control .mui-control-item {
+            line-height: 50px;
+            width: 100%;
+        }
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+            background-color: #fff;
+        }
+
+        .mui-content{
+            font-size: 14px;
+        }
+        .sub_title{
+            font-size: 12px;
+            font-style: italic;
+            color: #f8b323;
+        }
+        .mui-bar{
+            background-color: #fff !important;
+        }
+        .headerH64{
+            height: 64px;
+            padding-top: 20px;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+
+</head>
+<body class="mui-fullscreen">
+
+<div class="mui-content mui-row mui-fullscreen">
+    {{eq name="is_app" value="102"}}
+    {{include file="web/h5_view_head"/}}
+    {{else/}}
+    <header id="header" class="mui-bar mui-bar-nav headerH64">
+        <h1 class="mui-title">{{$title}}</h1>
+        <a id="{{neq name="is_web" value="101"}}back{{else /}}pop{{/neq}}" class="mui-icon mui-icon-left-nav mui-pull-left mainColor"><span class="ltext"></span></a>
+    </header>
+    {{/eq}}
+
+
+    <div class="mui-col-xs-3" style="padding-top: 64px;">
+        <div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+            {{volist name="data" id="vo"}}
+            <a class="mui-control-item" href="#item_{{$vo.id}}">{{$vo.title}}</a>
+            {{/volist}}
+            <!--<a class="mui-control-item mui-active" href="#content1">选项1</a>-->
+        </div>
+    </div>
+    <div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;padding-top: 64px;">
+        {{volist name="data" id="vo" key="i"}}
+        <!-- 全体数组 -->
+        <div id="item_{{$vo.id}}" class="mui-control-content {{eq name="i" value="1"}}mui-active{{/eq}}">
+        {{notempty name="vo.sub"}}
+        <ul class="mui-table-view">
+            {{volist name="vo.sub" id="v"}}
+            <!-- 省级 -->
+            <li class="mui-table-view-cell mui-collapse">
+                <a class="mui-navigate-right" href="#">{{$v.title}}</a>
+                <div class="">
+                    {{notempty name="v.sub"}}
+                    <ul class="mui-table-view">
+                        {{volist name="v.sub" id="item"}}
+                        <!-- 市级 -->
+                        <li class="mui-table-view-cell address_li" id="{{$item.id}}">{{$item.title}} <span class="mui-pull-right sub_title">进入论坛</span></li>
+                        {{/volist}}
+                    </ul>
+                    {{/notempty}}
+                </div>
+            </li>
+            {{/volist}}
+        </ul>
+        {{/notempty}}
+    </div>
+    {{/volist}}
+
+</div>
+</div>
+
+</body>
+<!--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>-->
+
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/mui.view.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+
+<script>
+    var sd = new shiDianCommon({});
+    var token   = sd.token('{{$token}}');
+    mui.init();
+    mui.ready(function() {
+        mui('#segmentedControlContents').on('tap','.address_li',function(e){
+            var forum_id = this.getAttribute("id");
+            localStorage.shidian_data_forum_last_id = forum_id;
+            self.location='{{$baseUrl}}index/web/forum?forum_id='+forum_id+'&jump_style=subtype_left&token='+token;
+        });
+        $("#segmentedControls .mui-control-item").eq(0).addClass("mui-active");
+    })
+</script>
+
+</html>

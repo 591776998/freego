@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>推首审核</title>
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <script src="../js/jquery.min.js"> </script>
+    <script src="../js/bootstrap.js"></script>
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 80%;
+                margin:0 auto;
+                border: 2px solid #DDDDDD;
+                padding-bottom:125px ;
+            }
+            .comment{
+                width: 100%;
+                font-size:0.8em;
+                color: #666666;
+
+            }
+
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 15px auto;
+            }
+
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.1em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 30px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 15px auto;
+            }
+
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.2em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 98%;text-align: center;
+                margin: 15px auto;
+            }
+
+        }
+        .header{
+
+            margin-top: -10px;
+            padding: 16px 0;
+            background: #F9F9F9;
+            color:#FFCC00;
+            font-weight: bold;
+
+
+        }
+        .btn1{
+            border: none;
+            background: #F9F9F9;
+            margin: 0;
+        }
+
+        .btn2{
+            border: none;
+            background: #FFFFFF;
+           padding: 10px 30px;
+
+        }
+        .btn3{
+
+            width:230px;
+            padding: 3px 0;
+        }
+        .btn4{
+            width:165px;
+            padding: 3px 0;
+        }
+        .btn5{
+            border: none;
+            background: #FFFFFF;
+           color:#FFCC00;
+        }
+        .btn6{
+            width: 240px;
+            font-size: 0.8em;
+            padding: 3px 0px;
+        }
+        .modal-header{
+            text-align: center;
+        }
+        .modal-footer{
+            text-align: center;
+            padding: 0;
+        }
+        .footcom{
+            width: 100%;
+            height: 50px;
+            font-size: 1.4em;
+            font-weight: bold;
+            color:#FFCC00;
+            border-bottom: 1px solid #DDDDDD;
+
+        }
+        .table{
+           font-size:1.1em;
+        }
+        button{
+            outline: 0;
+        }
+        .col-xs-4{
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <div class="comment">
+                <div class="row header">
+                    <div class="col-xs-4 col-md-4" style="text-align: left;">
+                        <button class="btn1">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            精彩内容</button>
+                    </div>
+                    <div class="col-xs-3 col-md-3" style="color: #080808; text-align: center;">
+                        <button class="btn1">标题</button></div>
+                    <div class="col-xs-5 col-md-5" style=" text-align: right;padding: 0 ">
+                        <button class="btn1"  data-toggle="modal" data-target="#failModal" >打回</button>
+                        <button class="btn1"  data-toggle="modal" data-target="#passModal" >推首</button>
+                    </div>
+                </div>
+                <div class="comm">
+
+                </div>
+                <div class="comm">
+
+                </div>
+                <div class="comm">
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="passModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">选择推首页的地方</h4>
+                </div>
+                <div class="modal-body" style="padding-bottom:20px ">
+                    <div class="comb"><select class="btn3" id="country"></select></div>
+                    <div class="comb"><select class="btn3" id="province"></select></div>
+                    <div class="comb"><select class="btn3" id="branch"></select></div>
+                    <div class="comb">
+                        <select class="btn4" id="putTime">
+                        <option value="86400">24小时</option>
+                        <option value="172800">48小时</option>
+                        <option value="259200">72小时</option>
+                        <option value="345600">96小时</option>
+                        </select>
+                        <button style="padding: 0 15px" id="add">加添</button></div>
+                    <div class="comb">
+                        <table class="table">
+                            <thead>
+                            <th>
+                                <td></td>
+                            </th>
+                            </thead>
+                          <tbody id="bcontent">
+
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="footcom"> <button type="button" id="putbtn" class="btn2">推送</button></div>
+                    <div class="footcom"> <button type="button" id="nopbtn" class="btn2" data-dismiss="modal">取消</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="failModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="ModalLafailbel">告诉特权嘉宾申请不过的理由</h3>
+                </div>
+                <div class="modal-body"  id="failbody" style="height: 250px;font-size: 1.3em">
+                      你未进行任何地点标记，用户可能！
+                </div>
+                <div class="modal-footer">
+                    <div class="footcom"> <button type="button" id="sendfailbtn" class="btn2">发送</button></div>
+                    <div class="footcom"> <button type="button" class="btn2" data-dismiss="modal">取消</button></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function sendfail(id){//打回推首
+        var failData={};
+        failData.id=id;
+        failData.desc=$("#failbody").text();
+        $.ajax({
+            type:"POST",
+            url:"http://api.myfreego.cn/branch/top/delete",
+            dataType:"json",
+            data:failData,
+            success:function(d){
+                 if(d.code==200){
+                   alert("成功打回");
+                 }
+                if(d.code==201){
+                   alert("成功失败");
+                }
+            },
+            error:function(d){
+                  alert(d);
+            }
+        })
+    }
+
+
+    function getCountry(){//获取国家
+        $.ajax({
+            type:"GET",
+            url:"http://api.myfreego.cn/branch/branch/index",
+            dataType:"json",
+            data:"",
+            success:function(d){
+                var s="<option>--请选择--</option>";
+                if(d.code==200){
+                    for(var i=0;i<d.data.length;i++)
+                    s+='<option value="'+d.data[i].id+'">'+d.data[i].name+'</option>'
+                }
+                $("#country").append(s);
+            }
+        })
+    }
+
+
+    function getProvince(id){//获取省份
+        var proData={};
+        proData.branch_id=id;
+        $.ajax({
+            type:"POST",
+            url:"http://api.myfreego.cn/branch/branch/index",
+            dataType:"json",
+            data:proData,
+            success:function(d){
+                var s="<option>--请选择--</option>";
+                if(d.code==200){
+                    for(var i=0;i<d.data.length;i++)
+                        s+='<option value="'+d.data[i].id+'" >'+d.data[i].name+'</option>'
+                }
+                $("#province").html(s);
+            }
+        })
+    }
+
+
+    function getBranch(id){获取协会
+        var BraData={};
+        BraData.id = id;
+        $.ajax({
+            type:"POST",
+            url:"http://api.myfreego.cn/branch/branch/index",
+            dataType:"json",
+            data:BraData,
+            success:function(d){
+                var s="<option>--请选择--</option>";
+                if(d.code==200){
+                    for(var i=0;i<d.data.length;i++)
+                        s+='<option value="'+d.data[i].id+'" bname="'+d.data[i].name+'">'+d.data[i].name+'</option>'
+                }
+                $("#branch").html(s);
+            }
+        })
+    }
+
+
+    function sendput(id,brnch_id,exp_time){//批量推首
+       var sendData={};
+        sendData.id = id;
+        sendData.branch_id=brnch_id;
+        sendData.exp_time=exp_time;
+        $.ajax({
+            type:"POST",
+            url:"http://api.myfreego.cn/branch/top/save",
+            dataType:"json",
+            data:sendData,
+            success:function(d){
+
+                if(d.code==200){
+                   alert("推首成功")
+                }
+                if(d.code==201){
+                    alert("推首失败-"+d.data.desc)
+                }
+            }
+        })
+    }
+    function delectB(id){
+        $("#"+id).remove();
+    }
+    $().ready(function(){
+        getCountry();
+        $("#country").change(function(){
+            getProvince($("#country").val())
+        })
+        $("#province").change(function(){
+            getBranch($("#province").val())
+        })
+        $("#add").click(function(){
+            var id=$("#branch").val();
+            var bname=$("#branch").attr("bname")
+            var  s='<tr class="branchMess" id="'+id+'" ><td>'+bname+'</td><td><button class="btn5 deleb" onclick="delectB('+id+')">删除</button></td> </tr>';
+            $("#bcontent").append(s)
+        })
+        $("#nopbtn").click(function(){
+            $("#bcontent").empty();
+        })
+        $("#putbtn").click(function(){//发送推首
+            var branch_id=new Array();
+            for(var i=0;i<$(".branchMess").length;i++){
+                branch_id[i]=$(".branchMess").eq(i).attr("id")
+            }
+            var exp_time=$("#putTime").val();
+            var id="";//文章id
+            sendput(id,branch_id,exp_time);
+        })
+        $("#sendfailbtn").click(function(){
+            var id="";//文章id
+            alert("1");
+            sendfail(id);
+        })
+    })
+</script>
+</body>
+</html>

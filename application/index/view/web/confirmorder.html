@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/com.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/activity.css">
+
+    <style>
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        a,a:hover,a:active{
+            text-decoration: none !important;
+            text-decoration-color: #fff;
+        }
+        .contentList{
+            padding-top: 64px !important;
+        }
+        .title {
+            margin: 20px 15px 7px;
+            color: #6d6d72;
+            font-size: 15px;
+        }
+        .yellow {
+            color: #f49700 !important;
+        }
+        .mui-switch.mui-active {
+            border-color: #f49700 !important;
+            background-color: #f49700 !important;
+        }
+        .mui-switch.mui-active:before {
+            content: '是';
+        }
+        .mui-switch:before {
+            content: '否';
+        }
+        .pay_type_btn{
+            display: block;
+            color: #b3a9aa;
+            border: 1px #b3a9aa solid;
+            padding: 8px;
+            text-align: center;
+            margin-left: 10px;
+            margin-right: 10px;
+            font-size: 12px;
+            vertical-align:middle;
+            border-radius: 2px;
+        }
+        .pay_type_btn img{ vertical-align:middle;}
+        .pay_type_btn.checked{
+            color: #21a91c;
+            border-color:#21a91c;
+        }
+
+        #buy{
+            position: fixed;
+            z-index: 99999;
+            bottom: 0;
+            width: 100%;
+            height: 48px;
+            color: white;
+            background: #ffcc00;
+            line-height: 48px;
+            text-align: center;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+</head>
+
+<body>
+{{eq name="is_app" value="102"}}
+{{include file="web/h5_view_head" /}}
+{{else/}}
+<header class="mui-bar mui-bar-nav" style="padding-top: 20px;height: 64px;width: 100%; display: block; z-index: 99999;">
+    <a id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left yellow"><span class="ltext"></span></a>
+    <h1 class="mui-title">{{$title}}</h1>
+</header>
+{{/eq}}
+<div class="mui-content contentList">
+
+    <!--//	单选-->
+    <div class="  singup">
+        <div class="titlebox">
+            <div class="floatL w50">报名方式（单选）</div>
+        </div>
+        {{volist name="plan" id="vo"}}
+        {{eq name="vo.plan_type" value="101"}}
+        <div class="bodybox posR" style="">
+            <div class="l lefts posA width100" style="">
+                <div class="t mui-ellipsis" style="">
+                    {{$vo.title}}
+                </div>
+                <div class="b twos" style="">
+                    {{$vo.content}}
+                </div>
+            </div>
+            <div class="floatR r rights lineRight" style="">
+                <div class="t lineCenter" style="">{{$vo.fact_price/100|number_format=2|}}¥+{{$vo.use_points}}分</div>
+                <div class="c lineCenter" style="">X</div>
+                <div class="b posR lineCenter" style="">
+                    {{$vo.num}}个
+                </div>
+            </div>
+        </div>
+        <div class="bline clearB " style=""></div>
+        {{/eq}}
+        {{/volist}}
+    </div>
+
+    <!--多选-->
+    <div class="moresingup  singup">
+        <div class="titlebox">
+            <div class="floatL w50">附加选项（可多选）</div>
+        </div>
+        {{volist name="plan" id="vo"}}
+        {{eq name="vo.plan_type" value="103"}}
+        <div class="bodybox posR" style="">
+            <div class="l lefts posA width100" style="">
+                <div class="t mui-ellipsis" style="">
+                    {{$vo.title}}
+                </div>
+                <div class="b twos" style="">
+                    {{$vo.content}}
+                </div>
+            </div>
+            <div class="floatR r rights lineRight" style="">
+                <div class="t lineCenter" style="">{{$vo.fact_price/100|number_format=2|}}¥+{{$vo.use_points}}分</div>
+                <div class="c lineCenter" style="">X</div>
+                <div class="b posR lineCenter" style="">
+                    {{$vo.num}}个
+                </div>
+            </div>
+        </div>
+        <div class="bline clearB " style=""></div>
+        {{/eq}}
+        {{/volist}}
+    </div>
+    <!--必买-->
+    <div class="moresingup  singup">
+        <div class="titlebox">
+            <div class="floatL w50">必买选项</div>
+        </div>
+
+        {{volist name="plan" id="vo"}}
+        {{eq name="vo.plan_type" value="102"}}
+        <div class="bodybox posR" style="">
+            <div class="l lefts posA width100" style="">
+                <div class="t mui-ellipsis" style="">
+                    {{$vo.title}}
+                </div>
+                <div class="b twos" style="">
+                    {{$vo.content}}
+                </div>
+            </div>
+            <div class="floatR r rights lineRight" style="">
+                <div class="t lineCenter" style="">{{$vo.fact_price/100|number_format=2|}}¥+{{$vo.use_points}}分</div>
+                <div class="c lineCenter" style="">X</div>
+                <div class="b posR lineCenter" style="">
+                    {{$vo.num}}个
+                </div>
+            </div>
+        </div>
+        <div class="bline clearB " style=""></div>
+        {{/eq}}
+        {{/volist}}
+    </div>
+
+
+    <div class="moresingup  singup">
+        <div class="titlebox" style="height: 20px;">
+        </div>
+        <div class="bodybox posR" style="height: 45px;">
+            <div class="l lefts posA width100" style="">
+                <div class="t mui-ellipsis" style="">
+                    是否匿名
+                </div>
+            </div>
+            <div class="floatR r rights lineRight" style="padding-right: 20px;">
+                <div class="mui-switch mui-switch-mini mui-pull-right" id="anonymous">
+                    <div class="mui-switch-handle"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="moresingup  singup">
+        <div class="titlebox" >
+            支付方式
+        </div>
+        <div class="bodybox posR" >
+            <div class="l lefts  " style="height: 35px;">
+                <div class="t mui-ellipsis" style="">
+                    需要支付 <span id="total_price">{{$total_price|number_format=###/100,2}}</span> 元
+                </div>
+            </div>
+            <div class="mui-row" id="pay_type_btn_wrap">
+                <div class="mui-col-sm-6 mui-col-xs-6">
+                    <a class="pay_type_btn checked" data-pay_type="101" style="margin-left: 20px;"><img style="width: 16px; height: 14px;margin-right: 4px;" src="__PUBLIC__/img/weixin2.png"/>微信支付</a>
+                </div>
+                <div class="mui-col-sm-6 mui-col-xs-6">
+                    <a class="pay_type_btn " data-pay_type="102" style="margin-right: 20px;"><img style="width: 16px; height: 14px;margin-right: 4px;" src="__PUBLIC__/img/alipay.png"/>支付宝支付</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="empt" style="width:100%;height: 80px;">&nbsp;</div>
+
+    <div id="buy" style="display: block">
+        立即购买
+    </div>
+
+</div>
+
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/jq.1.6.1.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script>
+    var sd = new shiDianCommon({});
+    var token   = sd.token('{{$token}}');
+    var baseUrl = '{{$baseUrl}}';
+    var pulicS = '__PUBLIC__/img/';
+    var pay_data_cache = {};
+    mui.ready(function() {
+        //订单参数
+        var c = {{$c|json_encode}};
+
+        //选择支付方式
+        sd.on('#pay_type_btn_wrap','tap','.pay_type_btn',function(e){
+            var pay_type_btn_all = document.querySelectorAll('.pay_type_btn');
+            for (i = 0; i < pay_type_btn_all.length; ++i) {
+//                changeIcon(pay_type_btn_all[i]);
+                removeClass(pay_type_btn_all[i],'checked');
+            }
+            addClass(e.target, 'checked');
+
+            var pay_type_btn_all2 = document.querySelectorAll('.pay_type_btn')
+            for (i = 0; i < pay_type_btn_all2.length; ++i) {
+                changeIcon(pay_type_btn_all2[i]);
+            }
+        });
+
+        //切换图片
+        function changeIcon( a ) {
+            var img = a.querySelector('img');
+            if(null != img){
+                var weixin_img  = '__PUBLIC__/img/weixin.png';
+                var weixin_img2 = '__PUBLIC__/img/weixin2.png';
+                var alipay_img  = '__PUBLIC__/img/alipay.png';
+                var alipay_img2 = '__PUBLIC__/img/alipay2.png';
+                if(hasClass(a,'checked')){
+                    if(101 == a.dataset.pay_type){
+                        img.src = weixin_img2;
+                    }else{
+                        img.src = alipay_img2;
+                    }
+                }else{
+                    if(101 == a.dataset.pay_type){
+                        img.src = weixin_img;
+                    }else{
+                        img.src = alipay_img;
+                    }
+                }
+            }
+        }
+
+        //创建订单
+        var is_submit = false;
+        sd.listen('#buy','tap',function(){
+            if(JSON.stringify(pay_data_cache) != "{}"){
+//                pay_data_cache.data.pay_type=payType();
+                dealPayInfo(pay_data_cache);
+            }else{
+                if(!is_submit){
+                    is_submit = true;
+                    var url = baseUrl+'order';
+                    var param = c;
+                    param.token = token;
+                    param.anonymous = switchStatus('#anonymous');
+                    $.ajax({
+                        url:url,
+                        data:param,
+                        type:'POST',
+                        success:function(data){
+                            is_submit = false;
+                            if('undefined' != typeof data.code){
+                                dealPayInfo(data);
+                            }else{
+                                popTitle('创建订单错误，请稍后再试！',2);
+                            }
+                        },
+                        error:function(){
+                            is_submit = false;
+                            popTitle('网络异常，请稍后再试！',2);
+                        }
+                    });
+                }else{
+                    popTitle('订单正在处理，请稍等',2);
+                }
+            }
+        });
+    });
+
+
+    function dealPayInfo(data) {
+        pay_data_cache = data;
+        if(200 == data.code){
+            pay_data = {pay_info:data.data.pay_info,order_id:data.data.id,pay_type:payType()};
+            if(101 == data.data.ftof){
+                cm('该订单支持到店支付，请到店后在店家确认后在订单中支付',function () {
+                    sd.app('order',{type:"101"});
+                },function () {
+                    sd.app('order',{type:"101"});
+                });
+            }else{
+                //把pay_info和支付方式给app
+                sd.app('pay',pay_data);
+            }
+        }else{
+
+            if(1064 == data.code || '1064' == data.code){
+                cm(data.desc,function () {
+                    sd.app('order',{type:"101"});
+                },function () {
+                    sd.app('order',{type:"101"});
+                });
+            }else{
+                popTitle(data.desc,2);
+            }
+        }
+    }
+
+    //支付方式获取
+    function payType() {
+        return $('.pay_type_btn.checked').data('pay_type')+'';
+    }
+
+    //开关状态获取
+    function switchStatus(id) {
+        var isActive = document.querySelector(id).classList.contains("mui-active");
+        if(isActive){
+            return 101;
+        }else{
+            return 102;
+        }
+    }
+
+    function hasClass(obj, cls) {
+        return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+    }
+
+    function addClass(obj, cls) {
+        if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+    }
+
+    function removeClass(obj, cls) {
+        if (hasClass(obj, cls)) {
+            var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+            obj.className = obj.className.replace(reg, ' ');
+        }
+    }
+
+    function toggleClass(obj,cls){
+        if(hasClass(obj,cls)){
+            removeClass(obj, cls);
+        }else{
+            addClass(obj, cls);
+        }
+    }
+
+    //data显示的文字.action:0loading，1.正确，2.错误
+    function popTitle(data,action){
+        if(action==0){
+            iosTooltip(data,pulicS+'oval.svg',300,pulicS+'cenel.png',0.1);
+        }else if(action==1){
+            iosTooltip(data,pulicS+'ok.png',300,'',0);
+        }else if(action == 2){
+            iosTooltip(data,pulicS+'cenel.png',300,'',0);
+        }
+    }
+
+    function iosTooltip(content, url, animateTime, close, showAddTime) {
+        console.log($);
+        $('#Prompt').attr('id')?$('#Prompt').remove():'';
+        $('#Prompt_z_index').attr('id')?$('#Prompt_z_index').remove():'';
+        !showAddTime?showAddTime = 0:'';
+        var html = '<div class=" " id="Prompt_z_index" style="opacity: 0;z-index: 1110; min-height: 95px; position: absolute; width: 100px; height: 100px;background: black;"></div><div id="Prompt" style="z-index: 1110; min-height: 95px; position: absolute; top: 36%;">'+
+                '<div class="PromptBody" style="z-index: 1111; width: 100%; height: 100%;">'+
+                '<div class="yesPrompttool" style="position: absolute;left: -8px;top: -8px;"> <img id="PromptColse" onclick="closeIosTooltip()" class="hide" style="width: 24px;height: 24px;" src="' + close + '"></div>'+
+                '<div class="yesPrompttop" style="height: 60px;    text-align: center;"><img class="PromptBodyImg" style="height: 32px;width: 32px;margin-top: 18px " src="' + url + '"></div>'+
+                '<div class="yesPrompttop" style="color: white;font-size: 14px;text-align: center;letter-spacing:2px;padding:0 15px 5px 15px;">' + content +'</div>'
+        '</div>'+
+        '</div>'
+        $('body').children().eq(0).before(html);
+        var domW = $('#Prompt').width();
+        var domCanW = $('body').width()*0.8;
+        var winW =  $('body').width();
+        if(domW>=domCanW){
+            $('#Prompt,#Prompt_z_index').css('width',domCanW+'px').css('left',$('body').width()*0.1).css('right',$('body').width()*0.1);
+        }else if(domW<=110){
+            $('#Prompt,#Prompt_z_index').css('left',parseInt(winW-110)/2+'px').css('right',parseInt(winW-110)/2+'px');
+        }
+        else{
+            $('#Prompt,#Prompt_z_index').css('left',parseInt(winW-domW)/2+'px').css('right',parseInt(winW-domW)/2+'px');
+        }
+        $("body,html").css({"overflow":"hidden"});
+        $('#Prompt,#Prompt_z_index').css('top',$(window).height()*0.36+$(window).scrollTop());
+        $('#Prompt_z_index').css('height',$('#Prompt').height());
+        $('#Prompt_z_index').css('width',$('#Prompt').width());
+        if(close) {
+            show_mask('', 0.1);
+            $('#PromptColse').removeClass('hide');
+        }
+        $("#Prompt_z_index").animate({
+            opacity: 0.85
+        },animateTime);
+        $("#Prompt").animate({
+            opacity: 1
+        },animateTime+100);
+        if(!close){
+            setTimeout(function(){
+                $("#z-index").remove();
+                hide_mask();
+                $("#Prompt,#Prompt_z_index").animate({opacity: 0}, 300,function(){
+                    $("#Prompt").remove();
+                    $("#Prompt_z_index").remove();
+
+                });
+            },animateTime+1000+showAddTime)
+        }
+    }
+
+    //隐藏遮罩
+    function hide_mask() {
+        $("#z-index").hide();
+        $("#z-index,.z-index").remove();
+    }
+    //显示遮罩
+    function show_mask(top, opacity, anmit) {
+        if(!top) {
+            top = 0;
+        }
+        if(!opacity) {
+            opacity = 0.6;
+        }
+        if(!anmit) {
+            anmit = 700;
+        }
+        var html = '<div id="z-index" class="z-index" style="position: fixed;height: 100%;width: 100%;background: #919191;z-index: 100;opacity: 0;top: ' + top + 'px;left:0"></div>	'
+        $('body').children().eq(0).before(html);
+        $("#z-index").animate({
+            opacity: opacity,
+        }, anmit);
+    }
+
+    function cm(content,t,f) {
+        if(confirm(content)){
+            t();
+        }else{
+            f();
+        }
+    }
+</script>
+</body>
+
+</html>

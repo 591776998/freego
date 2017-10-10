@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>失败原因</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <style>
+        html,body,.main{
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .wrap{
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .header{
+            height: 50px;
+            line-height: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .footer{
+            height: 120px;
+        }
+        textarea{
+            flex: 1;
+            width: 99%;
+            padding: 0;
+            /*height: 100px;*/
+            border: none;
+        }
+        .footer{
+            width: 100%;
+        }
+        .footer a{
+            display: block;
+            height: 60px;
+            width: 100%;
+            text-align: center;
+            line-height: 60px;
+            color: #FFCC00;
+        }
+        .line{
+            height: 1px;
+            background-color: #bbb;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="wrap">
+        <div class="header">
+            告诉特权嘉宾申请不过的理由
+        </div>
+        <textarea class="reason" placeholder="输入打回理由"></textarea>
+        <div class="line"></div>
+        <div class="footer">
+            <a class="send_btn">发送</a>
+            <div class="line"></div>
+            <a class="cancel_btn">取消</a>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/js/jquery.3.2.1.js"></script>
+<script>
+    function sendfail(id){//打回推首
+        var failData={};
+        failData.id=id;
+        failData.desc=$(".reason").val();
+        $.ajax({
+            type:"POST",
+            url:"http://api.myfreego.cn/branch/top/delete",
+            dataType:"json",
+            data:failData,
+            success:function(d){
+                if(200 == d.code){
+                    alert("成功打回");
+                    parent.closeI();
+                }else{
+                    alert(d.desc);
+                }
+            },
+            error:function(d){
+                alert(d);
+            }
+        })
+    }
+
+    $('.wrap').on('click','.send_btn',function () {
+        parent.closeI();
+        parent.noPut($(".reason").val());
+    });
+
+    $('.wrap').on('click','.cancel_btn',function () {
+        parent.closeI();
+    });
+</script>
+</body>
+</html>

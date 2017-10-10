@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+
+    <style type="text/css">
+        .mainColor{
+            color: #F8CD20 !important;
+        }
+        .mui-row.mui-fullscreen>[class*="mui-col-"] {
+            height: 100%;
+        }
+        .mui-col-xs-3,
+        .mui-control-content {
+            overflow-y: auto;
+            height: 100%;
+        }
+        .mui-segmented-control .mui-control-item {
+            line-height: 50px;
+            width: 100%;
+        }
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+            background-color: #fff;
+        }
+
+        .mui-content{
+            font-size: 14px;
+        }
+        .sub_title{
+            font-size: 12px;
+            font-style: italic;
+            color: #f8b323;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        .mui-content{
+            padding-top: {{$h}}px;
+            background-color: #ffffff;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+        li{
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body class="mui-fullscreen">
+<div class="mui-content mui-row mui-fullscreen">
+    <div class="mui-col-xs-3">
+        <div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+        </div>
+    </div>
+    <div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;overflow: scroll">
+        <div>
+           <ul id="segmentedCont" class="mui-table-view">
+           </ul>
+        </div>
+    </div>
+
+
+</div>
+</div>
+
+</body>
+<!--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>-->
+
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/mui.view.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+
+<script>
+
+    //var sd = new shiDianCommon();
+
+   // var token = sd.token('{{$token}}');
+    mui.init();
+    mui.ready(function() {
+      /*  mui('#segmentedControlContents').on('tap','.address_li',function(e){
+
+            shidian('assoc',{association_id:this.getAttribute("id"),title:this.innerText,phone:this.getAttribute('phone')});
+        });
+
+        function error_show($msg) {
+            mui.toast($msg)
+        }
+
+        //和shidianAPP交互
+        function shidian($action, $param) {
+            if (typeof($param != "string")){
+                $param = JSON.stringify($param);
+            }
+            self.location='shidian://'+$action+'?jp='+$param;
+        }*/
+        ajaxW();
+    })
+    function ajaxW(){//加载中国 亚洲
+        $.ajax({
+            type:"GET",
+            url:"http://www.myfreego.cn/getMess.php",
+            data:"do=getW",
+            dataType:'JSON',
+            success:function(d){
+
+                var html='';
+                for(var i=0;i< d.data.length;i++)
+                {
+                    html+='<a class="mui-control-item" onclick="ajaxS('+d.data[i].id+')">'+ d.data[i].title+'</a>'
+                }
+                $("#segmentedControls").append(html);
+            }
+
+        })
+    }
+    function ajaxS(id){
+        $.ajax({
+            type:"GET",
+            data:"do=getS&id="+id,
+            dataType:'JSON',
+            url:"http://www.myfreego.cn/getMess.php",
+            success:function(d){
+                var s="";
+                for(var i=0;i< d.data.length;i++)
+                {
+                    s+='<li class="mui-table-view-cell mui-collapse" add_id="'+d.data[i].id+'">'+
+                          '<a class="mui-navigate-right" >中华自驾联盟'+d.data[i].title+'总会</a>'+
+                          '<div>'+
+                           '<ul class="mui-table-view" id="'+d.data[i].id+'">'+
+                           '</ul>'+
+                           '</div>'+
+                           '</li>'
+                }
+                $("#segmentedCont").empty()
+                $("#segmentedCont").append(s);
+                mui('#segmentedCont').on('tap', 'li', function() { //给li添加点击事件，直接写普通的a标签或者在元素上加onclick事件不成功
+
+                    ajaxC($(this).attr("add_id"));
+                });
+            }
+        })
+    }
+    //渲染左边
+   function ajaxC(id){
+       $.ajax({
+           type:"GET",
+           data:"do=getC&id="+id,
+           dataType:'JSON',
+           url:"http://www.myfreego.cn/getMess.php",
+           success:function(e){
+               var html="";
+               for(var j=0;j< e.data.length;j++)
+               {
+                   html+='<li class="mui-table-view-cell address_li" id="'+e.data[j].id+'">中华自驾联盟'+e.data[j].title+'</li>'
+               }
+               $("#"+id).empty();
+               $("#"+id).append(html);
+
+               mui("#"+id).on('tap','.address_li',function(e){
+
+                   shidian('assoc',{association_id:this.getAttribute("id"),title:this.innerText,phone:this.getAttribute('phone')});
+               });
+
+               function error_show($msg) {
+                   mui.toast($msg)
+               }
+
+               //和shidianAPP交互
+               function shidian($action, $param) {
+                   if (typeof($param != "string")){
+                       $param = JSON.stringify($param);
+                   }
+                   self.location='shidian://'+$action+'?jp='+$param;
+               }
+           }
+       })
+
+   }
+
+</script>
+
+</html>

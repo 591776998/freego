@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>推首审核</title>
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 80%;
+                margin:0 auto;
+                border: 2px solid #DDDDDD;
+                padding-bottom:125px ;
+            }
+            .comment{
+                width: 100%;
+                font-size:0.8em;
+                color: #666666;
+
+            }
+
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 15px auto;
+            }
+
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.1em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 30px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 15px auto;
+            }
+
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.2em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 98%;text-align: center;
+                margin: 15px auto;
+            }
+
+        }
+        .header{
+
+            margin-top: -10px;
+            padding: 16px 0;
+            background: #F9F9F9;
+            color:#FFCC00;
+            font-weight: bold;
+
+
+        }
+        .btn1{
+            border: none;
+            background: #F9F9F9;
+            margin: 0;
+        }
+
+        .btn2{
+            border: none;
+            background: #FFFFFF;
+            padding: 10px 30px;
+
+        }
+        .btn3{
+
+            width:230px;
+            padding: 3px 0;
+        }
+        .btn4{
+            width:165px;
+            padding: 3px 0;
+        }
+        .btn5{
+            border: none;
+            background: #FFFFFF;
+            color:#FFCC00;
+        }
+        .btn6{
+            width: 240px;
+            font-size: 0.8em;
+            padding: 3px 0px;
+        }
+        .header{
+            text-align: center;
+        }
+        .footer{
+            text-align: center;
+            padding: 0;
+        }
+        .footcom{
+            width: 100%;
+            height: 50px;
+            font-size: 1.4em;
+            font-weight: bold;
+            color:#FFCC00;
+            border-bottom: 1px solid #DDDDDD;
+
+        }
+        .table{
+            font-size:1.1em;
+        }
+        button{
+            outline: 0;
+        }
+        .col-xs-4{
+            padding: 0;
+        }
+
+        html,body,.content_wrap{
+            height: 100%;
+        }
+        .content_wrap{
+            display: flex;
+            flex-direction: column;
+        }
+        .content_wrap .content{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .content .footer{
+            height: 100px;
+            width: 100%;
+            bottom: 0;
+        }
+        .content .header{
+            height: 70px;
+
+        }
+        .content .body{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .content .top{
+            height: 180px;
+        }
+        .content .bot{
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="content_wrap">
+            <div class="content">
+                <div class="header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="title" id="myModalLabel">选择推首页的地方</h4>
+                </div>
+                <div class="body" style="padding-bottom:20px ">
+                    <div class="top">
+
+                        <div class="comb"><select class="btn3"><option>中国</option></select></div>
+                        <div class="comb"><select class="btn3"><option>贵州</option></select></div>
+                        <div class="comb"><select class="btn3"><option>贵阳分会</option></select></div>
+                        <div class="comb">
+                            <select class="btn4"><option>24小时</option><option>48小时</option><option>72小时</option><option>96小时</option></select>
+                            <button style="padding: 0 15px">加添</button>
+                        </div>
+                    </div>
+                    <div class="bot">
+
+                        <div class="comb">
+                            <table class="table">
+                                <thead>
+                                <th>
+                                <td></td>
+                                </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>贵州总会</td>
+                                    <td><button class="btn5">删除</button></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="footcom"> <button type="button" class="btn2">推送</button></div>
+                <div class="footcom"> <button type="button" class="btn2" data-dismiss="modal">取消</button></div>
+            </div>
+    <div class="modal fade" id="failModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="dialog" role="document">
+            <div class="content">
+                <div class="header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="title" id="ModalLafailbel">告诉特权嘉宾申请不过的理由</h3>
+                </div>
+                <div class="body"  style="height: 250px;font-size: 1.3em">
+                    你未进行任何地点标记，用户可能！
+                </div>
+                <div class="footer">
+                    <div class="footcom"> <button type="button" class="btn2">发送</button></div>
+                    <div class="footcom"> <button type="button" class="btn2" data-dismiss="modal">取消</button></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="__PUBLIC__/js/jquery.min.js"> </script>
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>好友列表</title>
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <style type="text/css">
+        .comb{
+            cursor: pointer;
+            height: 54px;
+            padding: 2px;
+        }
+        .comb img{
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+            margin-right: 10px;
+        }
+        .comb span{
+            height: 50px;
+            line-height: 50px;
+        }
+        .line{
+            height: 1px;
+            background-color: #ccc;
+            width: 100%;
+        }
+        .comb .right_btn{
+            float: right;
+            width: 60px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #737373;
+            margin-top: 10px;
+            text-align: center;
+            border-radius: 4px;
+        }
+        .comb .right_btn.check{
+            color: white;
+            background-color: #FF9D00;
+            border: none;
+        }
+        .ok{
+            position: fixed;
+            cursor: pointer;
+            bottom: 0;
+            text-align: center;
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            background-color: #FF9D00;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div style="height: 24px;"></div>
+    <div id="mainContent"></div>
+</div>
+<div class="ok">完成</div>
+<script src="__PUBLIC__/js/jquery.min.js"> </script>
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+<script type="text/javascript">
+    var data = [];
+    var user = [];
+    $(function () {
+        ajaxData();
+
+        $('body').on('click','.comb',function () {
+            var btn = $(this).find('.right_btn');
+            var id = $(this).data('id');
+            if(btn.hasClass('check')){
+                var index = in_array(id,data);
+                if(-1 != index){
+                    data.splice(index,1);
+                }
+                btn.removeClass('check');
+            }else{
+                data.push(id);
+                btn.addClass('check');
+            }
+        });
+
+        $('.ok').click(function () {
+            //调用父级的函数
+            if(window.parent. handle_userinfo){
+                window.parent. handle_userinfo(data,userArr(data,user))
+            }
+        });
+    });
+
+    //获取用户数组
+    function userArr(id,user) {
+        var res = [];
+        user.map(function (item) {
+            if(-1 != in_array(item.id,id)){
+                res.push(item);
+            }
+        });
+        return res;
+    }
+
+    //请求数据
+    function ajaxData(p,ps) {
+        $.ajax({
+            type: "GET",
+            url: "{#:web_url('/main/user/index')}",
+            data: {page:p,page_size:ps},
+            success: function (data) {
+                if (data.code = 200) {
+                    user = data.data;
+                    renderData(data.data);
+                }else{
+                    msg(data.desc,2);
+                }
+            },
+            error: function (data) {}
+        })
+
+    }
+    //渲染数据
+    function renderData(data) {
+        var html = data.map(function (item) {
+            var check = '';
+            if(-1 != in_array(item.id,data)){
+                check = 'check';
+            }
+            return '<div class="comb" data-id="'+item.id+'">'+
+                    '<img class="img-rounded src="'+(item.head_img_url?item.head_img_url:'')+'">'+
+                    '<span class="span1">'+item.nick_name+'</span>'+
+                    '<span class="right_btn '+check+'">选择</span> </div>';
+        }).join('<div class="line"></div>');
+        $('#mainContent').html(html);
+    }
+
+    function in_array(item,array) {
+        return ('|' + array.join('|') + '|').indexOf('|' + item + '|')
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <style>
+        @media (min-width:992px) {
+            .row{
+                width: 60%;
+                margin: 0 auto;
+                border-right: 2px solid #DDDDDD;
+                border-left: 2px solid #DDDDDD;
+            }
+            .imgCom{
+                width: 100%;
+                height:135px;
+                margin: 10px 0;
+                background: #F2F2F2 ;
+            }
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+
+        }
+        @media (max-width:376px){
+            .comment{
+                font-size:7px;
+                padding-top: 10px;
+                color: #979797;
+                font-weight:bold;
+            }
+        }
+        @media (min-width:410px){
+            .comment{
+                font-size:1.1em;
+                padding-top: 10px;
+                color: #979797;
+                letter-spacing:0.5px;
+                font-weight:bold;
+            }
+        }
+        a:hover{
+            cursor: pointer;
+        }
+        .main{
+            padding: 10px 8px;
+
+        }
+
+        .span1{
+            background: #D8D8D8;
+            padding: 3px 10px;
+            margin:0 10px;
+            font-weight:normal;
+            border: none;
+            height: 25px;
+            width: 100px;
+        }
+        .span2{
+
+            padding: 6px 10px;
+            font-size: 1.0em;
+            font-weight: normal;
+
+        }
+        .btn{
+            border-radius: 7px;
+            margin-left:5px ;
+            font-size: 0.9em;
+            margin-bottom:5px ;
+            padding: 2px;
+            color: #979797;
+            height: 28px;
+            background: #FFFFFF;
+            border: 1px solid #DDDDDD;
+
+        }
+        .btn1{
+            border-radius: 7px;
+            margin-left:5px ;
+            font-size: 0.9em;
+            margin-bottom:5px ;
+            padding: 2px 5px ;
+            color: #0000ff;
+            height: 28px;
+            background: #FFFFFF;
+            border:none;
+
+        }
+
+        select{
+            width: 60%;
+            height: 20px;
+            color: #000000;
+            font-size: 15px;
+        }
+        a{
+            color:#0000ff;
+            margin: 0 10px;
+        }
+        .imgCom{
+            width: 100%;
+            height: 60px;
+            margin: 10px 0;
+            background: #F2F2F2 ;
+        }
+        textarea{
+            background: #F2F2F2;
+            width: 100%;
+            border:none;
+        }
+        .comm{
+            margin: 25px 0px;
+        }
+        .img_input_wrap{
+            position: relative;
+        }
+        .img_input_wrap .delete_btn{
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+        }
+
+    </style>
+    <!--/script-->
+</head>
+<body>
+<div class="container">
+    <form id="main_form" enctype="multipart/form-data" method="post">
+        <div class="row">
+            <div class="col-xs-12 col-md-8 main">
+                <h2 style="font-weight: bolder">账号</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-8 main">
+                <div class="comment">
+                    {{volist name="a" id="vo"}}
+                        <div class="comm">负责人手机号<input name="phone" value="{{$vo.phone}}" disabled="disabled" type="text" class="span1 user_name" />
+                            <a data-id="{{$vo.id}}" data-type="101" class="btn show_pass_word_input">设置负责人登陆密码</a>
+                        </div>
+                    {{/volist}}
+                    {{empty name="b"}}
+                        <div class="comm">响应者手机号<input name="phone" type="text" class="span1 user_name" />
+                            <a data-id="0" data-type="102"  class="btn show_pass_word_input">设置响应者登陆密码</a>
+                        </div>
+                    {{else /}}
+                    {{volist name="b" id="vo"}}
+                        <div class="comm">响应者手机号<input name="phone" value="{{$vo.phone}}" type="text" class="span1 user_name" />
+                            <a data-id="{{$vo.id}}" data-type="102" class="btn show_pass_word_input">设置响应者登陆密码</a>
+                        </div>
+                    {{/volist}}
+                    {{/empty}}
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+<script src="__PUBLIC__/js/jquery.3.2.1.js"> </script>
+<script type="text/javascript" src="__PUBLIC__/temp/js/md5.js"> </script>
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+<script src="__PUBLIC__/js/seller.js"></script>
+<script type="text/javascript">
+    $(function() {
+        //显示密码修改框
+        $('#main_form').on('click','.show_pass_word_input',function(){
+
+            var the  = $(this);
+            var id   = the.data('id');
+            var type = the.data('type');
+            var wrap = the.parent();
+
+            var pass_dom = '<div style="display: inline-block"><input style="width: 100px" name="pwd" type="password" class="pass"/><a data-id="'+id+'" data-type="'+type+'"  class="set_pass_word">确定</a></div>';
+
+            the.remove();
+            wrap.append(pass_dom);
+        });
+
+        $('#main_form').on('click','.set_pass_word',function () {
+            //修改密码
+            var the  = $(this);
+            var id   = the.data('id');
+            var type = the.data('type');
+            var wrap = the.parent().parent();
+
+            var phone= wrap.find('input[name=phone]').val();
+
+            var pwd  = wrap.find('input[name=pwd]').val();
+                pwd  = (hex_md5("ShiDianAdmin"+pwd)).toUpperCase();
+
+            updatepwd(id,phone,pwd,function (res) {
+                var btn_dom = '<a data-id="'+res.id+'" data-type="'+res.type+'" class="btn show_pass_word_input">设置响应者登陆密码</a>';
+                the.parent().remove();
+                wrap.append(btn_dom);
+            });
+        });
+
+
+    });
+
+    //输入ID和密码，修改密码
+    function updatepwd($id,$phone,$pass,suc) {
+        var url = '';
+        if($id){
+            url = "{{:web_url('/seller/seller/updatepwd')}}";
+        }else{
+            url = "{{:web_url('/seller/seller/create')}}";
+        }
+        $.ajax({
+            url     : url,
+            type    : "POST",
+            dataType: "json",
+            data    : {id:$id,phone:$phone,pwd:$pass},
+            success:function(data){
+                if(200 != data.code){
+                    msg(data.desc,2);
+                }else{
+                    suc(data.data);
+                    msg('成功',1);
+                }
+            },
+            error:function () {
+                msg('网络不稳定，请稍后再试',2);
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

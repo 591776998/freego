@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>自游GO代理商平台</title>
+    <link href="__PUBLIC__/temp/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <script src="__PUBLIC__/temp/js/jquery.min.js"> </script>
+    <script src="__PUBLIC__/temp/js/bootstrap.js"></script>
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 60%;
+                margin:0 auto;
+                border: 2px solid #DDDDDD;
+            }
+            .comment{
+                width: 100%;
+                font-size:1.1em;
+                padding-top: 10px;
+                color: #666666;
+                font-weight:bold;
+            }
+
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+            .comm{
+                width: 100%;
+                margin: 45px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+            .btn1{
+                border: none;
+                background: #F2F2F2;
+                width: 240px;
+            }
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.5em;
+                padding-top: 10px;
+                color: #666666;
+                font-weight:bold;
+            }
+            .comm{
+                width: 100%;
+                margin: 45px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+            .btn1{
+                border: none;
+                background: #F2F2F2;
+                width: 210px;
+
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+
+            }
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.8em;
+                padding-top: 10px;
+                color: #666666;
+                font-weight:bold;
+            }
+            .comm{
+                width: 100%;
+                margin: 55px auto;
+            }
+            .comb{
+                width: 98%;text-align: center;
+                margin: 35px auto;
+            }
+            .btn1{
+                border: none;
+                background: #F2F2F2;
+                width: 230px;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+
+            }
+        }
+
+        .imgCom{
+            width: 180px;
+            height:180px;
+            background: #F2F2F2 ;
+            margin: 0 auto;
+
+        }
+
+
+        .btn2{
+            width: 120px;
+            font-size: 0.7em;
+            margin: 0 10px;
+            padding: 6px 0px;
+            background: #FFFFFF;
+            border:1px solid #FFCC00;
+            border-radius: 8px;
+            font-weight: normal;
+        }
+        .btn3{
+            background: #FFFFFF;
+            border: none;
+            color:#FFCC00;
+            font-weight: bold;
+        }
+        .img-rounded{
+            width: 180px;
+            height:180px;
+        }
+        button{
+            outline: 0;
+        }
+        .mainColor{
+            color: #FFCC00
+        }
+        a:hover, a:focus {
+            color: #FFCC00;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <div class="comment">
+                <div class="comm" style="margin-top:60px">
+                    <div class="imgCom"><img class="img-rounded" src="__PUBLIC__/temp/img/login.png"></div>
+                </div>
+                <div class="comm" style="text-align: center">
+                    <h2><strong>自游GO代理商平台</strong></h2>
+                </div>
+
+                <div class="comm">
+                    <div class="comb">手机号：<input class="btn1" id="phone" type="text"></div>
+                    <div class="comb" >密&nbsp &nbsp&nbsp码：<input class="btn1" style="font-size: 1.0em;font-weight: normal" id="pwd" placeholder="请输入密码或验证码" type="password"></div>
+                </div>
+
+                <div class="comm" style="text-align: center">
+                    <button class="btn2" id="submit">密码登陆</button>
+                    <button class="btn2"  id="codebtn">验证码登陆</button>
+
+                </div>
+                <div class="comm" style="text-align: center">
+                    <a class="mainColor" href="tel:10086" >成为代理商？</a>
+                </div>
+
+            </div>
+            <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content" style="text-align: center">
+                        <div id="content" style="height: 100px;margin-top: 30px">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/temp/js/md5.js"> </script>
+<script type="text/javascript" src="__PUBLIC__/js/branch.js"> </script>
+<script type="text/javascript">
+    $().ready(function(){
+
+        var formDate={};
+        var formCode={};
+        formDate.type = 101;
+
+        //获取验证码
+        $('#codebtn').on('click',function () {
+            formDate.type = 102;
+            formCode.type = 113;
+            formCode.phone=$("#phone").val();
+            $.ajax({
+                type:"POST",
+                url:"{{:web_url('/branch/vcode/save')}}",
+                dataType:"json",
+                data:formCode,
+                success:function(data){
+                    if(data.code=200)  $('#codebtn').val("已发送");
+                    if(data.code=201){
+                        $("#content").text(data.desc);
+                        $('#myModal').modal('toggle');
+                    }
+                },
+                error:function(data){
+                    $("#content").text(data.desc);
+                    $('#myModal').modal('toggle');
+                }
+            })
+        });
+
+        //账号密码登陆
+        $('#submit').on('click',function () {
+            if(formDate.type==101){//判断验证码登陆
+                formDate.pwd=hex_md5("ShiDianAdmin"+$("#pwd").val());
+                formDate.pwd=formDate.pwd.toUpperCase();
+            }
+            else{
+                formDate.vcode=$("#pwd").val();
+                formDate.pwd=null;
+            }
+            formDate.phone=$("#phone").val();
+            $.ajax({
+                type: "POST",
+                url: "{{:web_url('/branch/session/save')}}",
+                dataType:"json",
+                data:formDate,
+                success: function(data) {
+                    if(200 == data.code){
+                        if(101 == data.data.role){
+                            jump("{{:web_url('/branch/index/index')}}");
+                        }else if(102 == data.data.role){
+                            jump("{{:web_url('/branch/art/main')}}");
+                        }else if(103 == data.data.role){
+                            jump("{{:web_url('/branch/seller/main')}}");
+                        }
+                    }else{
+                        $("#content").text(data.desc);
+                        $('#myModal').modal('toggle');
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    $("#content").text("登录失败，请检查网络后重试");
+                    $('#myModal').modal('toggle');
+                }
+            })
+        });
+    })
+</script>
+</body>
+</html>

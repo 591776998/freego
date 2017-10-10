@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>资质提交</title>
+    <link href="__PUBLIC__/temp/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 80%;
+                margin:0 auto;
+                border: 2px solid #DDDDDD;
+                padding-bottom:125px ;
+            }
+            .comment{
+                width: 100%;
+                font-size:0.8em;
+                color: #666666;
+
+            }
+
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+            .header{
+                left: 0px;
+            }
+
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.3em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 30px auto;
+            }
+            .comb{
+                width: 98%;text-align: center;
+                margin: 20px auto;
+            }
+
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.5em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 98%;text-align: center;
+                margin: 25px auto;
+            }
+
+        }
+        .header{
+            width: 100%;
+            padding: 16px 0;
+            background: #F9F9F9;
+            color:#FFCC00;
+            font-weight: bold;
+            position: fixed;
+            top: 0px;
+            z-index: 99999;
+
+        }
+        .btn1{
+            border: none;
+            background: #F9F9F9;
+        }
+        .btn11{
+            border: none;
+            background: #FFFFFF;
+            color: #FFCC00;
+        }
+
+        .btn2{
+            border: none;
+            background: #F9F9F9;
+            width: 210px;
+            padding: 3px 0;
+        }
+        .btn3{
+            border: none;
+            background: #F9F9F9;
+            width:140px;
+            padding: 3px 0;
+        }
+        .btn4{
+            border-radius: 8px;
+            padding: 3px 12px;
+            font-size: 0.8em;
+            background: #FFFFFF;
+            margin-left:  10px;
+
+        }
+        .btn5{
+            border: none;
+            background: #F9F9F9;
+            width: 220px;
+            padding: 3px 0;
+        }
+        .btn6{
+            width: 250px;
+            font-size: 0.7em;
+            padding: 5px 5px;
+        }
+        .btn7{
+            border: none;
+            background: #F9F9F9;
+            width:100%;
+            padding: 3px 5px;
+        }
+        .span1{
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+        .img-rounded{
+            width: 100px;
+            height: 100px;
+        }
+        .hrline{
+            width: 100%;
+            height: 2px;
+            border-top:1px solid #DDDDDD ;
+        }
+        button{
+            outline: 0;
+        }
+        .col-xs-4{
+            padding: 0;
+        }
+        .input-file {
+
+            display: block;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <div class="comment">
+                <form action="./save.html" method="post" id="main_form" enctype="multipart/form-data">
+                    <input name="img1" class="input input-file" type="file" accept="image/*" hidden />
+                    <input name="img2" class="input input-file" type="file" accept="image/*" hidden />
+                    <input name="img3" class="input input-file" type="file" accept="image/*" hidden />
+                    <input name="img4" class="input input-file" type="file" accept="image/*" hidden />
+                    <button type="submit">提交</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/temp/js/jquery.min.js"> </script>
+<script src="__PUBLIC__/temp/js/bootstrap.js"></script>
+<script type="text/javascript" src="__PUBLIC__/temp/js/seller.js"></script>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

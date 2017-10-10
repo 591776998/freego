@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>自游GO</title>
+
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <style>
+        .content{
+            width: 100%;
+            padding: 20px;
+        }
+        .content .main_title{
+            font-size: 16px;
+        }
+        .content .main_img,.img_input{
+            width: 400px;
+            height: 300px;
+        }
+        .content .img_input{
+            position: absolute;
+            opacity: .01;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="jumbotron">
+    <div class="container"> 
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <div class="select_wrap">
+            <select class="select_country">
+                <option >--请选择--</option>
+                {#volist name="data" id="vo"}
+                    <option data-img="{#$vo.img_url}" data-name="s_code"  value="{#$vo.s_code}">{#$vo.name}</option>
+                {#/volist}
+            </select>
+            <select class="select_p"></select>
+            <select class="select_c"></select>
+        </div>
+        <div class="content">
+            <p class="main_title">地区名称</p>
+            <div class="img_wrap">
+                <form class="img_form" enctype="multipart/form-data" method="post">
+                    <input name="image_type" value="117" hidden class="hide">
+                    <input class="img_input" name="img" type="file">
+                </form>
+                <img class="main_img" src="">
+            </div>
+        </div>
+    </div>
+</div>
+{#include file="common/modal" /}
+<script src="__PUBLIC__/js/jquery.min.js"> </script>
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+<script src="__PUBLIC__/js/main.js"></script>
+<script type="text/javascript">
+    var location_name  = '';
+    var location_value = '';
+
+    var select_1 = 'select_country';
+    var select_2 = 'select_p';
+    var select_3 = 'select_c';
+
+    var $select_1 = $('.'+select_1);
+    var $select_2 = $('.'+select_2);
+    var $select_3 = $('.'+select_3);
+
+    var main_img  = $('.main_img');
+    var main_title= $('.main_title');
+    $(function () {
+        //3级联动
+        $('.select_wrap').on('change','select',function () {
+            var the = $(this);
+            var option = the.find("option:selected");
+
+            var location_value = the.val();
+            var location_name  = option.data('name');
+            var img            = option.data('img');
+            var name           = option.text();
+
+            if(the.hasClass(select_1)){
+                changeCountry(location_name,location_value,img,name);
+            }else if(the.hasClass(select_2)){
+                changeP(location_name,location_value,img,name);
+            }else if(the.hasClass(select_3)){
+                changeC(location_name,location_value,img,name);
+            }
+        })
+
+        $('.content').on('change','.img_input',function () {
+            if(location_name){
+                var form_data = new FormData(document.querySelector(".img_form"));
+                form_data.append("location_name", location_name);
+                form_data.append("location_value", location_value);
+                var file = this;
+                $.ajax({
+                    url: "{#:web_url('/main/address/img')}",
+                    type: "POST",
+                    data: form_data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        if(!isError(data,true)){
+                            //1.修改图片
+                            main_img.attr('src',getObjectURL(file.files[0]));
+                        }
+                    },
+                    error:function (e) {
+                        msg('网络不稳定，请稍后再试',2);
+                    }
+                });
+            }else{
+                console.log(location_name);
+                msg('请先选择一个地区或国家',2);
+            }
+        });
+
+    });
+
+    //选择某国家
+    function changeCountry($name,$value,img,text) {
+        location_name  = $name;
+        location_value = $value;
+
+        if(location_name){
+            main_img.attr('src',img);
+            main_title.text(text);
+        }else{
+            main_img.attr('src','');
+            main_title.text('');
+        }
+        getSub(location_name,location_value,function (data) {
+            var html = '<option data-img="" data-name="" value="">--请选择--</option>';
+            html += data.map(function (vo) {
+                return '<option data-img="'+vo.img_url+'" data-name="'+vo.code_name+'" value="'+vo.code_value+'">'+vo.name+'</option>';
+            }).join('');
+            $select_2.empty();
+            $select_3.empty();
+            $select_2.append(html);
+        });
+    }
+
+    //选择某省或者某外国城市
+    function changeP($name,$value,img,text) {
+        location_name  = $name;
+        location_value = $value;
+
+        if(location_name){
+            main_img.attr('src',img);
+            main_title.text(text);
+        }else{
+            main_img.attr('src','');
+            main_title.text('');
+        }
+
+        getSub(location_name,location_value,function (data) {
+            $select_3.empty();
+            if('p_code' == $name){
+                var html = '<option data-img="" data-name="" value="">--请选择--</option>';
+                html += data.map(function (vo) {
+                    return '<option data-img="'+vo.img_url+'" data-name="'+vo.code_name+'" value="'+vo.code_value+'">'+vo.name+'</option>';
+                }).join('');
+                $select_3.append(html);
+            }
+        });
+    }
+
+    //选择某市
+    function changeC($name,$value,img,text) {
+        location_name  = $name;
+        location_value = $value;
+
+        if(location_name){
+            main_img.attr('src',img);
+            main_title.text(text);
+        }else{
+            main_img.attr('src','');
+            main_title.text('');
+        }
+    }
+
+    function getSub($name,$code,func) {
+        if($name){
+            $.ajax({
+                type: "POST",
+                url: "{#:web_url('main/address/sub')}",
+                dataType:"json",
+                data:{location_name:$name,location_value:$code},
+                success: function(data) {
+                    if(!isError(data,true)){
+                        func(data.data);
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    msg('网络不稳定，请稍后再试',2);
+                }
+            });
+        }
+    }
+
+</script>
+</body>
+</html>

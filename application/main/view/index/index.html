@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>自游GO</title>
+
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <style>
+        form label{
+            min-width:75px;
+        }
+        .mainColor{
+            color: #FF9D00;
+        }
+        .mainBgColor{
+            background-color: #FF9D00;
+        }
+        .bgClear{
+            background: none;
+        }
+        .submit{
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <a href="{#:web_url('/main/art/create')}">写游记</a>
+        <a href="{#:web_url('/main/art/create',['type'=>102])}">写活动</a>
+        <a href="{#:web_url('/main/address/editor')}">设置地点图片</a>
+    </div>
+</div>
+{#include file="common/modal" /}
+<script src="__PUBLIC__/js/jquery.min.js"> </script>
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+<script type="text/javascript" src="__PUBLIC__/temp/js/md5.js"> </script>
+<script src="__PUBLIC__/js/main.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>商户注册</title>
+    <link href="__PUBLIC__/temp/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <script src="__PUBLIC__/temp/js/jquery.min.js"> </script>
+    <script src="__PUBLIC__/temp/js/bootstrap.js"></script>
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 80%;
+                margin:0 auto;
+                border: 2px solid #DDDDDD;
+                padding-bottom:125px ;
+            }
+            .comment{
+                width: 100%;
+                font-size:0.8em;
+                color: #666666;
+
+            }
+
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.2em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 30px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+
+            }
+
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.3em;
+                padding-top: 10px;
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 98%;text-align: center;
+                margin: 35px auto;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+
+            }
+
+        }
+        .header{
+
+            margin-top: -10px;
+            padding: 16px 0;
+            background: #F9F9F9;
+            color: #FFCC00;
+            font-weight: bold;
+
+
+        }
+        .btn1{
+            border: none;
+            background: #F9F9F9;
+        }
+
+        .btn2{
+            border: none;
+            background: #F9F9F9;
+            width: 240px;
+            padding: 3px 0;
+        }
+        .btn3{
+            border: none;
+            background: #F9F9F9;
+            width:112px;
+            padding: 3px 0;
+        }
+        .btn4{
+            border-radius: 8px;
+            padding: 3px 12px;
+            font-size: 0.8em;
+            background: #FFFFFF;
+            margin-left:  10px;
+
+        }
+        .btn5{
+            border: none;
+            background: #F9F9F9;
+            width: 220px;
+            padding: 3px 0px;
+        }
+        .btn6{
+            width: 240px;
+            font-size: 0.8em;
+            padding: 3px 0px;
+        }
+        button{
+            outline: 0;
+        }
+        .col-xs-4{
+            padding: 0 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <div class="comment">
+                <div class="row header">
+                    <div class="col-xs-4 col-md-4" style="text-align: left">
+                        <button class="btn1" id="headbtn">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            首页</button>
+                    </div>
+                    <div class="col-xs-4 col-md-4" style="color: #080808; text-align: center;">
+                        <button class="btn1">创建账户</button></div>
+                    <div class="col-xs-4 col-md-4" style=" text-align: right;">
+                        <button class="btn1" id="submit"  >
+                            下一步<span class="glyphicon glyphicon-chevron-right"></span>
+                        </button></div>
+                </div>
+
+                <div class="comm">
+                    地 &nbsp&nbsp区：<select class="btn6" id="pre_phone">
+                    <option value="86">+86（中国）</option>
+                    <option value="66">+66（泰国）</option>
+                    <option value="856">+856（老挝）</option>
+                    <option value="855">+855（柬埔寨）</option>
+                    <option value="1">+1（美国）</option>
+                    <option value="61">+61（澳大利亚）</option>
+                    <option value="43">+43（奥地利）</option>
+                </select>
+                </div>
+                <div class="comm">
+                    手机号：<input class="btn2" type="text" id="phone">
+                </div>
+                <div class="comm">
+                    验证码：<input class="btn3" type="text" id="vcode"><button class="btn4" id="codebtn">发送验证码</button>
+                </div>
+                <div class="comm">
+                    设置密码：<input type="password" id="pwd1" class="btn5" >
+                </div>
+                <div class="comm">
+                    确认密码：<input type="password" id="pwd2" class="btn5">
+                </div>
+
+                <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content" style="text-align: center">
+                            <div id="content" style="height: 100px;margin-top: 30px">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/temp/js/md5.js"> </script>
+<script type="text/javascript" src="__PUBLIC__/js/seller.js"> </script>
+<script type="text/javascript">
+    $().ready(function(){
+        var formCode={};
+        var formDate={};
+
+        //跳转首页
+        $("#headbtn").click(function(){
+            window.history.back();
+//            location.href="{{:web_url('/seller/session/login')}}";
+        })
+        //获取验证码
+        $("#codebtn").click(function(){
+            formCode.type = 112;
+            formCode.pre_phone=$("#pre_phone").val();
+            formCode.phone=$("#phone").val();
+            $.ajax({
+                type:"POST",
+                url:"{{$baseUrl}}seller/vcode/save",
+                dataType:"json",
+                data:formCode,
+                success:function(data){
+                    if(data.code=200)
+                        $('#codebtn').val("已发送");
+                    if(data.code=201){
+                        $("#content").text(data.desc);
+                        $('#myModal').modal('toggle');
+                    }
+                },
+                error:function(data){
+                    $("#content").text(data.desc);
+                    $('#myModal').modal('toggle');
+                }
+            })
+        })
+        //提交
+        $('#submit').on('click',function () {
+            if($("#pwd1").val()==$("#pwd2").val()){//两次密码一致
+                formDate.pwd=hex_md5("ShiDianAdmin"+$("#pwd1").val());
+                formDate.pwd=formDate.pwd.toUpperCase();
+                formDate.phone=$("#phone").val();
+                formDate.pre_phone=$("#pre_phone").val();
+                formDate.vcode=$("#vcode").val();
+                $.ajax({
+                    type: "POST",
+                    url: "{{$baseUrl}}seller/seller/save",
+                    dataType:"json",
+                    data:formDate,
+                    success: function(data) {
+                        if(200 == data.code){
+                            if(data.data.info_status==101){
+                                jump("{{:web_url('/seller/session/login')}}");
+                            }
+                            else if(data.data.info_status==102){
+                                if(choose('资质还在审核中，去查看？')){
+                                    jump("{{:web_url('/seller/sellerinfo/res')}}");
+                                }
+                            }
+                            else if(data.data.info_status==103){
+//                                $("#content").text("还未提交审查资格");
+//                                $('#myModal').modal('toggle');
+                                if(choose('资质失效或未提交，现在去提交？')){
+                                    jump("{{:web_url('/seller/sellerinfo/editor')}}");
+                                }
+                            }
+                            else {
+//                                $("#content").text("资质失效或不存在");
+//                                $('#myModal').modal('toggle');
+                                if(choose('资质失效或未提交，现在去提交？')){
+                                    jump("{{:web_url('/seller/sellerinfo/editor')}}");
+                                }
+                            }
+                        }else{
+                            $("#content").text(data.desc);
+                            $('#myModal').modal('toggle');
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        $("#content").text("登录失败，请检查网络后重试");
+                        $('#myModal').modal('toggle');
+
+                    }
+                })
+            }
+            else{
+                $("#content").text("两次输入密码不一致");
+                $('#myModal').modal('toggle');
+            }
+        });
+    })
+</script>
+</body>
+</html>

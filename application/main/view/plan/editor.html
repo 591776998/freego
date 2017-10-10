@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>编辑套餐</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="__PUBLIC__/temp/css/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/skin.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        label{
+            text-align: right;
+        }
+        .form-group{
+        }
+        .submit_btn{
+            display: block;
+            width: 150px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+<!--<div id="tool_top">-->
+    <!--<div class="wrapper">-->
+        <!--<span class="b save_btn" title="保存">保存</span>-->
+    <!--</div>-->
+<!--</div>-->
+<div style="height: 81px;"></div>
+<!-- plan_type  99蹭车消费 100扫码消费 101普通套餐 102附加必买套餐 103附加选购套餐 -->
+<!-- price_type 价格计算方式 101时间*价格*数量 102数量*价格 103时间*价格*保额*数量 -->
+<!-- time_type  时间模式的类型 0无限制 101小时段制 102日期段制 103日期制 -->
+
+<div class="list">
+    <div class="item">
+
+            <form id="main_form" class="plan_form form-horizontal" method="post">
+                <input type="number" name="id" value="{#$data.id}" hidden/>
+                <div class="form-group">
+                    <label class=" col-sm-2">套餐名称</label>
+                    <div class=" col-sm-10">
+                        <input name="title" value="{#$data.title}" type="text" class="form-control" placeholder="套餐名称"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2">套餐简介</label>
+                    <div class=" col-sm-10">
+                        <input name="content" value="{#$data.content}" type="text" class="form-control " placeholder="套餐简介" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2">挂牌价</label>
+                    <div class=" col-sm-10">
+                        <input name="price" value="{#$data.price|number_format=###/100,2}" type="number" class="form-control" placeholder="单位元"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2">实售价</label>
+                    <div class=" col-sm-10">
+                        <input name="fact_price" value="{#$data.fact_price|number_format=###/100,2}" type="number" class="form-control" placeholder="单位元"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2">积分</label>
+                    <div class=" col-sm-10">
+                        <input name="back_points" value="{#$data.back_points}" type="number" class="form-control" placeholder="请输入正整数"/>
+                    </div>
+                </div>
+                
+                
+                <div class="form-group linkage_wrap">
+                    <div class="col-sm-2"></div>
+                    <div class="checkbox col-sm-10">
+                        <label>
+                            <input name="has_max_num" class="linkage_btn" type="checkbox" {#eq name="data.has_max_num" value="101"}checked="checked" {#/eq}> 设置库存数
+                        </label>
+                    </div>
+                    <div class="linkage_box">
+                        <label class="col-sm-2 ">总数</label>
+                        <div class="col-sm-10 ">
+                            <input name="total_num" value="{#$data.total_num}" type="number" class="form-control" placeholder="请输入正整数"/>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group linkage_wrap">
+                    <div class="col-sm-2"></div>
+                    <div class="checkbox col-sm-10">
+                        <label>
+                            <input  name="has_pre_num"  class="linkage_btn" type="checkbox" {#eq name="data.has_pre_num" value="101"}checked="checked" {#/eq} > 设置限购
+                        </label>
+                    </div>
+                    <div class="linkage_box">
+                        <label class="col-sm-2">限购数</label>
+                        <div class="col-sm-10">
+                            <input name="pre_num" value="{#$data.pre_num}" type="number" class="form-control " placeholder="请输入正整数"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2">套餐类型</label>
+                    <div class="col-sm-10">
+                        <select name="plan_type" class="form-control" >
+                            <option {#eq name="$data.plan_type" value="101" }selected="selected"{#/eq} value="101">主套餐（单选）</option>
+                            <option {#eq name="$data.plan_type" value="102" }selected="selected"{#/eq} value="102">可选套餐（无最低限制购买数量）</option>
+                            <option {#eq name="$data.plan_type" value="103" }selected="selected"{#/eq} value="103">捆绑套餐（捆绑购买最少1个）</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2">价格计算方式</label>
+                    <div class="col-sm-10">
+                        <select name="price_type" class="form-control" >
+                            <option {#eq name="$data.price_type" value="102" }selected="selected"{#/eq} value="102">数量x价格</option>
+                            <option {#eq name="$data.price_type" value="101" }selected="selected"{#/eq} value="101">时间x价格x数量</option>
+                            <option {#eq name="$data.price_type" value="103" }selected="selected"{#/eq} value="103">时间段x价格x保额x数量</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2">时间计算方式</label>
+                    <div class="col-sm-10">
+                        <select name="time_type" class="form-control" >
+                            <option {#eq name="$data.time_type" value="101" }selected="selected"{#/eq} value="101">小时段制</option>
+                            <option {#eq name="$data.time_type" value="102" }selected="selected"{#/eq} value="102">日期段制</option>
+                            <option {#eq name="$data.time_type" value="103" }selected="selected"{#/eq} value="103">日期制</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input name="need_book" value="102" class="hide" hidden>
+                    <input name="ftof" value="102" class="hide" hidden>
+                    <input name="verify" value="102" class="hide" hidden>
+
+                    <!--<div class="col-sm-2"></div>-->
+                    <!--<div class="checkbox col-sm-10">-->
+                        <!--<label>-->
+                            <!--<input name="need_book" value="101"  type="checkbox" {#eq name="data.need_book" value="101"}checked="checked" {#/eq}> 购买前需店家确认还有该商品-->
+                        <!--</label>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-2"></div>-->
+                    <!--<div class="checkbox col-sm-10">-->
+                        <!--<label>-->
+                            <!--<input name="ftof" value="101"  type="checkbox" {#eq name="data.ftof" value="101"}checked="checked" {#/eq}> 可支持到店支付-->
+                        <!--</label>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-2"></div>-->
+                    <!--<div class="checkbox col-sm-10">-->
+                        <!--<label>-->
+                            <!--<input name="verify" value="101"  type="checkbox" {#eq name="data.verify" value="101"}checked="checked" {#/eq} > 是否需要验票扫码-->
+                        <!--</label>-->
+                    <!--</div>-->
+
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default submit_btn">提交</button>
+                </div>
+        </form>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/temp/js/bootstrap.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/main.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        $('#main_form').on('click','.submit_btn',function () {
+            var formData = new FormData(document.querySelector('#main_form'));
+            $.ajax({
+                url:"{#:web_url('/main/plan/update')}",
+                data:formData,
+                type: "POST",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success:function (data) {
+                    if(200 != data.code){
+                        msg(data.desc,2);
+                    }else{
+                        //成功，回调父页面的函数，创建一个子项
+                        //关闭本页面
+                        if(window.opener){
+                            window.opener.plan_callback(data.data);
+                        }
+                        //关闭本页面
+                        window.close();
+                        msg('保存成功 ！！',1);
+                    }
+                    return false;
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    msg("保存失败，请检查网络后重试",2);
+                    return false;
+                }
+            });
+        });
+
+        initLinkage();
+    });
+    
+    //设置select的联动显示
+    function iniLinkageSelect() {
+        
+    }
+    
+    //设置 联动
+    function initLinkage() {
+        //初始化
+        $('.linkage_wrap .linkage_btn').each(function(){
+            toggleLinkageBox($(this).is(':checked'),$(this).parents('.linkage_wrap').find('.linkage_box'));
+        });
+        //设置监听
+        $('.linkage_wrap').on('change','.linkage_btn',function () {
+            var linkage_wrap = $(this).parents('.linkage_wrap');
+            var linkage_box  = linkage_wrap.find('.linkage_box');
+            toggleLinkageBox($(this).is(':checked'),linkage_box);
+        });
+    }
+
+    //切换 联动插件 显示区的显示和隐藏
+    function toggleLinkageBox(status,dom) {
+        if(status){
+            dom.show();
+        }else{
+            dom.hide();
+        }
+    }
+    
+</script>
+</body>
+</html>

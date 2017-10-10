@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <style>
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        body,.mui-content{
+            background-color: white;
+        }
+        a,a:hover,a:active{
+            text-decoration: none !important;
+            text-decoration-color: #fff;
+        }
+        .mui-bar-nav~.mui-content {
+            padding-top: 64px;
+        }
+        a{
+            color: black;
+        }
+        a:hover{
+            color: black;
+        }
+        .main{
+        }
+        .row{
+            display: flex;
+            flex-direction: column;
+            margin-left: 20px;
+            margin-right: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .title_wrap{
+            display: flex;
+            flex-direction: row;
+        }
+        .title_wrap span{
+            height: 30px;
+            line-height: 30px;
+            font-size: 14px;
+            overflow: hidden;
+        }
+        .title_wrap span:first-child{
+            flex: 1;
+        }
+        .title_wrap span:last-child{
+            width: 100px;
+            text-align: right;
+        }
+        .item_content{
+            display: flex;
+            flex-direction: row;
+            color: black;
+        }
+        .item_content span{
+            height: 30px;
+            line-height: 30px;
+            font-size: 14px;
+        }
+        .item_content span:first-child{
+            flex: 1;
+        }
+        .item_content span:last-child{
+            width: 100px;
+            text-align: right;
+        }
+        .item_content .tag_wrap{
+            width: 150px !important;
+        }
+        .line{
+            background-color: #ccc;
+            height: 1px;
+
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+        .tag{
+            color: white;
+            height: 20px;
+            padding-left: 6px;
+            padding-right: 6px;
+            background-color: #ccc;
+            border-radius: 4px;
+        }
+        .footer{
+            display: flex;
+            flex-direction: column;
+        }
+        .footer p{
+            margin-top: 20px;
+        }
+        .footer a,.footer p{
+            text-align: center;
+        }
+        .footer .normal_btn{
+            color: #f4a51d;
+            font-size: 20px;
+        }
+        .footer .default_btn{
+            background-color: #ccc;
+            font-size: 20px;
+            width: 120px;
+            margin: 0 auto;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: white;
+            border-radius: 4px;
+        }
+        #qrcode{
+            margin: 0 auto;
+            text-align: center;
+        }
+        .mui-popup-inner-text div{
+            height: 64px;
+            line-height: 64px;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        .mui-popup-button{
+            color: #f4a51d;
+        }
+        .mui-popup-inner-text .item_line{
+            width: 100%;
+            height: 1px;
+            background-color: #dadada;
+        }
+        .mui-popup-inner{
+            padding-bottom: 0;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+</head>
+
+<body>
+{{eq name="is_app" value="102"}}
+{{include file="web/h5_view_head" /}}
+{{else/}}
+<header class="mui-bar mui-bar-nav" style="padding-top: 20px;height: 64px;">
+    <a id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left mainColor"><span class="ltext"></span></a>
+    <h1 class="mui-title">{{$title}}</h1>
+</header>
+{{/eq}}
+<div class="mui-content">
+    <div class="main">
+        <div class="row">
+            <div class="title_wrap">
+                <span>{{$data.title}}</span>
+                <span>{{$data.total_price|number_format=###/100,2}}￥</span>
+            </div>
+            {{volist name="data.order_item" id="vo"}}
+            <div class="item">
+                <div class="item_content">
+                    <span>{{$vo.title}}{{neq name="vo.item_type" value="100"}}x{{$vo.num}}{{/neq}}</span>
+                    <span>返{{$vo.back_points}}积分</span>
+                </div>
+                <div class="item_content">
+                    {{neq name="vo.time_type" value="0"}}
+                        {{switch name="vo.time_type" }}
+                            {{case value="101" break="1"}}<span>{{$vo.s_time|formatTimeStr=###,3}} 至 {{$vo.e_time|formatTimeStr=###,3}}</span>{{/case}}
+                            {{case value="102" break="1"}}<span>{{$vo.s_date|formatTimeStr=###,1}} 至 {{$vo.e_date|formatTimeStr=###,1}}</span>{{/case}}
+                            {{case value="103" break="1"}}<span>{{$vo.u_date|formatTimeStr=###,1}}</span>{{/case}}
+                            {{default /}}<span></span>
+                        {{/switch}}
+                    {{/neq}}
+
+                    <span class="tag_wrap">
+                    {{neq name="vo.book_status" value="0"}}
+                        {{switch name="vo.book_status" }}
+                            {{case value="101" break="1"}}<a class="tag">正在预定</a>{{/case}}
+                            {{case value="102" break="1"}}<a class="tag">正在预定</a>{{/case}}
+                            {{case value="103" break="1"}}<a class="tag">预定成功</a>{{/case}}
+                            {{default /}}<span></span>
+                        {{/switch}}
+                    {{/neq}}
+                    {{eq name="vo.ftof" value="101"}}
+                        <a class="tag">到店支付</a>
+                    {{/eq}}
+                    </span>
+                </div>
+            </div>
+            {{/volist}}
+        </div>
+        <div class="line"></div>
+        <div class="row">
+            {{switch name="data.order_type" }}
+                {{case value="100" break="1"}}
+                    <a class="item_content" href="{{:web_url('/index/web/place',['id'=>$data['seller_id'],'is_web'=>'101','token'=>$token])}}">
+                        <span class="mainColor">地点详情</span>
+                        <span class="mainColor">></span>
+                    </a>
+                {{/case}}
+                {{case value="101" break="1"}}
+                    {{volist name="data.services_id_arr" id="vo"}}
+                        <a class="item_content" href="{{:web_url('/index/web/services',['id'=>$vo,'is_web'=>'101','token'=>$token])}}">
+                            <span class="mainColor">产品/服务详情</span>
+                            <span class="mainColor">></span>
+                        </a>
+                    {{/volist}}
+                    <a class="item_content" href="{{:web_url('/index/web/place',['id'=>$data['seller_id'],'is_web'=>'101','token'=>$token])}}">
+                        <span class="mainColor">地点详情</span>
+                        <span class="mainColor">></span>
+                    </a>
+                {{/case}}
+                {{case value="102" break="1"}}
+                    {{volist name="data.services_id_arr" id="vo"}}
+                    <a class="item_content" href="{{:web_url('/index/web/services',['id'=>$vo,'is_web'=>'101','token'=>$token])}}">
+                        <span>产品/服务详情</span>
+                        <span>></span>
+                    </a>
+                    {{/volist}}
+                    <a class="item_content" href="{{:web_url('/index/web/art',['id'=>$data['activity_id'],'is_web'=>'101','token'=>$token])}}">
+                        <span class="mainColor">活动详情</span>
+                        <span class="mainColor">></span>
+                    </a>
+                {{/case}}
+                {{case value="103" break="1"}}
+                    <a class="item_content" href="{{:web_url('/index/web/art',['id'=>$data['activity_id'],'is_web'=>'101','token'=>$token])}}">
+                        <span class="mainColor">活动详情</span>
+                        <span class="mainColor">></span>
+                    </a>
+                {{/case}}
+                {{default /}}
+            {{/switch}}
+        </div>
+        <div class="line"></div>
+        <div class="row">
+            {{volist name="data.time_str_arr" id="vo"}}
+            <p>{{$vo}}</p>
+            {{/volist}}
+        </div>
+        <div class="row footer">
+            {{switch name="data.order_status" }}
+                {{case value="1" break="1"}}<a class="order_btn default_btn">正在预定</a><p>约5至10分钟确认预定结果</p>{{/case}}
+                {{case value="2" break="1"}}<a class="order_btn normal_btn pay_type_btn">立即线上支付</a>{{/case}}
+                {{case value="3" break="1"}}<p class="order_desc">订单已过期或失效</p>{{/case}}
+                {{case value="6" break="1"}}<a class="order_btn normal_btn comment_btn">立即点评</a><p>点评获取积分兑换奖品</p>{{/case}}
+                {{case value="7" break="1"}}{{/case}}
+                {{default /}}
+            {{/switch}}
+
+            {{eq name="data.pay_time" value="0"}}
+                <a style="height: 60px;line-height: 60px;" class="order_btn normal_btn delete_btn">取消订单</a>
+            {{/eq}}
+
+            {{eq name="data.verify" value="101"}}
+                {{if condition="($data['order_status'] == 6) OR ($data['order_status'] == 7)"}}
+                    <div id="qrcode"></div>
+                    <p>{{$data.verify_code}}</p>
+                    <p>等待输码验票</p>
+                {{/if}}
+            {{/eq}}
+
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/jquery.3.2.1.js"></script>
+<script src="__PUBLIC__/js/qrcode.min.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script>
+    //    var ss = new shiDianCommon({});
+    var sd = new shiDianCommon();
+
+    var token   = sd.token('{{$token}}');
+    var baseUrl = '{{$baseUrl}}';
+    var pulicS  = '__PUBLIC__/img/';
+    mui.ready(function() {
+
+//        var qrcode = document.querySelector('#qrcode');
+//        if(null != qrcode){
+//            $order = {order_no:'{{$data.order_no}}'};
+//            var qr = new QRCode(qrcode, {
+//                text: "shidian://order?jp="+JSON.stringify($order),
+//                width: 128,
+//                height: 128,
+//                colorDark : "#000000",
+//                colorLight : "#ffffff",
+//                correctLevel : QRCode.CorrectLevel.H
+//            });
+//        }
+
+        //弹出支付方式选择
+        mui("body").on('tap','.pay_type_btn',function() {
+            mui.alert(' 1', '选择支付方式', '取消', null, 'div');
+            var popup = document.querySelector('.mui-popup-text');
+            popup.innerHTML = '<div class="mui-popup-inner-text"> ' +
+                    '<div class="item_line"></div>' +
+                    '<div class="pay_btn" data-pay_type="100"><p>零钱（剩余￥{{$user.money|number_format=###/100,2}}）</p></div>' +
+                    '<div class="item_line"></div>' +
+                    '<div class="pay_btn" data-pay_type="102">支付宝支付 ></div>' +
+                    '<div class="item_line"></div>' +
+                    '<div class="pay_btn" data-pay_type="101">微信支付 ></div>' +
+                    '</div>';
+        });
+
+        mui("body").on('tap','.pay_btn',function(){
+            //获取id
+            getPayInfo(this.dataset.pay_type);
+            mui.closePopup();
+        });
+
+        mui("body").on('tap','.mui-popup-backdrop',function(){
+            mui.closePopup();
+        });
+
+        mui("body").on('tap','.comment_btn',function(){
+            {{if condition="$data['order_type'] == 103"}}
+                var type    = 112;
+                var main_id = '{{$data.seller_id}}';
+            {{elseif condition="$data['order_type'] == 102"/}}
+                var type    = 103;
+                var main_id = '{{$data.activity_id}}';
+            {{else/}}
+                var type    = 104;
+                var main_id = '{{$data.seller_id}}';
+            {{/if}}
+            sd.app('comment',{order_id:'{{$data.id}}',main_type:type+'',main_id:main_id+''});
+        });
+
+        mui("body").on('tap','.delete_btn',function(){
+            if(confirm('您确定要取消这个订单？')){
+                var param = {id:'{{$data.id}}',token:token};
+                $.ajax({
+                    url:"{{:web_url('/order/delete')}}",
+                    data:param,
+                    type:'POST',
+                    success:function(data){
+                        if(200 != data.code){
+                            msg(data.desc,2);
+                        }else{
+
+                            msg('取消成功！',1);
+                            sd.app('pop',{});
+                        }
+                    },
+                    error:function () {
+                        msg('网络不稳定，请稍后再试！',1);
+                    }
+                });
+            }
+        });
+
+        //重新绑定a标签的事件
+        mui("body").on('tap','a',function(){
+            var url = $(this).attr('href');
+            if(url){
+                self.location = url;
+            }
+        });
+
+        //delete_btn
+    });
+    var is_submit = false;
+    function getPayInfo(pay_type) {
+        if(is_submit){
+            return msg('订单正在处理中，请稍候！',2);
+        }
+        is_submit = true;
+        var url = baseUrl+'orderconfirm/read';
+        var param = {id:'{{$data.id}}',token:token};
+        $.ajax({
+            url:url,
+            data:param,
+            type:'POST',
+            success:function(data){
+                if('undefined' != typeof data.code){
+                    if(200 == data.code){
+                        //把pay_info和支付方式给app
+                        sd.app('pay',{pay_info:data.data,order_id:'{{$data.id}}',pay_type:pay_type+''});
+                    }else{
+                        msg(data.desc,2);
+                    }
+                }else{
+                    msg('创建订单错误，请稍后再试！',2);
+                }
+                is_submit = false;
+            },
+            error:function(){
+                msg('网络异常，请稍后再试！',2);
+                is_submit = false;
+            }
+        });
+    }
+    function msg(data,type) {
+        if(2 == type){
+            alert(data);
+        }
+    }
+
+</script>
+</body>
+
+</html>

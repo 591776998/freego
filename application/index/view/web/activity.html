@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/swiper.min.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/com.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/activity.css">
+    <style>
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        a,a:hover,a:active{
+            text-decoration: none !important;
+            text-decoration-color: #fff;
+        }
+        .yellow {
+            color: #f49700 !important;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        .vjs-big-play-button{
+            display: none !important;
+        }
+        .singup .bodybox .rights {
+              width: 120px;
+        }
+
+        .radius_btn{
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            border: 1px solid rgb(255,169,0);
+            line-height: 16px;
+            text-align: center;
+        }
+        .num_btn_wrap span{
+            display: inline-block;
+            text-align: center;
+            font-size: 16px;
+            color: rgb(255,169,0);
+            margin-left: 10px;
+        }
+        .num_btn_wrap a{
+            text-align: center;
+            font-size: 16px;
+            color: rgb(255,169,0);
+            margin-left: 10px;
+        }
+        .num_btn_wrap .num{
+            width: 32px;
+            font-size: 14px;
+        }
+        .mui-bar-nav~.mui-content {
+             padding-top: 64px;
+        }
+        .black40{
+            height: 40px;
+        }
+        /*滑动插件*/
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+        }
+        .swiper-slide {
+            overflow: hidden;
+        }
+        .album_wrap{
+            height: 100%;
+            width: 100%;
+            background-color: black;
+            z-index: 112;
+            position: fixed;
+        }
+        .ablum_content .close_btn{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50px;
+            height:50px;
+            z-index: 2;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+        .head{
+            position: fixed;
+            top: 0px;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background: none;
+            z-index: 100000;
+        }
+        .header{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 64px;
+            background: none;
+            font-size: 1.3em !important;
+            padding: 15px 6px;
+        }
+        .headimg{
+            width:100%;
+            height: 64px;
+        }
+        .mui-btn, button, input[type=button], input[type=reset], input[type=submit] {
+            font-size: 16px;
+            padding: 6px 8px;
+        }
+        .mui-table-view-cell:after{
+            background-color:none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="album_wrap" style="display: none;">
+    <div class="swiper-container ablum_content">
+        <img class="close_btn" src="__PUBLIC__/img/close.png" />
+        <div class="swiper-wrapper" >
+            {{volist name="content" id="vo"}}
+            {{eq name="vo.para_type" value="102"}}
+            <div class="swiper-slide" >
+                <div class="swiper-zoom-container">
+                    <img class="lazyload" data-src="{{$vo.img_url}}" src="__PUBLIC__/img/zhanwei.png" />
+                </div>
+            </div>
+            {{/eq}}
+            {{/volist}}
+
+        </div>
+        <!--<div class="swiper-pagination swiper-pagination-white swiper-pagination-bullets"></div>-->
+    </div>
+</div>
+
+{{if condition="101 == $is_editor"}}
+<header class="mui-bar mui-bar-nav" style="padding-top: 20px;height: 64px;">
+    <a id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left mainColor"><span class="ltext"></span></a>
+    <h1 class="mui-title">{{$data.title}}</h1>
+    <button class="mui-btn mui-btn-link mui-pull-right mainColor pop" >编辑</button>
+</header>
+{{elseif condition="101 == $is_ex"/}}
+<div  class="head">
+    <img class="headimg" src="/static/img/menulogo.png">
+    <div class="header">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mainColor"><span class="ltext"></span></a>
+
+        <button class="mui-btn  mui-btn-link mui-pull-right mainColor set_best" >加精</button>
+        <button class="mui-btn  mui-btn-link mui-pull-right mainColor set_top" >推首</button>
+        <button class="mui-btn  mui-btn-link mui-pull-right mainColor set_not_top" >打回</button>
+    </div>
+</div>
+<!--加精推首放这里-->
+
+{{else /}}
+    {{eq name="is_app" value="102"}}
+        {{include file="web/h5_view_head" /}}
+    {{else/}}
+        {{include file="web/app_view_head"/}}
+    {{/eq}}
+{{/if}}
+
+
+<div class="mui-content contentList">
+    <li class="mui-table-view-cell imgbox posR" style=" padding: 0 0 !important;">
+        <img style="object-fit: cover;" class="lazyload" data-src="{{$data.img_url}}"/>
+    </li>
+    <ul id="list" class="mui-table-view mui-table-view-chevron">
+        <li class="mui-table-view-cell headerimgbox posR user_info_btn" id="user_info_btn" the_id="{{$data.user.id}}">
+            <img class="posA lazyload" data-src="{{$data.user.head_img_url}}"/>
+            <div class="boxc">
+                <div class="t">
+                    <div class="l mui-ellipsis">	{{$data.user.nick_name}}</div>
+                    {{volist name="data.tag" id="vo"}}
+                    <div class="lable">
+                        {{$vo.tag_name}}
+                    </div>
+                    {{/volist}}
+                </div>
+                <div class="b">
+                    <div >阅读:{{$data.read_count}}</div>
+                </div>
+            </div>
+        </li>
+        <li class="mui-table-view-cell car lineCenter mui-ellipsis rub_car_btn">
+            <a href="{{:web_url('seatlist',['main_id'=>$data['id'],'token'=>$token,'is_web'=>101],true)}}">
+            {{$data.car_desc}} >
+            </a>
+        </li>
+        <li class="mui-table-view-cell  rout">
+            <div class="t mainColor">城市</div>
+            <div class="c">
+                {{$data.line_str}}
+            </div>
+            <div class="b">
+                <div class="floatL w50">起始时间:{{$data.c_time|date="Y-m-d",###}}</div>
+                <div class="floatL w50">更新时间:{{$data.m_time|date="Y-m-d",###}}</div>
+            </div>
+        </li>
+
+        {{volist name="content" id="vo"}}
+        {{switch name="vo.para_type"}}
+        {{case value="101" break="1"}}
+        <li class="mui-table-view-cell  article noline" id="content_{{$vo.id}}">
+            <div class="b">
+                {{$vo.content}}
+            </div>
+        </li>
+        {{/case}}
+
+        {{case value="102" break="1"}}
+        <li style="width: 100%;" class="pad0 posR mui-table-view-cell lineCenter mui-ellipsis imgs noline" id="content_{{$vo.id}}">
+            <img style="width: 100%;height: 100%;" data-src="{{$vo.img_url}}" class="lazyload" src="__PUBLIC__/img/zhanwei.png"/>
+        </li>
+        {{/case}}
+
+        {{case value="103" break="1"}}
+        <li class="mui-table-view-cell loc noline place_btn mainColor" place_id="{{$vo.place_id}}" id="content_{{$vo.id}}">
+            <div class="t mui-ellipsis posR">
+                <img data-index="{{$index++}}" class="posA" src="__PUBLIC__/img/base/place.png"/>
+                {{$vo.content}}
+            </div>
+        </li>
+        {{/case}}
+
+        {{case value="104" break="1"}}
+        <li class="mui-table-view-cell  article noline" id="content_{{$vo.id}}">
+            <div class="b">
+                {{$vo.content}}
+            </div>
+        </li>
+        {{/case}}
+
+        {{case value="105" break="1"}}
+        <li class="mui-table-view-cell  article noline" id="content_{{$vo.id}}">
+            <div class="t mui-ellipsis">
+                {{$vo.content}}
+            </div>
+        </li>
+        {{/case}}
+
+        {{case value="106" break="1"}}
+        <li class="mui-table-view-cell  video noline" style="padding-left:0 !important; " id="content_{{$vo.id}}">
+            <div class="" is_play="102">
+                <!--<div class="videoBg" style="width: 100%position: absolute;z-index: 1111;text-align: center;display: none;">-->
+                <!--<img style="width:64px;height:64px;object-fit: cover;" src="__PUBLIC__/img/bofang.png"/>-->
+                <!--</div>-->
+                <video style="width: 100%;height: 100%;" controls="controls" id="my-video" webkit-playsinline="false" playsinline="false" class="video-js video_item" preload="preload" width="100%" height="210" poster="{{$vo.img_url}}" data-setup="{}" >
+                    <source src="{{$vo.video_url}}" type='video/mp4'>
+                </video>
+                <div class="hide" style="position: absolute;z-index: 10000;width: 100px;height: 100px;left: 0;top: 10px;"> </div>
+            </div>
+        </li>
+        {{/case}}
+
+        {{case value="107" break="1"}}
+        <li class="mui-table-view-cell loc noline navigate_btn" data-lat="{{$vo.lat}}" data-lng="{{$vo.lng}}" data-title="{{$vo.content}}" id="content_{{$vo.id}}">
+            <div class="t mui-ellipsis posR ">
+                <img class="posA" src="__PUBLIC__/img/base/place.png"/>
+                {{$vo.content}}
+            </div>
+        </li>
+        {{/case}}
+
+        {{default /}}{{$vo.content}}
+        {{/switch}}
+        {{/volist}}
+
+    </ul>
+    <!--//	单选-->
+    {{if condition="!!$data['art_activity']"}}
+    <div class="singup" id="main_plan_wrap">
+        <div class="titlebox">
+            <div class="floatL w50">报名方式（单选）</div>
+            <div class="floatL w50 textR">报名截止时间:{{$data.art_activity.end_time|date="Y-m-d",###}}</div>
+        </div>
+        {{volist name="data.activity_plan" id="vo"}}
+        {{eq name="vo.plan_type" value="101"}}
+        <div class="bodybox posR" style="">
+            <div class="l lefts posA width100" style="">
+                <div class="t mui-ellipsis" style="">
+                    {{$vo.title}}<span style="font-size: 12px;color: rgb(142,151,176);">&nbsp;&nbsp;{{eq name="$vo.has_max_num" value="101"}}剩余{{$vo.stock}}{{/eq}}</span>
+                </div>
+                <div class="b twos" style="">
+                    {{$vo.content}}
+                </div>
+            </div>
+            <div class="floatR r rights lineRight" style="">
+                <div class="t lineCenter" style="">{{$vo.price/100|number_format=2|}}¥+{{$vo.use_points}}分</div>
+                <div class="c lineCenter" style="">X</div>
+                <div class="b posR lineCenter" style="">
+                    <div class="mui-pull-right num_btn_wrap radio_btn" style="">
+                        <a class="radius_btn" data-num="-1">-</a>
+                        <span class="num plan_item"  plan_id="{{$vo.id}}" plan_type="{{$vo.plan_type}}"  {{eq name="vo.has_max_num" value="101"}}data-max_num="{{$vo.stock}}"{{/eq}} {{eq name="vo.plan_type" value="102"}}data-min_num="1">1{{else/}}>0{{/eq}}</span>
+                        <a class="radius_btn" data-num="1">+</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bline clearB " style=""></div>
+        {{/eq}}
+        {{/volist}}
+    </div>
+    <!--多选-->
+    <div class="moresingup  singup">
+        <div class="titlebox">
+            <div class="floatL w50">附加（多选）</div>
+        </div>
+
+        {{volist name="data.activity_plan" id="vo"}}
+        {{neq name="vo.plan_type" value="101"}}
+        <div class="bodybox posR" style="" id="plan_{{$vo.id}}">
+            <div class="l lefts posA width100" style="">
+                <div class="t mui-ellipsis" style="">
+                    {{$vo.title}}<span style="font-size: 12px;color: rgb(142,151,176);">&nbsp;&nbsp;{{eq name="$vo.has_max_num" value="101"}}剩余{{$vo.stock}}{{/eq}}</span>
+                </div>
+                <div class="b twos" style="">
+                    {{$vo.content}}
+                </div>
+            </div>
+            <div class="floatR r rights lineRight" style="">
+                <div class="t lineCenter" style="">{{$vo.price/100|number_format=2|}}¥+{{$vo.use_points}}分</div>
+                <div class="c lineCenter" style="">X</div>
+                <div class="b posR lineCenter" style="">
+
+                    <div class="mui-pull-right num_btn_wrap" style="">
+                        <a class="radius_btn" data-num="-1">-</a>
+                        <span class="num plan_item"  plan_id="{{$vo.id}}" plan_type="{{$vo.plan_type}}"  {{eq name="vo.has_max_num" value="101"}}data-max_num="{{$vo.stock}}"{{/eq}} {{eq name="vo.plan_type" value="102"}}data-min_num="1">1{{else/}}>0{{/eq}}</span>
+                        <a class="radius_btn" data-num="1">+</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bline clearB " style=""></div>
+        {{/neq}}
+        {{/volist}}
+
+    </div>
+    <!--选择车位-->
+    <div class="moresingup  singup" >
+        <div class="titlebox">
+            <div class="floatL w50">我有车可蹭车座位数:</div>
+            <!--<div class="floatL w50 textR">报名截止时间:08-4</div>-->
+        </div>
+        <div class="bodybox posR" style="padding-left: 15px;height: 66px;">
+            <ul class="mui-pagination" id="seats">
+                <li class="mui-active"><a href="#">0</a></li>
+                <li><a >1</a></li>
+                <li><a >2</a></li>
+                <li><a >3</a></li>
+                <li><a >4</a></li>
+                <li ><a >5</a></li>
+            </ul>
+            <div class="textpage " style="">申请者需要通过你审核,并自愿支付一定金额路费报酬</div>
+        </div>
+        <p id="car_btn" style="padding-left: 20px;" class="yellow" data-car_model_id="0" data-car_name="" data-car_full_name="">车型选择：<span></span></p>
+    </div>
+    {{/if}}
+
+    <!--相关精品游记-->
+    {{gt name="data.relation_art|count" value="0"}}
+    <div class=" youji  singup">
+        <div class="titlebox">
+            <div class="floatL w50">与该活动相关的精品游记</div>
+        </div>
+        {{volist name="data.relation_art" id="vo"}}
+        <div class="bodybox posR" style="">
+            <a href="{{$baseUrl}}index/web/art?id={{$vo.id}}&token={{$token}}&is_web=101">
+            <div class="letfs" style="">
+                <img style="width: 100%;height: 100%;" src="{{$vo.img_url}}"/>
+            </div>
+            <div class="floatR posA r  " style="">
+                <div class="t mui-ellipsis" style="">
+                    {{$vo.title}}
+                </div>
+                <div class="b mart" style="">
+                    <img style="" src="{{$vo.user.head_img_url}}"/>
+                    {{$vo.user.nick_name}}
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="bline clearB " style=""></div>
+        {{/volist}}
+    </div>
+    {{/gt}}
+
+    <div class="empt" style="height: 60px;">&nbsp;</div>
+</div>
+<div class="footers" style="">
+    <div class="item floatL item0" style=" "><a href="tel:{{$data.art_activity.phone}}">致电</a></div>
+    <div class="item floatL item1 " id="chat_btn" style="" >私信</div>
+    <div class="item floatL item2" style="" id="submit_btn">立即报名</div>
+
+</div>
+<!--<script src="mui.min.js"></script>-->
+<!--<script src="jquery.min.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="_publicCom.js" type="text/javascript" charset="utf-8"></script>-->
+
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/lazysizes.min.js"></script>
+<script src="__PUBLIC__/js/jquery.3.2.1.js"></script>
+<script src="__PUBLIC__/js/swiper.min.js"></script>
+<script src="__PUBLIC__/js/_publicCom2.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script>
+    {{eq name="$need_delete_table_cache" value="102"}}
+    localStorage.shidian_need_delete_table_cache = 102;
+    {{/eq}}
+
+//    var ss = new shiDianCommon({});
+    var sd = new shiDianCommon({share_data:{{$data.share|json_encode}}});
+
+    var token   = sd.token('{{$token}}');
+    var baseUrl = '{{$baseUrl}}';
+    var pulicS  = '__PUBLIC__/img/';
+    mui.ready(function() {
+        initAblum();
+
+//        mui(document).imageLazyload({
+//            placeholder: '__PUBLIC__/img/zhanwei.png'
+//        });
+
+        var rub_car_btn = document.querySelector('.rub_car_btn');
+        if(null !== rub_car_btn){
+            rub_car_btn.addEventListener('tap',function () {
+                self.location = this.querySelector('a').getAttribute('href');
+            });
+        }
+
+        document.querySelector("#chat_btn").addEventListener("tap",function () {
+            shidian('chat',{accid:'{{$data.user.id}}'});
+        });
+
+        document.querySelector("#user_info_btn").addEventListener("tap",function () {
+            shidian('user',{id:this.getAttribute('the_id')});
+        });
+
+        //收藏或取消
+        var collect_btn = document.querySelector(".collect_btn");
+        if(collect_btn) {
+            collect_btn.addEventListener("tap", function () {
+                var url = baseUrl + 'collect';
+                var this_btn = this;
+                var type = '';
+                var param = {token: token};
+                var is_collect = this_btn.getAttribute('is_collect');
+                if (0 < is_collect) {
+                    //取消
+                    type = 'DELETE';
+                    url += '/' + is_collect + '?token=' + param.token;
+                } else {
+                    type = 'POST';
+                    url += '/?type=103&target_id={{$data.id}}&token=' + param.token;
+                }
+                $.ajax({
+                    url: url,
+                    type: type,
+                    param: param,
+                    success: function (data) {
+                        var desc = '';
+                        if (200 != data.code) {
+                            popTitle(data.desc, 2);
+                        } else {
+                            if (0 < is_collect) {
+                                popTitle('取消收藏成功', 1);
+                                this_btn.setAttribute('is_collect', 0);
+                                this_btn.innerText = '收藏';
+                            } else {
+                                popTitle('收藏成功', 1);
+                                this_btn.setAttribute('is_collect', data.data.id);
+                                this_btn.innerText = '取消收藏';
+                            }
+                        }
+                    },
+                    error: function (e) {
+                        popTitle('出错了，请稍后再试！', 2)
+                    }
+                });
+            });
+        }
+
+        //点击报名按钮
+        var is_submit = false;
+        var submit_btn = document.querySelector("#submit_btn");
+        if(submit_btn){
+            submit_btn.addEventListener("tap",function () {
+                //判断在不在报名时间内
+                var end_time = '{{$data.art_activity.end_time}}';
+                var now_timestamp = (Date.parse(new Date()))/1000;
+                if(now_timestamp > end_time){
+                    popTitle('报名已经截止！',2);
+                }else{
+                    if(is_submit){
+                        return popTitle('正在提交订单，请稍等',2);
+                    }
+                    var url = '{{:web_url('confirmorder',[],true)}}';
+                    var car_btn = document.querySelector('#car_btn');
+                    var all_plan = $('.plan_item');
+                    var plan = [];
+
+                    var bixuan_count = 0;
+                    for (var x in all_plan){
+                        if(!isNaN(x)){
+                            var p = $(all_plan[x]);
+                            var plan_type = p.attr('plan_type');
+                            var num       = p.text();
+                            if(0 < num){
+                                if(101 == plan_type ){
+                                    console.log(p);
+                                    bixuan_count += 1;
+                                }
+                                plan.push({
+                                    id:p.attr('plan_id'),
+                                    plan_type:plan_type,
+                                    num:num
+                                });
+                            }else if(102 == plan_type){
+                                popTitle('请至少添加1个附加套餐！',2);
+                                scrollOTo('#plan_'+p.attr('plan_id'));
+                                return;
+                            }
+                        }
+                    }
+                    if(0 == bixuan_count){
+                        popTitle('请选择1种报名方式！',2);
+                        scrollOTo('#main_plan_wrap');
+                        return;
+                    }else if( 1 < bixuan_count){
+                        popTitle('最多只能选择1种报名方式！',2);
+                        scrollOTo('#main_plan_wrap');
+                        return;
+                    }
+                    var totalSeats_num = totalSeats();
+                    //组织参数
+                    var param = {
+                        token:token,
+                        type:'102',
+                        art_id:'{{$data.id}}',
+                        total_seats:totalSeats_num,
+                        plan:plan,
+                        is_web:'101',
+                        reload:'1'
+                    };
+                    if(0 < totalSeats_num){
+                        //判断有没有选车型
+                        if(car_btn.dataset.car_model_id && 0 < car_btn.dataset.car_model_id){
+                            param.car_model_id  = car_btn.dataset.car_model_id;
+                            param.car_name      = car_btn.dataset.car_name;
+                            param.car_full_name = car_btn.dataset.car_full_name;
+                        }else{
+                             popTitle('请选择您的车型！',2);
+                             scrollOTo('#car_btn');
+                            return;
+                        }
+                    }
+                    is_submit = true;
+                    self.location = url+'?'+$.param(param);
+                    //设置5秒后解开
+                    setTimeout(function () {
+                        is_submit = false;
+                    },5000);
+                }
+            });
+        }
+
+        mui('.mui-pagination').on('tap','li',function(){
+            $(this).parent().find('li').removeClass('mui-active')
+            $(this).addClass('mui-active')
+        })
+
+        var car_btn = document.querySelector('#car_btn');
+        if(null !== car_btn){
+            car_btn.addEventListener('tap',function () {
+                shidian('fetch_carinfo',{});
+            });
+        }
+
+//        mui('header').on('tap','.pop',function () {
+//            sd.app('pop',{});
+//        });
+
+
+
+        //置顶
+        $('body').on('click','.set_top',function () {
+            openI("{{:web_url('/branch/art/rpush',['id'=>$data['id']])}}");
+
+//            var the = $(this);
+//            put("{{$data.id}}",function () {
+//                the.remove();
+//            });
+        });
+
+        //加精
+        $('body').on('click','.set_best',function () {
+            var the = $(this);
+            perfect("{{$data.id}}",function () {
+                the.remove();
+            });
+        });
+
+        //打回
+        $('body').on('click','.set_not_top',function () {
+            openI("{{:web_url('/branch/art/repulse',['id'=>$data['id']])}}");
+        })
+    });
+
+    function handle_carinfo(param) {
+        if('string' == typeof param) {
+            param = JSON.parse(decodeURI(param));
+        }
+        var car_btn = document.querySelector('#car_btn');
+        car_btn.dataset.car_model_id = param.car_model_id;
+        car_btn.dataset.car_name = param.car_name;
+        car_btn.dataset.car_full_name = param.car_full_name;
+        $('#car_btn span').text(param.car_full_name);
+    }
+
+    //和shidianAPP交互
+    function shidian($action, $param) {
+        if (typeof($param != "string")){
+            $param = JSON.stringify($param);
+        }
+        self.location='shidian://'+$action+'?jp='+$param;
+    }
+
+    /*********************** hud **********************/
+
+
+    //data显示的文字.action:0loading，1.正确，2.错误
+    function popTitle(data,action){
+        return mui.alert( data, '', '确认');
+
+        if(action==0){
+            iosTooltip(data,pulicS+'oval.svg',300,pulicS+'cenel.png',0.1);
+        }else if(action==1){
+            iosTooltip(data,pulicS+'ok.png',300,'',0);
+        }else if(action == 2){
+            iosTooltip(data,pulicS+'cenel.png',300,'',0);
+        }
+    }
+
+    function iosTooltip(content, url, animateTime, close, showAddTime) {
+        console.log($);
+        $('#Prompt').attr('id')?$('#Prompt').remove():'';
+        $('#Prompt_z_index').attr('id')?$('#Prompt_z_index').remove():'';
+        !showAddTime?showAddTime = 0:'';
+        var html = '<div class=" " id="Prompt_z_index" style="opacity: 0;z-index: 1110; min-height: 95px; position: fixed; width: 100px; height: 100px;background: black;"></div><div id="Prompt" style="z-index: 1110; min-height: 95px; position: absolute; top: 36%;">'+
+                '<div class="PromptBody" style="z-index: 1111; width: 100%; height: 100%;">'+
+                '<div class="yesPrompttool" style="position: absolute;left: -8px;top: -8px;"> <img id="PromptColse" onclick="closeIosTooltip()" class="hide" style="width: 24px;height: 24px;" src="' + close + '"></div>'+
+                '<div class="yesPrompttop" style="height: 60px;    text-align: center;"><img class="PromptBodyImg" style="height: 32px;width: 32px;margin-top: 18px " src="' + url + '"></div>'+
+                '<div class="yesPrompttop" style="color: white;font-size: 14px;text-align: center;letter-spacing:2px;padding:0 15px 5px 15px;">' + content +'</div>'
+        '</div>'+
+        '</div>';
+
+        $('body').children().eq(0).before(html);
+        var domW = $('#Prompt').width();
+        var domCanW = $('body').width()*0.8;
+        var winW =  $('body').width();
+        if(domW>=domCanW){
+            $('#Prompt,#Prompt_z_index').css('width',domCanW+'px').css('left',$('body').width()*0.1).css('right',$('body').width()*0.1);
+        }else if(domW<=110){
+            $('#Prompt,#Prompt_z_index').css('left',parseInt(winW-110)/2+'px').css('right',parseInt(winW-110)/2+'px');
+        }
+        else{
+            $('#Prompt,#Prompt_z_index').css('left',parseInt(winW-domW)/2+'px').css('right',parseInt(winW-domW)/2+'px');
+        }
+        $("body,html").css({"overflow":"hidden"});
+        $('#Prompt,#Prompt_z_index').css('top',$(window).height()*0.36+$(window).scrollTop());
+        $('#Prompt_z_index').css('height',$('#Prompt').height());
+        $('#Prompt_z_index').css('width',$('#Prompt').width());
+        if(close) {
+            show_mask('', 0.1);
+            $('#PromptColse').removeClass('hide');
+        }
+        $("#Prompt_z_index").animate({
+            opacity: 0.85
+        },animateTime);
+        $("#Prompt").animate({
+            opacity: 1
+        },animateTime+100);
+        if(!close){
+
+            setTimeout(function(){
+                $("#z-index").remove();
+                hide_mask();
+                $("#Prompt,#Prompt_z_index").animate({opacity: 0}, 300,function(){
+                    $("#Prompt").remove();
+                    $("#Prompt_z_index").remove();
+
+                });
+            },animateTime+1000+showAddTime)
+
+        }
+    }
+
+    //隐藏遮罩
+    function hide_mask() {
+        $("#z-index").hide();
+        $("#z-index,.z-index").remove();
+    }
+    //显示遮罩
+    function show_mask(top, opacity, anmit) {
+        var html = '<div >你好</div>	';
+        $('body').prepend(html);
+
+        if(!top) {
+            top = 0;
+        }
+        if(!opacity) {
+            opacity = 0.6;
+        }
+        if(!anmit) {
+            anmit = 700;
+        }
+        var html = '<div id="z-index" class="z-index" style="position: fixed;height: 100%;width: 100%;background: #919191;z-index: 1000;top: ' + top + 'px;left:0"></div>	';
+        $("body").prepend(html);
+//        $("#z-index").animate({
+//            opacity: opacity,
+//        }, anmit);
+    }
+
+
+    //单选ui交互
+    function singupChoose(that,action){
+        var parent = $(that).parent(),span = parent.find('span'),max = span.attr('max'),min = span.attr('min'),allsingup_val = $('.singup_val');
+        for (var i=0;i<allsingup_val.length;i++) {
+            !(allsingup_val.eq(i)[0]==span[0])?allsingup_val.eq(i).text(0):'';
+        }
+        var num;
+        if(action=='add'){
+            num = 1;
+        }else{
+            num = -1;
+        }
+        if('undefined' == typeof min){
+            min = 0;
+        }
+        if('undefined' == typeof max){
+            max = false;
+        }
+        console.log(min);
+        numChoose(span,num,max,min);
+    }
+
+    var radio_btn = document.querySelectorAll('.radio_btn');
+
+    //数量加减
+    mui('.mui-content').on('tap','.radius_btn',function(){
+        var wrap = this.parentNode;
+        var dom = wrap.querySelector('.num');
+        var min = parseInt(dom.dataset.min_num);//('undefined' != typeof dom.dataset.min_num)?dom.dataset.min_num:0;
+        var max = parseInt(dom.dataset.max_num);//('undefined' != typeof dom.dataset.max_num)?dom.dataset.max_num:false;
+        numBtn(dom,this.dataset.num,isNaN(max)?false:max,isNaN(min)?0:min);
+        if(0 <　this.dataset.num){
+            if(hasClass(wrap,'radio_btn')) {
+                for (var i=0;i<radio_btn.length;i++) {
+                    !(radio_btn[i]==wrap)?radio_btn[i].querySelector('.num').innerText='0':'';
+                }
+            }
+        }
+    });
+    function numBtn(dom,num,max,min) {
+        var result = parseInt(parseInt(dom.innerText)) + parseInt(num);
+        if(result < min)result = min;
+        if(false !== max &&　result > max)result = max;
+        dom.innerText = parseInt(result);
+    }
+
+    //获取车位数
+    function totalSeats() {
+        return $('#seats .mui-active a').text();
+    }
+
+    function hasClass(obj, cls) {
+        return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+    }
+
+    //屏幕滚动到某标签处
+    function scrollOTo(dom) {
+        console.log('1');
+        window.location = dom;
+//        $('.contentList').animate({scrollTop:$(dom).position().top},500);
+    }
+
+    //初始化图片浏览器
+    var ablum_object = '.album_wrap';
+    function initAblum() {
+        screen_width = window.screen.width;
+        var swiper = new Swiper('.swiper-container', {
+//            pagination: '.swiper-pagination',
+            width:screen_width,
+            freeMode: false,
+            zoom:true
+        });
+
+        var all_img_para = $('.mui-content').find('li.imgs img');
+
+        $('.mui-content').on('click','.imgs img',function () {
+            var index = all_img_para.index($(this));
+            showAblum(swiper,index);
+        })
+        //close_btn
+        $(ablum_object).on('click','.close_btn',function () {
+            closeAblum();
+        });
+    }
+
+    function closeAblum() {
+        $(ablum_object).hide();
+    }
+
+    function showAblum(swiper,index) {
+        // TODO 这里切换图片到对应的位置
+        console.log(index);
+        swiper.slideTo(index, 300, false);
+        $(ablum_object).show();
+    }
+
+
+    //置顶
+    function put(id,func){
+        $.ajax({
+            type: "POST",
+            url: "{{:web_url('/branch/top/save')}}",
+            dataType: "json",
+            data:{id:id},
+            success: function (data) {
+                if(200 == data.code) {
+                    func();
+                    popTitle('设置成功',1);
+                }else{
+                    popTitle(data.desc,2);
+                }
+            },
+            error: function (data) {
+                popTitle('网络不稳定，请稍后再试',2);
+            }
+        })
+    }
+
+    //加精
+    function perfect(id,func){
+        $.ajax({
+            type: "POST",
+            url: "{{:web_url('/branch/best/save')}}",
+            dataType: "json",
+            data:{id:id},
+            success: function (data) {
+                if(200 == data.code) {
+                    func();
+                    popTitle('设置成功',1);
+                }else{
+                    popTitle(data.desc,2);
+                }
+            },
+            error: function (data) {
+                popTitle('网络不稳定，请稍后再试',2);
+            }
+        })
+    }
+
+    //打回
+    function noPut(desc) {
+        $.ajax({
+            type: "POST",
+            url: "{{:web_url('/branch/top/delete')}}",
+            dataType: "json",
+            data:{id:"{{$data.id}}",desc:desc},
+            success: function (data) {
+                if(200 == data.code) {
+                    popTitle('打回成功',1);
+                }else{
+                    popTitle(data.desc,2);
+                }
+            },
+            error: function (data) {
+                popTitle('网络不稳定，请稍后再试',2);
+            }
+        })
+    }
+
+    //打开iframe弹出层
+    function openI(url) {
+        var frame = $('.sub_window_frame');
+        frame.show();
+        frame.find('.window_wrap').attr("src", url);
+    }
+
+    //关闭
+    function closeI() {
+        $('.sub_window_frame').hide();
+    }
+
+
+</script>
+</body>
+
+</html>

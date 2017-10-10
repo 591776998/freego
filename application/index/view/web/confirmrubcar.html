@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/com.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/activity.css">
+
+    <style>
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        a,a:hover,a:active{
+            text-decoration: none !important;
+            text-decoration-color: #fff;
+        }
+        .contentList{
+            padding-top: 64px !important;
+        }
+        #buy{
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 48px;
+            color: white;
+            background: #f4a51d;
+            line-height: 48px;
+            text-align: center;
+        }
+        .item{
+            margin-top: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        input{
+            width: 150px !important;
+            height: 35px !important;
+            margin-right: 25px;
+            margin-bottom: 10px !important;
+        }
+        .line{
+            margin-left: 20px;
+            margin-right: 20px;
+            background-color: #dadada;
+            height: 1px;
+        }
+        .item_title{
+            position: relative;
+        }
+        .item_title p{
+            font-size: 16px;
+            color: #555;
+        }
+        .item_title a{
+            position: absolute;
+            right: 0;
+            top:0;
+        }
+        .text{
+            padding-top: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+            font-size: 14px;
+            color: #8f8f94;
+        }
+        .explain{
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        .mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before {
+            color: #f4a51d !important;
+        }
+        textarea {
+            margin-bottom: 0!important;
+        }
+        .mui-popup-inner-text div{
+            height: 64px;
+            line-height: 64px;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        .mui-popup-button{
+            color: #f4a51d !important;
+        }
+        .mui-popup-inner-text .item_line{
+            width: 100%;
+            height: 1px;
+            background-color: #dadada;
+        }
+        .mui-popup-inner{
+            padding-bottom: 0;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+</head>
+
+<body>
+{{eq name="is_app" value="102"}}
+{{include file="web/h5_view_head" /}}
+{{else/}}
+<header class="mui-bar mui-bar-nav" style="padding-top: 20px;height: 64px;">
+    <a id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left mainColor"><span class="ltext"></span></a>
+    <h1 class="mui-title">{{$title}}</h1>
+</header>
+{{/eq}}
+
+
+<div class="mui-content contentList">
+
+    <textarea id="textarea" rows="5" placeholder="向车主说点什么吧"></textarea>
+    <div class="item">
+        <div class="item_title">
+            <p>自愿提供积分作为乘车报酬</p>
+            <a class="mainColor">?</a>
+        </div>
+        <input id="points" type="number" class="mui-input-clear" placeholder="">分
+        <p>您的钱包有{{$user.point|default="0"}}积分</p>
+    </div>
+    <div class="line"></div>
+    <div class="item">
+        <div class="item_title">
+            <p>自愿提供费用作为乘车报酬</p>
+            <a class="mainColor">?</a>
+        </div>
+        <input id="money" type="number" class="mui-input-clear" placeholder="">元
+        <p>您的钱包有{{$user.money|default="0"|number_format=###/100,2}}元零钱</p>
+    </div>
+    <div class="line"></div>
+    <div class="text">
+        积分和费用由平台作为信用预扣，建议您即将抵达目的地时，在“订单消费”中确认支付，平台不参与提成；乘车过程中可全程开启定位，以便遇到紧急情况时有助于平台对您提供帮助；
+    </div>
+    <a class="explain mainColor">查看详情说明 ></a>
+    <div class="mui-input-row mui-checkbox mui-left">
+        <label>同意详情说明中的相关内容</label>
+        <input name="checkbox" value="Item 1" type="checkbox" checked>
+    </div>
+    <div class="empt" style="height: 60px;">&nbsp;</div>
+
+    <div id="buy">
+        发送申请
+    </div>
+</div>
+
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/jq.1.6.1.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script>
+    var sd = new shiDianCommon({});
+    var token   = sd.token('{{$token}}');
+    var baseUrl = '{{$baseUrl}}';
+    var pulicS = '__PUBLIC__/img/';
+    mui.ready(function() {
+        //创建订单
+        sd.listen('#buy','tap',function(){
+            mui.alert(' 1','选择支付方式','取消',null,'div');
+            //修改样式
+            var popup =document.querySelector('.mui-popup-text');
+            popup.innerHTML = '<div class="mui-popup-inner-text"> ' +
+                    '<div class="item_line"></div>' +
+                    '<div class="pay_btn" data-pay_type="100"><p>零钱（剩余￥{{$user.money|number_format=###/100,2}}）</p></div>' +
+                    '<div class="item_line"></div>' +
+                    '<div class="pay_btn" data-pay_type="102">支付宝支付 ></div>' +
+                    '<div class="item_line"></div>' +
+                    '<div class="pay_btn" data-pay_type="101">微信支付 ></div>' +
+                    '</div>';
+        });
+        mui("body").on('tap','.pay_btn',function(){
+            //获取id
+            creatOrder(this.dataset.pay_type);
+            mui.closePopup();
+        });
+
+        //
+        mui("body").on('tap','.mui-popup-backdrop',function(){
+
+            mui.closePopup();
+        });
+    });
+
+    var is_submit = false;
+    function creatOrder(pay_type) {
+        if(is_submit){
+            return popTitle('订单正在处理中，请稍候！',2);
+        }
+        is_submit = true;
+        var url = baseUrl+'order';
+        var param = {};
+        param.token = token;
+        param.type  = 103;
+        param.art_id= '{{$join.main_id}}';
+        param.target_id= '{{$join.id}}';
+        param.money= $('#money').val() * 100;
+        param.points= $('#points').val() * 1;
+        param.content= $('#textarea').val();
+
+        $.ajax({
+            url:url,
+            data:param,
+            type:'POST',
+            success:function(data){
+                if('undefined' != typeof data.code){
+                    if(200 == data.code){
+                        //把pay_info和支付方式给app
+                        sd.app('pay',{pay_info:data.data.pay_info,order_id:data.data.id,pay_type:pay_type+''});
+                    }else{
+                        popTitle(data.desc,2);
+                    }
+                }else{
+                    popTitle('创建订单错误，请稍后再试！',2);
+                }
+                is_submit = false;
+            },
+            error:function(){
+                popTitle('网络异常，请稍后再试！',2);
+                is_submit = false;
+            }
+        });
+    }
+
+    function hasClass(obj, cls) {
+        return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+    }
+
+    function addClass(obj, cls) {
+        if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+    }
+
+    function removeClass(obj, cls) {
+        if (hasClass(obj, cls)) {
+            var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+            obj.className = obj.className.replace(reg, ' ');
+        }
+    }
+
+    function toggleClass(obj,cls){
+        if(hasClass(obj,cls)){
+            removeClass(obj, cls);
+        }else{
+            addClass(obj, cls);
+        }
+    }
+
+    function toggleClassTest(){
+        var obj = document. getElementById('test');
+        toggleClass(obj,"testClass");
+    }
+    //data显示的文字.action:0loading，1.正确，2.错误
+    function popTitle(data,action){
+        if(action==0){
+            iosTooltip(data,pulicS+'oval.svg',300,pulicS+'cenel.png',0.1);
+        }else if(action==1){
+            iosTooltip(data,pulicS+'ok.png',300,'',0);
+        }else if(action == 2){
+            iosTooltip(data,pulicS+'cenel.png',300,'',0);
+        }
+    }
+
+    function iosTooltip(content, url, animateTime, close, showAddTime) {
+        console.log($);
+        $('#Prompt').attr('id')?$('#Prompt').remove():'';
+        $('#Prompt_z_index').attr('id')?$('#Prompt_z_index').remove():'';
+        !showAddTime?showAddTime = 0:'';
+        var html = '<div class=" " id="Prompt_z_index" style="opacity: 0;z-index: 1110; min-height: 95px; position: absolute; width: 100px; height: 100px;background: black;"></div><div id="Prompt" style="z-index: 1110; min-height: 95px; position: absolute; top: 36%;">'+
+                '<div class="PromptBody" style="z-index: 1111; width: 100%; height: 100%;">'+
+                '<div class="yesPrompttool" style="position: absolute;left: -8px;top: -8px;"> <img id="PromptColse" onclick="closeIosTooltip()" class="hide" style="width: 24px;height: 24px;" src="' + close + '"></div>'+
+                '<div class="yesPrompttop" style="height: 60px;    text-align: center;"><img class="PromptBodyImg" style="height: 32px;width: 32px;margin-top: 18px " src="' + url + '"></div>'+
+                '<div class="yesPrompttop" style="color: white;font-size: 14px;text-align: center;letter-spacing:2px;padding:0 15px 5px 15px;">' + content +'</div>'
+        '</div>'+
+        '</div>'
+        $('body').children().eq(0).before(html);
+        var domW = $('#Prompt').width();
+        var domCanW = $('body').width()*0.8;
+        var winW =  $('body').width();
+        if(domW>=domCanW){
+            $('#Prompt,#Prompt_z_index').css('width',domCanW+'px').css('left',$('body').width()*0.1).css('right',$('body').width()*0.1);
+        }else if(domW<=110){
+            $('#Prompt,#Prompt_z_index').css('left',parseInt(winW-110)/2+'px').css('right',parseInt(winW-110)/2+'px');
+        }
+        else{
+            $('#Prompt,#Prompt_z_index').css('left',parseInt(winW-domW)/2+'px').css('right',parseInt(winW-domW)/2+'px');
+        }
+        $("body,html").css({"overflow":"hidden"});
+        $('#Prompt,#Prompt_z_index').css('top',$(window).height()*0.36+$(window).scrollTop());
+        $('#Prompt_z_index').css('height',$('#Prompt').height());
+        $('#Prompt_z_index').css('width',$('#Prompt').width());
+        if(close) {
+            show_mask('', 0.1);
+            $('#PromptColse').removeClass('hide');
+        }
+        $("#Prompt_z_index").animate({
+            opacity: 0.85
+        },animateTime);
+        $("#Prompt").animate({
+            opacity: 1
+        },animateTime+100);
+        if(!close){
+            setTimeout(function(){
+                $("#z-index").remove();
+                hide_mask();
+                $("#Prompt,#Prompt_z_index").animate({opacity: 0}, 300,function(){
+                    $("#Prompt").remove();
+                    $("#Prompt_z_index").remove();
+
+                });
+            },animateTime+1000+showAddTime)
+        }
+    }
+
+    //隐藏遮罩
+    function hide_mask() {
+        $("#z-index").hide();
+        $("#z-index,.z-index").remove();
+    }
+    //显示遮罩
+    function show_mask(top, opacity, anmit) {
+        if(!top) {
+            top = 0;
+        }
+        if(!opacity) {
+            opacity = 0.6;
+        }
+        if(!anmit) {
+            anmit = 700;
+        }
+        var html = '<div id="z-index" class="z-index" style="position: fixed;height: 100%;width: 100%;background: #919191;z-index: 100;opacity: 0;top: ' + top + 'px;left:0"></div>	'
+        $('body').children().eq(0).before(html);
+        $("#z-index").animate({
+            opacity: opacity,
+        }, anmit);
+    }
+</script>
+</body>
+
+</html>

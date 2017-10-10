@@ -1,0 +1,882 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>写攻略</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="__PUBLIC__/css/skin.css" rel="stylesheet" type="text/css" />
+    <!--<link href="__PUBLIC__/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />-->
+    <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
+
+
+    <style type="text/css">
+        #logobox{
+            height: 680px;
+            background:url('{#$data.img_url|default="/static/img/page_bg.jpg"}') center center no-repeat;
+        }
+        .row{
+            width: 980px;
+            height: 60px;
+            margin: 0 auto;
+            padding-top: 20px;
+        }
+        .btn{
+            padding: 0 28px;
+            height: 36px;
+            line-height: 36px;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 5px;
+            background: #FFA800;
+            color: #FFF;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .companion_str img{
+            border-radius: 15px;
+            width: 30px;
+            height: 30px;
+        }
+        .box_l .c .ca {
+            width: 67px;
+            height: 59px;
+            cursor: pointer;
+            margin: 0 auto;
+            background: url(__PUBLIC__/img/btn1.png) left top no-repeat;
+            position: relative;
+            border: none;
+        }
+        .input-file{
+            position: absolute;
+            display: block;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            opacity: .01;
+            filter: alpha(opacity=1);
+            cursor: pointer;
+            z-index: 1;
+        }
+        img.para_data{
+            max-width: 600px;
+            max-height: 600px;
+        }
+        textarea{
+            overflow-y: scroll !important;
+        }
+        .plan_wrap{
+            width: 980px;
+            margin: 0 auto;
+        }
+        .activity_data_wrap{
+            width: 980px;
+            margin: 0 auto;
+        }
+        .plan_wrap .plan_type_title{
+            background: #ccc;
+            width: 100%;
+            height: 35px;
+            line-height: 35px;
+            font-size: 18px;
+            padding-left: 10px;
+        }
+        .plan_wrap .content_list{
+
+        }
+        .plan_wrap .content_list .item{
+            height: 40px;
+            line-height: 40px;
+            display: flex;
+            flex-direction: row;
+        }
+        .plan_wrap .content_list .item:hover{
+            background-color: #eee;
+        }
+        .plan_wrap .content_list .item .item_title_wrap{
+            flex: 1;
+            line-height: 20px;
+        }
+        .plan_wrap .content_list .item .item_title_wrap .item_content{
+            color: #666;
+        }
+        .plan_wrap .content_list .item .item_btn_wrap{
+            width: 200px;
+            display: flex;
+            flex-direction: row;
+        }
+        .plan_wrap .content_list .item .item_btn_wrap .item_btn_div{
+            flex: 1;
+        }
+        .plan_wrap .content_list .item .item_btn_wrap .item_btn{
+            display: block;
+            text-align: center;
+            color: white;
+            background-color: #FFA800;
+            border-radius: 5px;
+            width: 70px;
+            margin: 7px auto;
+            height: 26px;
+            line-height: 26px;
+        }
+        .line{
+            width: 100%;
+            height: 1px;
+            background-color: #acacac;
+        }
+        .create_btn{
+            background-color: #FFA800;
+            color: white;
+            height: 30px;
+            line-height: 30px;
+            width: 70px;
+            border-radius: 3px;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .activity_data_wrap{
+            font-size: 16px;
+        }
+        .activity_data_wrap .ac_title{
+            height: 35px;
+            background-color: #ccc;
+            font-size: 18px;
+            line-height: 35px;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
+        .activity_data_wrap .ac_input_wrap{
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+<div id="tool_top">
+    <div class="wrapper">
+        <span class="b save_btn" title="保存草稿">保存草稿</span>
+        <span class="b look" title="预览">预览</span>
+        <span class="a save_btn" status="101" title="保存并发布">保存并发布</span>
+    </div>
+</div>
+<div id="logobox" data="">
+    <div class="a">
+        <i value=""></i><span class="aa img_btn" ></span>
+        <h2>设置攻略头图</h2>
+        <p>图片建议选择尺寸宽度大于1680px，高度480px的高清大图</p>
+    </div>
+    <div class="b">
+        <input class="main_input" type="text" id="gl_title" name="title" value="{#$data.title}" placeholder="填写攻略标题" maxlength="48">
+    </div>
+    <div class="row">
+        <span class="btn line_btn" id="{#$data.line_id}" type="button">主路线</span>
+        <span class="line_str">{#$data.line_str}</span>
+    </div>
+    <div class="row">
+        <span class="btn car_btn" type="button">出行座驾</span>
+        <span class="car_str">{#$data.car_full_name|default="暂无"}</span>
+    </div>
+    <div class="row">
+        <span class="btn companion_btn" type="button">同行伙伴</span>
+        <span class="companion_str">
+            {#volist name="data.companion" id="vo"}
+                <img src="{#$vo.head_img_url}"/>
+            {#/volist}
+        </span>
+    </div>
+</div>
+<div class="wrapper">
+    <div class="black_header"></div>
+    <div class="box_l">
+        <div id="carea">
+            <div class="para toolbar">
+                <div class="a">
+                    <span class="tools_btn aa" ></span>
+                    <ul class="ab" style="display:block;">
+                        <li class="para_btn aba" data-para_type="101">
+                            <i>
+                            </i>
+                            文字
+                        </li>
+                        <li class="para_btn abb" data-para_type="102">
+                            <i>
+                            </i>
+                            照片
+                        </li>
+                        <li class="para_btn abc" data-para_type="106">
+                            <i>
+                            </i>
+                            视频
+                        </li>
+                        <li class="para_btn abd" data-para_type="105">
+                            <i>
+                            </i>
+                            标题
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {#volist name="para_data" id="vo"}
+            <div class="para content_area is_normal view" data-para_id="{#$vo.id}" para_type="{#$vo.para_type}">
+                <div class="mod_area"></div>
+                <div class="view_area">
+                    {#switch name="vo.para_type"}
+                    {#case value="101"}
+                    <div class="b">
+                        <p><span class="para_data">{#$vo.content}</span>
+                            <i class="update_btn"></i>
+                            <em class="del_btn"></em>
+                        </p>
+                    </div>
+                    {#/case}
+                    {#case value="102"}
+                    <div class="b">
+                        <p>
+                            <span><img  class="para_data" src="{#$vo.img_url}" alt="{#$vo.content}"></span>
+                            <i class="update_btn"></i>
+                            <em class="del_btn"></em>
+                        </p>
+                    </div>
+                    {#/case}
+                    {#case value="105"}
+                    <div class="b">
+                        <p>
+                            <span class="para_data">{#$vo.content}</span>
+                            <i class="update_btn"></i>
+                            <em class="del_btn"></em>
+                        </p>
+                    </div>
+                    {#/case}
+                    {#case value="106"} <div class="b">
+                    <div class="b">
+                        <p>
+                            <span><img  class="para_data" src="{#$vo.img_url}" alt="{#$vo.content}"></span>
+                            <i class="update_btn"></i>
+                            <em class="del_btn"></em>
+                        </p>
+                    </div>
+                    {#/case}
+                    {#default /}未知的类型
+                    {#/switch}
+                </div>
+                </div>
+                <div class="para toolbar">
+                    <div class="a">
+                        <span class="tools_btn aa" ></span>
+                        <ul class="ab" style="display:block;">
+                            <li class="para_btn aba" data-para_type="101">
+                                <i>
+                                </i>
+                                文字
+                            </li>
+                            <li class="para_btn abb" data-para_type="102">
+                                <i>
+                                </i>
+                                照片
+                            </li>
+                            <li class="para_btn abc" data-para_type="106">
+                                <i>
+                                </i>
+                                视频
+                            </li>
+                            <li class="para_btn abd" data-para_type="105">
+                                <i>
+                                </i>
+                                标题
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {#/volist}
+            </div>
+            <div class="bk100">
+            </div>
+
+
+            <div class="bk100">
+            </div>
+            <div class="stool">
+            <!--<span class="b return_btn" >-->
+				<!--返回-->
+			<!--</span>-->
+            </div>
+            <div class="bk100">
+            </div>
+        </div>
+    </div>
+
+    {#eq name="data.type" value="102"}
+
+        <div class="activity_data_wrap">
+            <form>
+            <p class="ac_title">活动属性</p>
+            <div class="">
+                报名截止时间
+                <!--<input type="text" value="{#$data.art_activity.end_time|date='Y-m-d H:i',###}" data-date-format="yyyy-mm-dd hh:ii" name="end_time" id="datetimepicker" >-->
+                <!--<div style="height: 220px;width: 220px;display: block" id="datetimepicker"></div>-->
+                <input id="myID" value="{#$data.art_activity.end_time|date='Y-m-d',###}" type="text" class="hours form-control">
+                <input id="myHours" value="{#$data.art_activity.end_time|date='H:i',###}" type="text" class="time form-control">
+            </div>
+            <div class="ac_input_wrap">
+                <input name="free_ride" type="checkbox" value="101" {#eq name="data.art_activity.free_ride" value="101"}checked="checked"{#/eq}/>
+                允许自驾
+            </div>
+            <div class="ac_input_wrap">
+                <input name="has_car" type="checkbox" value="101" {#neq name="data.art_activity.has_car" value="0"}checked="checked"{#/neq}/>
+                允许顺风车
+            </div>
+            <div class="ac_input_wrap">
+                <input name="mast_insur" type="checkbox"  value="101" {#eq name="data.art_activity.mast_insur" value="101"}checked="checked"{#/eq}/>
+                必须购买保险
+            </div>
+            <div class="ac_input_wrap">
+                领队头像
+                <img class="lead_head_img_btn" style="width: 30px; height: 30px;" src="{#$data.art_activity.lead_head_img_url}" />
+                <input class="lead_head_img_id" name="lead_head_img_id" type="text" value="{#$data.art_activity.lead_head_img_id}" hidden/>
+            </div>
+            <div class="ac_input_wrap">
+                领队昵称
+                <input name="lead_nick_name" type="text" value="{#$data.art_activity.lead_nick_name}"/>
+            </div>
+            <div class="ac_input_wrap">
+                领队介绍
+                <input name="lead_desc" type="text" value="{#$data.art_activity.lead_desc}"/>
+            </div>
+            <div class="ac_input_wrap">
+                联系电话
+                <input name="phone" type="text" value="{#$data.art_activity.phone}"/>
+            </div>
+            <div class="ac_input_wrap">
+                群组ID
+                <input name="tid" class="tid_input" type="text" value="{#$data.art_activity.tid}" />
+                <a class="create_group">创建群组</a>
+            </div>
+            </form>
+        </div>
+
+        <div class="plan_wrap">
+            <p class="plan_type_title">主套餐</p>
+            <div class="content_list main_plan_wrap">
+                {#volist name="plan" id="vo"}
+                {#eq name="vo.plan_type" value="101"}
+                    <div class="item" plan_id="{#$vo.id}">
+                        <div class="item_title_wrap">
+                            <p class="item_title">{#$vo.title}
+                            <p class="item_content">{#$vo.content}</p>
+                        </div>
+                        <div class="item_btn_wrap">
+                            <div class="item_btn_div">
+                                <a class="item_btn" target="_blank" href="{#:web_url('/main/plan/editor',['id'=>$vo['id']])}">修改</a>
+                            </div>
+                             <div class="item_btn_div">
+                                <a class="item_btn delete_plan_btn" plan_id="{#$vo.id}" ">删除</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line"></div>
+                {#/eq}
+                {#/volist}
+            </div>
+        </div>
+
+        <div class="plan_wrap">
+            <p class="plan_type_title">附加套餐</p>
+            <div class="content_list added_plan_wrap">
+                {#volist name="plan" id="vo"}
+                {#neq name="vo.plan_type" value="101"}
+                    <div class="item" plan_id="{#$vo.id}">
+                        <div class="item_title_wrap">
+                            <p class="item_title">{#$vo.title}
+                            <p class="item_content">{#$vo.content}</p>
+                        </div>
+                        <div class="item_btn_wrap">
+                            <div class="item_btn_div">
+                                <a class="item_btn" target="_blank" href="{#:web_url('/main/plan/editor',['id'=>$vo['id']])}">修改</a>
+                            </div>
+                            <div class="item_btn_div">
+                                <a class="item_btn delete_plan_btn" plan_id="{#$vo.id}" ">删除</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line"></div>
+                {#/neq}
+                {#/volist}
+            </div>
+        </div>
+
+        <div class="plan_wrap">
+            <a class="create_btn" target="_blank" href="{#:web_url('/main/plan/createNew',['art_id'=>$data['id']])}">新建套餐</a>
+        </div>
+
+
+    {#/eq}
+</div>
+<div class="bk10"></div>
+<form></form>
+<script type="text/javascript">
+    var data ={id:"{#$data.id}",line_id:{#$data.line_id}};
+    //定义变量
+    var main_type  = '103';
+    var id         = '{#$data.id}';
+    var createPara = "{#:web_url('/artpara/save')}";
+    var updatePara = "{#:web_url('/artpara/update')}";
+    var deletePara = "{#:web_url('/artpara/delete')}";
+    var par_comment = {};
+    par_comment.id         = id;
+    par_comment.type  = main_type;
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.3.2.1.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_editor.js?v=6"></script>
+<script type="text/javascript" src="__PUBLIC__/js/main.js"></script>
+<!--<script type="text/javascript" src="__PUBLIC__/datepicker/js/bootstrap-datepicker.min.js"></script>-->
+
+<script src="https://unpkg.com/flatpickr"></script>
+
+<script type="text/javascript">
+    var img_url = "{#$data.img_url}";
+    if(img_url){
+        $('#logobox').css("background-image","url("+(img_url)+")");
+    }
+    var is_submit = false;
+
+    var xhrOnProgress=function(fun) {
+        xhrOnProgress.onprogress = fun; //绑定监听
+        //使用闭包实现监听绑
+        return function() {
+            //通过$.ajaxSettings.xhr();获得XMLHttpRequest对象
+            var xhr = $.ajaxSettings.xhr();
+            //判断监听函数是否为函数
+            if (typeof xhrOnProgress.onprogress !== 'function')
+                return xhr;
+            //如果有监听函数并且xhr对象支持绑定时就把监听函数绑定上去
+            if (xhrOnProgress.onprogress && xhr.upload) {
+                xhr.upload.onprogress = xhrOnProgress.onprogress;
+            }
+            return xhr;
+        }
+    };
+
+    $(function () {
+
+        $("#myID").flatpickr({});
+        $("#myHours").flatpickr({
+            enableTime: true,
+            noCalendar: true,
+
+            enableSeconds: false, // disabled by default
+
+            time_24hr: true, // AM/PM time picker is used by default
+
+            // default format
+            dateFormat: "H:i",
+
+            // initial values for time. don't use these to preload a date
+            defaultHour: 0,
+            defaultMinute: 0
+
+            // Preload time with defaultDate instead:
+            // defaultDate: "3:30"
+        });
+
+//        $('.datepicker').datepicker();
+
+        leadHead();
+
+        //选择路线
+        $('.line_btn').click(function () {
+            //调出选择路线页面
+            var width  = 600;
+            var height = 630;
+            var top    = (document.documentElement.clientHeight - height)/2;
+            var left   = (document.documentElement.clientWidth  - width)/2;
+
+            window.open("{#:web_url('/main/map/main')}"+"?line_id="+data.line_id,"_blank"," toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, width="+width+", height="+height+", left="+left+", top="+top);
+//            subWindow("{#:web_url('/main/map/main')}");
+        });
+
+        //调出选择车型页面
+        $('.car_btn').click(function () {
+            subWindow("{#:web_url('/index/web/carselect')}");
+        });
+
+        //选择同行伙伴
+        $('.companion_btn').click(function () {
+            //调出选择路线页面
+            subWindow("{#:web_url('/main/user/all')}");
+        });
+
+        //封面图
+        imgCoverInput();
+
+        //保存
+        $('body').on('click','.save_btn',function(){
+            save($(this).attr('status'));
+        });
+
+        if(window.history && window.history.pushState){
+            $(window).on('popstate', function () {
+                save(null);
+            });
+        }
+
+        //预览
+        $('body').on('click','.look',function(){
+            jump("{#:web_url('/index/web/art',['id'=>$data['id']])}");
+        });
+
+        //当input控制被修改时，触发修改文章对应属性
+        $('body').on('change','.main_input',function () {
+            var name = $(this).attr('name');
+            data[name] = $(this).val();
+        });
+
+        //1.绑定工具栏的展开和关闭事件
+        $("#carea").on("click",'span.tools_btn',function(e){
+            toggleToolsBar($(this));
+        });
+
+        //2.绑定段落显示编辑模式
+        $("#carea").on("click",'li.para_btn',function(e){
+            //1.下面是没有数据的，2.下面有数据的
+            var parent = $(this).parents('.para.toolbar');
+            //后面的栏位
+            var next = parent.next();
+            if(next.length > 0){
+                //后面有工具栏或内容区
+                if(next.hasClass('insert')){
+                    //下面是编辑模式 切换编辑区的样式
+                    toggleEditorType(next,$(this).data('para_type'),'insert');
+                }else{
+                    //下面是显示模式 在工具栏的下方添加1个编辑区
+                    newEditor(parent,$(this).data('para_type'),'insert');
+                }
+            }else{
+                //在当前工具栏的下方添加1个编辑区
+                newEditor(parent,$(this).data('para_type'),'insert');
+            }
+        });
+
+        //3.绑定段落提交按钮
+        $("#carea").on("click",'.save_para',function(e){
+            //上
+            loadPara($(this).parents('.mod_area'));
+        });
+
+        //图片和视频的上传事件
+        $("#carea").on("change",'.input-file',function(e){
+            loadPara($(this).parents('.mod_area'));
+        });
+
+        //编辑按钮
+        $("#carea").on("click",'.update_btn',function(e){
+            toggleParaShow($(this).parents('.content_area'));
+        });
+
+        //删除按钮
+        $("#carea").on("click",'.del_btn',function(e){
+            delPara($(this).parents('.content_area'));
+        });
+
+        //返回上一级
+        $("#carea").on("click",'.return_btn',function(e){
+            window.history.back();
+        });
+
+        n2br($(".view_area .para_data"));
+    
+        $('body').on('click','.delete_plan_btn',function () {
+            var item = $(this).parents('.item');
+            $.ajax({
+                url:"{#:web_url('/main/plan/delete')}",
+                data:{id:$(this).attr('plan_id')},
+                success:function (data) {
+                    if(200 != data.code){
+                        msg(data.desc,2);
+                    }else{
+                        deletePlanDom(item);
+                        msg('删除成功',1);
+                    }
+                },
+                error:function () {
+                    msg('网络不稳定，请稍后再试');
+                }
+            });
+        })
+
+        $('body').on('click','.create_group',function () {
+            if(choose('该操作会新建群组,您确定要继续吗？')){
+                var title = $('input.main_input[name=title]').val();
+                var icon  = '';
+                if(data.img_id){
+                    icon = data.img_id;
+                }else{
+                    icon = "{#$data.img_id}";
+                }
+                $.ajax({
+                    url:"{#:web_url('/main/group/save')}",
+                    data:{title:title,icon:icon},
+                    success:function (data) {
+                        if(200 == data.code){
+                            $('.tid_input').val(data.data.tid);
+                        }else{
+                            msg(data.desc,2);
+                        }
+                    },
+                    error:function () {
+                        msg('网络错误，请稍后再试',2);
+                    }
+                });
+            }
+        });
+    });
+
+    function plan_callback(data) {
+        var dom;
+        if(101 == data.plan_type){
+            dom = $('.main_plan_wrap');
+        }else{
+            dom = $('.added_plan_wrap');
+        }
+        addPlanDom(dom,data);
+        return true;
+    }
+
+    //删除一个套餐的dom
+    function deletePlanDom(dom) {
+        dom.remove();
+    }
+
+    //添加一个套餐的dom
+    function addPlanDom(dom,data) {
+        //如果这个ID已经存在在这边
+        var item = $('.item[plan_id='+data.id+']');
+        if(item.length > 0){
+            item.find('.item_title').text(data.title);
+            item.find('.item_content').text(data.content);
+        }else{
+            var url = "{#:web_url('/main/plan/editor')}";
+            var html  = '<div class="item" plan_id="' +
+                    data.id+
+                    '">'+
+                    '<div class="item_title_wrap">'+
+                    '<p class="item_title">'+
+                    data.title+
+                    '<p class="item_content">'+
+                    data.content+
+                    '</p></div>'+
+                    '<div class="item_btn_wrap">'+
+                    '<div class="item_btn_div">'+
+                    '<a class="item_btn" target="_blank" href="'+
+                    url+'?id='+data.id+
+                    '" >修改</a></div><div class="item_btn_div">'+
+                    '<a class="item_btn delete_plan_btn" plan_id="'+
+                    data.id+
+                    '">删除</a></div></div></div><div class="line"></div>';
+            dom.append(html);
+        }
+    }
+
+    function n2br(dom) {
+        dom.each(function (index,item) {
+            var temp = $(this);
+            temp.html(temp.text().replace(/\n/g,'<br/>'));
+        });
+    }
+
+    //保存
+    function save(type) {
+        if('undefined' !== typeof type && null != type){
+            data.status = type;
+        }
+        var p = data;
+        if($('.activity_data_wrap')){
+            var temp = $('.activity_data_wrap form').serializeArray();
+            p.art_activity = {};
+            temp.map(function (item) {
+                console.log(item);
+                p.art_activity[item.name] = item.value;
+            });
+
+            p.art_activity.end_time = Date.parse($('#myID').val()+' '+$('#myHours').val())/1000;
+        }
+
+        $.ajax({
+            type: "POST",
+            url:"{#:web_url('/art/update')}",
+            data: p,
+            success: function (data) {
+                if (200 == data.code) {
+                    window.data.line_id = data.data.line_id;
+
+                    if(101 == type){
+                        //查看
+                        jump("{#:web_url('/index/web/art',['id'=>$data['id']])}");
+                    }
+                    msg('保存成功',1);
+                }else{
+                    msg(data.desc,2);
+                }
+            },
+            error: function (data) {
+                msg('网络错误，请检查网络连接，稍后再试',2);
+            }
+        })
+    }
+
+    //接收修改座驾的操作
+    function handle_carinfo(param) {
+        if('string' == typeof param) {
+            param = JSON.parse(decodeURI(param));
+        }
+        data.car_model_id  = param.car_model_id;
+        data.car_name      = param.car_name;
+        data.car_full_name = param.car_full_name;
+        $('.car_str').text(param.car_full_name);
+        hideSubWindow();
+    }
+
+    //接收同行伙伴的修改操作
+    function handle_userinfo(param,user) {
+        data.companion = param;
+        var user_head = user.map(function (item) {
+            return '<img src="'+item.head_img_url+'"/>';
+        }).join('');
+        $('.companion_str').html(user_head);
+        hideSubWindow();
+    }
+
+    //接收路线的修改操作
+    function handle_lineinfo(points) {
+        data.line = points;
+        var dom = points.map(function (item) {
+            return item.title;
+        }).join('-');
+        $('.line_str').html(dom);
+        hideSubWindow();
+        return true;
+    }
+
+    //封面
+    var can = true;
+    function imgCoverInput() {
+        uploadInit();
+
+        $('.img_btn').on('click',function (e) {
+            console.log('1');
+            if(can){
+                can = false;
+                $('.img_form').find('.img_file_input').trigger("click");
+                can = true;
+            }
+        });
+    }
+
+    function uploadInit() {
+        var img_form = getImgForm();
+        //用户选择文件以后
+        $('form.img_form').on('change','.img_file_input',function () {
+            var formData = new FormData($(this).parents('form')[0]);
+            formData.append('image_type',101);
+            var that = this;
+            $.ajax({
+                type: "POST",
+                url: "{#:web_url('/image/save')}",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                xhr:xhrOnProgress(function(e){
+                    console.log(e);
+                }),
+                success: function(data) {
+                    if(200 == data.code){
+                        window.data.img_id = data.data.id;
+                        var objUrl = getObjectURL(that.files[0]) ;
+                        if (objUrl) {
+                            $('#logobox').css("background-image","url("+(objUrl)+")");
+                        }
+                    }else{
+                        msg('图片上传失败！',2);
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    msg("上传失败，请检查网络后重试",2);
+                }
+            });
+
+        });
+    }
+
+    function getImgForm() {
+        var img_form = $('.img_form');
+        if(img_form.length <= 0){
+            $('body').append('<form hidden method="post"  enctype="multipart/form-data" hidden class="hide img_form">' +
+                    '<input name="image_type" value="101" />' +
+                    '<input name="img"  class="input img_file_input" type="file" />' +
+                    '</from>');
+            img_form = $('.img_form');
+        }
+        return img_form;
+    }
+
+    //图片
+    function leadHead() {
+        var img_form = getLeadHeadImgForm();
+        $('body').on('click','.lead_head_img_btn',function () {
+            img_form.find('.img_file_input').trigger("click");
+        });
+
+        img_form.on('change','.img_file_input',function () {
+            var that = this;
+            $.ajax({
+                type: "POST",
+                url: "{#:web_url('/image/save')}",
+                data: new FormData(img_form[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                xhr:xhrOnProgress(function(e){
+                    console.log(e);
+                }),
+                success: function(data) {
+                    if(200 == data.code){
+                        $('.lead_head_img_id').val(data.data.id);
+                        var objUrl = getObjectURL(that.files[0]) ;
+                        if (objUrl) {
+                            $('.lead_head_img_btn').attr('src',objUrl);
+                        }
+                    }else{
+                        msg('图片上传失败！',2);
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    msg("上传失败，请检查网络后重试",2);
+                }
+            });
+        });
+
+    }
+
+    function getLeadHeadImgForm() {
+        var img_form = $('.getLeadHeadImgForm');
+        if(img_form.length <= 0){
+            $('body').append('<form hidden method="post"  enctype="multipart/form-data" hidden class="hide getLeadHeadImgForm">' +
+                    '<input name="image_type" value="101" />' +
+                    '<input name="img"  class="input img_file_input" type="file" />' +
+                    '</from>');
+            return $('.getLeadHeadImgForm');
+        }
+        return img_form;
+    }
+
+    function convert_FormData_to_json2(formData) {
+        var objData = {};
+        formData.forEach((value,key) => objData[key] = value);
+        return JSON.stringify(objData);
+    }
+</script>
+</body>
+</html>

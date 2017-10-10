@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>温馨提示</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link charset="utf-8" rel="stylesheet" href="<?php echo config('static_path');?>/css/mui.min.css">
+    <style>
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        a,a:hover,a:active{
+            text-decoration: none !important;
+            text-decoration-color: #fff;
+        }
+        .content{
+            margin-top: 64px;
+            padding-top: 64px;
+
+        }
+        .content .title{
+            font-size: 20px;
+            text-align: center;
+        }
+        .content .desc{
+            font-size: 16px;
+            text-align: center;
+        }
+        .back_btn{
+            width: 60%;
+            margin: 50px auto;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+</head>
+<body>
+<div class="mui-content contentList">
+    <div class="content">
+        <div class="title">
+            系统正在调试中
+            <p class="desc">请稍后再试！</p>
+        </div>
+        <button class="mui-btn-block back_btn mainColor" id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}">返回上一级</button>
+    </div>
+</div>
+<script src="<?php echo config('static_path');?>/js/mui.min.js"></script>
+<script src="<?php echo config('static_path');?>/js/shidian.js"></script>
+<script>
+    var sd = new shiDianCommon({});
+    var token   = sd.token('{{$token}}');
+    mui.ready(function() {
+        mui(document.body).on('tap', '.back_btn', function (e) {
+            sd.app('pop',{});
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <title>H5写攻略</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="__PUBLIC__/css/h5_skin.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="wrapper">
+    <div class="box_l">
+        <div id="carea">
+            <div class="para toolbar">
+                <div class="a">
+					<span class="tools_btn aa" ></span>
+                    <ul class="ab" style="display:block;">
+                        <li class="para_btn aba" data-para_type="101">
+                            <i>
+                            </i>
+                            文字
+                        </li>
+                        <li class="para_btn abb" data-para_type="102">
+                            <i>
+                            </i>
+                            照片
+                        </li>
+                        <li class="para_btn abc" data-para_type="106">
+                            <i>
+                            </i>
+                            视频
+                        </li>
+                        <li class="para_btn abd" data-para_type="105">
+                            <i>
+                            </i>
+                            标题
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {{volist name="data" id="vo"}}
+                <div class="para content_area is_normal view" data-para_id="{{$vo.id}}" para_type="{{$vo.para_type}}">
+                    <div class="mod_area"></div>
+                    <div class="view_area">
+                        {{switch name="vo.para_type"}}
+                            {{case value="101"}}
+                            <div class="b">
+                                <p><span class="para_data">{{$vo.content}}</span>
+                                    <i class="update_btn"></i>
+                                    <em class="del_btn"></em>
+                                </p>
+                            </div>
+                            {{/case}}
+                            {{case value="102"}}
+                            <div class="b">
+                                <p>
+                                    <span><img  class="para_data" src="{{$vo.img_url}}" alt="{{$vo.content}}"></span>
+                                    <i class="update_btn"></i>
+                                    <em class="del_btn"></em>
+                                </p>
+                            </div>
+                            {{/case}}
+                            {{case value="105"}}
+                            <div class="b">
+                                <p>
+                                    <span class="para_data">{{$vo.content}}</span>
+                                    <i class="update_btn"></i>
+                                    <em class="del_btn"></em>
+                                </p>
+                            </div>
+                            {{/case}}
+                            {{case value="106"}} <div class="b">
+                            <div class="b">
+                                <p>
+                                    <span><img  class="para_data" src="{{$vo.img_url}}" alt="{{$vo.content}}"></span>
+                                    <i class="update_btn"></i>
+                                    <em class="del_btn"></em>
+                                </p>
+                            </div>
+                            {{/case}}
+                        {{default /}}未知的类型
+                        {{/switch}}
+                    </div>
+                </div>
+                <div class="para toolbar">
+                        <div class="a">
+                            <span class="tools_btn aa" ></span>
+                            <ul class="ab" style="display:block;">
+                                <li class="para_btn aba" data-para_type="101">
+                                    <i>
+                                    </i>
+                                    文字
+                                </li>
+                                <li class="para_btn abb" data-para_type="102">
+                                    <i>
+                                    </i>
+                                    照片
+                                </li>
+                                <li class="para_btn abc" data-para_type="106">
+                                    <i>
+                                    </i>
+                                    视频
+                                </li>
+                                <li class="para_btn abd" data-para_type="105">
+                                    <i>
+                                    </i>
+                                    标题
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+            {{/volist}}
+        </div>
+        <div class="bk100">
+        </div>
+        <div class="bk100">
+        </div>
+        <div class="stool">
+            <span class="b return_btn" >
+				返回
+			</span>
+        </div>
+        <div class="bk100">
+        </div>
+    </div>
+</div>
+<div class="bk10">
+</div>
+<div id="loading">
+</div>
+<script type="text/javascript">
+    //定义变量
+    var main_type = '{{$type}}';
+    var id   = '{{$id}}';
+    var createPara = '{{:web_url('/artpara/save')}}';
+    var updatePara = '{{:web_url('/artpara/update')}}';
+    var deletePara = '{{:web_url('/artpara/delete')}}';
+    var par_comment = {};
+    par_comment.id   = '{{$id}}';
+    par_comment.main_type = '{{$type}}';
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.3.2.1.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_editor.js"></script>
+<script src="__PUBLIC__/js/seller.js"></script>
+<script type="text/javascript">
+    //false 当前没有提交中的段落数据，true表示有段落数据在提交
+    var is_submit = false;
+
+    $(function () {
+        //1.绑定工具栏的展开和关闭事件
+        $("#carea").on("click",'span.tools_btn',function(e){
+            toggleToolsBar($(this));
+        });
+
+        //2.绑定段落显示编辑模式
+        $("#carea").on("click",'li.para_btn',function(e){
+            //1.下面是没有数据的，2.下面有数据的
+            var parent = $(this).parents('.para.toolbar');
+            var next = parent.next();
+            if(next.length > 0){
+                //后面还有
+                if(!next.hasClass('insert')){
+                    //显示模式 在当前工具栏的下方添加1个编辑区
+                    newEditor(parent,$(this).data('para_type'),'insert');
+                }else{
+                    //编辑模式 修改当前编辑区的样式
+                    toggleEditorType(next,$(this).data('para_type'),'insert');
+                }
+            }else{
+                //在当前工具栏的下方添加1个编辑区
+                newEditor(parent,$(this).data('para_type'),'insert');
+            }
+        });
+
+        //3.绑定段落提交按钮
+        $("#carea").on("click",'.save_para',function(e){
+            //上
+            loadPara($(this).parents('.mod_area'));
+        });
+
+        //图片和视频的上传事件
+        $("#carea").on("change",'.input-file',function(e){
+            loadPara($(this).parents('.mod_area'));
+        });
+
+        //编辑按钮
+        $("#carea").on("click",'.update_btn',function(e){
+            toggleParaShow($(this).parents('.content_area'));
+        });
+
+        //删除按钮
+        $("#carea").on("click",'.del_btn',function(e){
+            delPara($(this).parents('.content_area'));
+        });
+
+        //返回上一级
+        $("#carea").on("click",'.return_btn',function(e){
+            window.history.back();
+        });
+    });
+
+
+
+</script>
+</body>
+</html>

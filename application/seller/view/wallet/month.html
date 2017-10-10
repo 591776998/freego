@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>流水</title>
+    <link href="__PUBLIC__/temp/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <script src="__PUBLIC__/temp/js/jquery.min.js"> </script>
+    <script src="__PUBLIC__/temp/js/bootstrap.js"></script>
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 80%;
+                margin:0 auto;
+                border: 2px solid #DDDDDD;
+                padding-bottom:125px ;
+            }
+            .comment{
+                width: 100%;
+                font-size:0.8em;
+                color: #666666;
+
+            }
+
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.1em;
+
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 30px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+
+            }
+
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.2em;
+
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 98%;text-align: center;
+                margin: 35px auto;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+
+            }
+
+        }
+        .header{
+
+
+            padding: 16px 0;
+            background: #F9F9F9;
+            color:#FFCC00;
+            font-weight: bold;
+
+
+        }
+        .btn1{
+            border: none;
+            background: #F9F9F9;
+        }
+
+        .btn2{
+            font-size: 0.9em;
+            width: 80%;
+            padding: 3px 0;
+            font-weight: normal;
+            color: #080808;
+        }
+        .btn3{
+            border: none;
+            background: #F9F9F9;
+            width:112px;
+            padding: 3px 0;
+        }
+        .btn4{
+            border-radius: 8px;
+            padding: 3px 12px;
+            font-size: 0.8em;
+            background: #FFFFFF;
+            margin-left:  10px;
+
+        }
+        .btn5{
+            border: none;
+            background: #F9F9F9;
+            width: 220px;
+            padding: 3px 0px;
+        }
+        .btn6{
+            width: 240px;
+            font-size: 0.8em;
+            padding: 3px 0px;
+        }
+        button{
+            outline: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <div class="comment">
+                <div class="row header">
+                    <div class="col-xs-3 col-md-3" style="text-align: left;padding: 0">
+                        <button class="btn1"><span class="glyphicon glyphicon-chevron-left"></span>钱包</button>
+                    </div>
+                    <div class="col-xs-8 col-md-8" style=" text-align: left;">
+                    <select class="btn2" id="year_time"> </select></div>
+
+                </div>
+                <div class="comm">
+                    <table class="table">
+                        <thead>
+                        <th>
+
+                        <td>现金收入</td>
+                        <td>积分收入</td>
+                        </th>
+                        </thead>
+                        <tbody id="databody">
+                        <tr>
+                            <td>一月</td>
+                            <td>6000￥</td>
+                            <td>3000分</td>
+                        </tr>
+                        <tr>
+                            <td>二月</td>
+                            <td>6000￥</td>
+                            <td>3000分</td>
+                        </tr>
+                        <tr>
+                            <td>三月</td>
+                            <td>6000￥</td>
+                            <td>3000分</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content" style="text-align: center">
+            <div id="content" style="height: 100px;margin-top: 30px">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function ajaxWalletdetail(year_time){//获取钱包信息
+        var yeardetail="";
+        $("#databody").empty();
+        $.ajax({
+            type: "GET",
+            url: "{{$baseUrl}}seller/wallet/index",
+            data:year_time,
+            success: function (data) {
+                if (data.code ==200) {
+                    for (var i = 0; i < data.data.length; i++) {
+                        var smoney=data.data[i].money/100;
+                        yeardetail = yeardetail + '<tr><td>' + data.data[i].time_str + '</td><td>' +smoney+ '</td><td>' + data.data[i].point + '</td></tr>';
+                    }
+                    $("#databody").append(yeardetail);
+                }
+
+                if (data.code == 201) {
+                    $("#content").text(data.desc);
+                    $('#myModal').modal('toggle');
+                }
+            },
+            error:function(data){
+                $("#content").text("获取失败，请检查网络");
+                $('#myModal').modal('toggle');
+            }
+        })
+    }
+    $().ready(function(){
+        $(".btn1").click(function(){
+            window.history.back();
+        })
+        //加载选择时间
+        var date=new Date();
+        var year="";
+        date=date.getFullYear();
+        ajaxWalletdetail(date);
+        dateLength=date-2017;
+        for(var i=0;i<=dateLength;i++,date--)
+        {
+            var year=year+'<option value="'+date+'">'+date+'<option>'
+
+        }
+        $("#year_time").append(year);
+        //获取数据
+        $("#year_time").change(function(){
+            ajaxWalletdetail($("#year_time").val());
+        })
+
+    })
+</script>
+</body>
+</html>

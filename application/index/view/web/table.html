@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/index.css?v=1">
+
+    <style type="text/css">
+        .mainColor{
+            color: #F8CD20 !important;
+            font-size: 14px !important;
+        }
+        .slectbox .item {
+            flex: 1;
+            color: #F8CD20 !important;
+        }
+        .mui-table-view-chevron .mui-table-view-cell {
+            /*padding-right: 0;*/
+        }
+        .twoSy{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .threeSy{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .allSelect,.sortSelect,.carSelect {
+            background: none !important;
+            /*opacity:0.5;*/
+        }
+        .loctionSelect_z_index{
+
+            opacity:0.5;
+        }
+        .loctionSelect_box{
+            z-index: 999999 !important;
+        }
+        .headerH64{
+            height: 64px;
+            padding-top: 20px;
+        }
+        .slectbox {
+            display: flex;
+            flex-direction: row;
+             height: 80px;
+             padding-top: 66px !important;
+         }
+        .mui-scroll-wrapper{
+            top:104px !important;
+        }
+        .allSelect{
+            top:105px;
+
+        }
+        .carSelect{
+            top:105px;
+        }
+        .loctionSelect{
+            top:105px;
+        }
+        .sortSelect{
+            top:105px;
+        }
+        .mui-bar-nav~.mui-content .mui-pull-top-pocket {
+            top: 0;
+        }
+        .mui-pull-top-pocket.mui-block {
+            visibility: hidden;
+        }
+        .user_head_img{
+            border-radius:14px;
+            margin-right: 7px;
+        }
+        .sub_icon{
+            margin-right: 5px;
+            height: 12px !important;
+            color:#F8CD20 !important;
+        }
+        .mui-table-view-chevron .mui-table-view-cell>a:not(.mui-btn) {
+             margin-right: 0;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+            left: 80px !important;
+        }
+        img{
+            object-fit: cover;
+        }
+        .footer .floatL img {
+            width: 16px;
+            object-fit: inherit;
+
+        }
+        .mui-table-view-chevron .mui-table-view-cell {
+            padding-right: 0;
+        }
+        .mui-table-view-cell{
+            color: #F8CD20;
+            font-size: 13px;
+            padding: 8px 12px;
+        }
+
+        .mui-table-view-cell:after{
+            left: 15px !important;
+            right: 15px !important;
+            margin-left:0 !important;
+            margin-right: 0 !important;
+        }
+        #search_input{
+            background: none;
+            border: 1px solid #c8c7cc;
+            width: 80%;
+        }
+        .mui-table-view-chevron .mui-table-view-cell {
+            padding-right: 0;
+            margin-bottom: 15px;
+        }
+        .ltext {
+            font-size: 14px !important;
+        }
+        #back{
+            font-size: 18px !important;
+            padding-top: 13px;
+        }
+        .citem {
+            border-right: 1px solid gainsboro;
+            border-left: 1px solid gainsboro;
+            height: 16px;
+            margin-top: 10px;
+            line-height: 20px !important;
+        }
+        .grey_6{
+
+            height: 38px;
+            border-bottom: 1px solid #E5E6E6;
+            width: 100%;
+        }
+        .mui-bar-nav.mui-bar .mui-icon {
+            margin-right:5px;
+        }
+
+        .desc{
+            white-space:normal;
+            height: 60px;
+            overflow: hidden;
+        }
+        .content .title{
+            font-size: 16px !important;
+            color: black !important;
+        }
+        .sub_title{
+            color: black;
+        }
+        .sub_title span{
+            color: grey;
+        }
+
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+        #span_down {
+            position: absolute;
+            top: 33px;
+            right: 5px;
+            color: #F8CD20;
+            font-size: 14px;
+            padding: 0;
+            font-weight: bold;
+        }
+        #pop{
+           padding-top: 15px;
+        }
+        .mui-table-view-cell p{
+            margin-bottom: 3px;
+        }
+        .boxt2 .content .R .title {
+            margin-bottom: 5px;
+        }
+        .helpimg{
+            position: absolute;
+            top: 6px;
+            right: 7px;
+        }
+    </style>
+
+</head>
+
+<body>
+{{eq name="is_app" value="102"}}
+{{include file="web/h5_view_head" /}}
+{{else/}}
+<header class="mui-bar mui-bar-nav headerH64" style="background-color: #fff;">
+    <a id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left mainColor"><span class="ltext">返回</span></a>
+    <h1 class="mui-title">
+        <form id="search_form">
+            <input id="search_input" class="hinput" type="search"  value="" />
+        </form>
+    </h1>
+    <a class="mui-icon rtext mui-pull-right mainColor" _#="carSelect" id="car_select_btn" onclick="selectHideShow(this)">汽车服务
+    </a><span id="span_down" class="mui-icon mui-icon-arrowdown"></span>
+</header>
+{{/eq}}
+
+<div class="slectbox">
+    <div class="location_select_btn item floatL item0" style=" " _#="loctionSelect" onclick="selectHideShow(this)">{{$location_str}}</div>
+    <div class="tag_select_btn item floatL item1 citem" _#="allSelect"  style="" onclick="selectHideShow(this)">全部类型</div>
+    <div class="order_select_btn order_select_btn item floatL item2"  _#="sortSelect"  onclick="selectHideShow(this)">默认排序</div>
+    <!--<div class="grey_6"></div>-->
+</div>
+
+<div class="allSelect select_z_index hide"   _#="allSelect" onclick="selectHideShow(this)">
+    <ul class="mui-table-view  floatL textc" id="tag_wrap_ul" style=""></ul>
+    <div class="loctionSelect_z_index"> &nbsp;</div>
+</div>
+<div class="carSelect select_z_index hide"    _#="carSelect" onclick="selectHideShow(this)">
+    <ul class="mui-table-view  floatL textc type_select" style="">
+        {{volist name="chanel" id="vo"}}
+            <li class="mui-table-view-cell select_item" obj_type="type" type="{{$vo.jump.type}}" sub_type="{{$vo.jump.sub_type}}">{{$vo.title}}</li>
+        {{/volist}}
+    </ul>
+    <div class="loctionSelect_z_index"> &nbsp;</div>
+</div>
+<div class="sortSelect select_z_index  hide"  _#="sortSelect" onclick="selectHideShow(this)" >
+    <ul class="mui-table-view  floatL textc" id="order_wrap_ul" style=""></ul>
+    <div class="loctionSelect_z_index"> &nbsp;</div>
+</div>
+
+<div class="loctionSelect_box loctionSelect select_z_index hide" onclick="" >
+    <div class="loctionSelect_z_index"   _#="loctionSelect" onclick="selectHideShow(this)" > &nbsp;</div>
+    <ul class="mui-table-view floatL textc ul0" style="">
+        <!--<li class="mui-table-view-cell">1</li> <li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li> <li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li><li class="mui-table-view-cell">1</li>-->
+    </ul>
+    <ul class="mui-table-view floatL textc ul1" style="">
+        <!--<li class="mui-table-view-cell">2</li><li class="mui-table-view-cell">2</li><li class="mui-table-view-cell">2</li><li class="mui-table-view-cell">2</li><li class="mui-table-view-cell">2</li>-->
+    </ul>
+    <ul class="mui-table-view floatL textc ul2" style="">
+        <!--<li class="mui-table-view-cell">3</li>-->
+    </ul>
+</div>
+<div class="help" style="">
+    <span class="helpp">一键救援</span><img style="width:16px;height:14px" class="helpimg" src="__PUBLIC__/img/base/soscall.png" >
+</div>
+<!--下拉刷新容器-->
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+    <div class="mui-scroll">
+        <ul class="mui-table-view mui-table-view-chevron databox"></ul>
+    </div>
+</div>
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/js/_publicCom.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script>
+
+    var order = {{$order|json_encode}};
+
+    var tag   = {{$tag|json_encode}};
+
+    //select 数据
+    var loacSelectData = {{$address}};
+
+</script>
+
+<script>
+    //是否清除缓存
+    var postconfig_par_cache_key = 'shidian_table_postconfig_par_v3';
+    var postconfig_setting_cache_key = 'shidian_table_postconfig_setting_v3';
+
+    if(102 != localStorage.shidian_need_delete_table_cache){
+        delete localStorage[postconfig_par_cache_key];
+        delete localStorage[postconfig_setting_cache_key];
+    }
+    localStorage.shidian_need_delete_table_cache = 101;
+
+    var sd = new shiDianCommon({});
+    var token = sd.token('{{$token}}');
+    var baseUrl = '{{$baseUrl}}';
+    var pulicS = '__PUBLIC__/img/';
+    var type     = '{{$type}}';
+    var sub_type = '{{$sub_type}}';
+
+    var location_name  = '{{$location_name}}';
+    var location_value = '{{$location_value}}';
+    var location_str   = '{{$location_str}}';
+    var lat = '{{$lat}}';
+    var lng = '{{$lng}}';
+
+    var url_103 = '{{$baseUrl}}art/index';
+    var url_104 = '{{$baseUrl}}place/index';
+
+    //类型按钮
+    var tag_select_btn = $('.tag_select_btn');
+    var order_select_btn = $('.order_select_btn');
+    var location_select_btn = $('.location_select_btn');
+
+    mui.init({
+        pullRefresh: {
+            container: '#pullrefresh',
+            down: {
+                callback: function() {
+                    page_init('reloadtype',postConfig.setting.type,postConfig.setting.sub_type);
+                }
+            },
+            up: {
+                contentrefresh: '正在加载...',
+                callback: function () {
+                    page_init('',postConfig.setting.type,postConfig.setting.sub_type);
+                }
+            }
+        }
+    });
+    var nowPage = 1,pagesize=20;
+
+    var postConfig = {
+        par:initProxy(postconfig_par_cache_key),
+        setting:initProxy(postconfig_setting_cache_key)
+    };
+    if(lat){
+        postConfig.par.lat = lat;
+    }
+    if(lng){
+        postConfig.par.lng = lng;
+    }
+    postConfig.par.token     = token;
+    postConfig.par.page      = nowPage;
+    postConfig.par.page_size = pagesize;
+    
+    //1.先读取本地缓存，2.如果有请求参数，就用请求参数覆盖掉本地缓存
+    mui.ready(function(){
+
+        if('undefined' == typeof postConfig.setting.type){
+            postConfig.setting.type = type;
+        }
+        if('undefined' == typeof postConfig.setting.sub_type){
+            postConfig.setting.sub_type = sub_type;
+        }
+
+        if(103 == postConfig.setting.type) {
+            if('undefined' == typeof postConfig.par.art_type){
+                postConfig.par.art_type = sub_type;
+            }
+            if('undefined' == typeof postConfig.setting.url){
+                postConfig.setting.url = url_103;
+            }
+        }else{
+            if('undefined' == typeof postConfig.par.place_type){
+                postConfig.par.place_type = sub_type;
+            }
+            if('undefined' == typeof postConfig.setting.url){
+                postConfig.setting.url = url_104;
+            }
+        }
+
+
+        if('undefined' == typeof postConfig.par.location_name){
+            postConfig.par.location_name    = location_name;
+            postConfig.par.location_value   = location_value;
+        }
+
+        if('undefined' == typeof postConfig.setting.location_str){
+            postConfig.setting.location_str = location_str;
+        }
+
+        location_select_btn.text(postConfig.setting.location_str);
+
+        //初始化页面
+        mui('#pullrefresh').pullRefresh().pulldownLoading();
+
+        initLocaSelect();
+        mui('body').on('tap','.ul0 li,.ul1 li',function(){
+            initLocaSelect($(this).attr('findex'),$(this).attr('sindex'))
+        });
+
+        mui('body').on('tap','.ul2 li',function(){
+            $('.loctionSelect_z_index').eq(1).click();
+            postConfig.par.location_name  = this.getAttribute('code_name');
+            postConfig.par.location_value = this.getAttribute('code_value');
+
+            postConfig.setting.location_str = $(this).text();
+
+            location_select_btn.text($(this).text());
+
+            mui('#pullrefresh').pullRefresh().pulldownLoading();
+
+        });
+
+        mui('body').on('tap','.a_btn',function(){
+            self.location = this.getAttribute('href');
+        });
+
+        //搜索
+        $("#search_form").on('submit',function(e){
+            postConfig.par.key_word = $(this).find('input').val();
+
+            //1.修改其他参数为默认值
+            //1.地区
+            postConfig.par.location_name  = '';
+            postConfig.par.location_value = '';
+            postConfig.setting.location_str = '不限';
+            location_select_btn.text('不限');
+            //类型
+            postConfig.par.tag_id   = '0';
+            tag_select_btn.text('全部类型');
+            //排序
+            postConfig.par.order    = '';
+            order_select_btn.text('默认排序');
+
+            mui('#pullrefresh').pullRefresh().pulldownLoading();
+//            page_init('reloadtype');
+            return false;
+        });
+
+        //设置右上角的文字
+        $('#car_select_btn').text('{{$type_title}}');
+
+        //点击select
+        $('body').on('tap','.select_item',function (e) {
+            var go = false;
+            this_obj = $(this);
+            this_obj_name = this_obj.attr('obj_type');
+            if('tag' == this_obj_name){
+                if(postConfig.par.tag_id != this_obj.attr('id')){
+                    tag_select_btn.text(this_obj.text());
+                    postConfig.par.tag_id = this_obj.attr('id');
+                    go = true;
+                }
+            }else if('order' == this_obj_name){
+                if(postConfig.par.order != this_obj.attr('key')){
+                    order_select_btn.text(this_obj.text());
+                    postConfig.par.order = this_obj.attr('key');
+                    go = true;
+                }
+            }else if('type' == this_obj_name){
+                $('#car_select_btn').text($(this).text());
+                //修改接口
+                var the_type     = this_obj.attr('type');
+                var the_sub_type = this_obj.attr('sub_type');
+
+                if((the_type != postConfig.setting.type) || (the_sub_type != postConfig.setting.sub_type)){
+                    postConfig.setting.type     = the_type;
+                    postConfig.setting.sub_type = the_sub_type;
+
+                    if(103 == postConfig.setting.type){
+                        postConfig.setting.url          = url_103;
+                        postConfig.par.art_type         = postConfig.setting.sub_type;
+                    }else{
+                        postConfig.setting.url          = url_104;
+                        postConfig.par.place_type       = postConfig.setting.sub_type;
+                    }
+                    postConfig.par.tag_id   = '0';
+                    postConfig.par.order    = '';
+                    order_select_btn.text('默认排序');
+                    tag_select_btn.text('全部类型');
+                    go = true;
+                }
+            }else{
+                return false;
+            }
+            if(go){
+                mui('#pullrefresh').pullRefresh().pulldownLoading();
+            }
+        });
+
+    });
+
+    var help_btn = $('.help');
+    var help_p= $('.helpp');
+    var helpimg=$('.helpimg')
+    var btn_type = 0;
+    var btn_param = {};
+
+    //页面初始化 reloadtype
+    function page_init(action,type,sub_type) {
+        //设置排序的标签
+        if('undefined' == typeof type){
+            type = postConfig.setting.type;
+        }
+        if('undefined' == typeof sub_type){
+            sub_type = postConfig.setting.sub_type;
+        }
+
+        console.log(type);
+        console.log(sub_type);
+
+        setOrder(type,sub_type);
+
+        setTag(type,sub_type);
+
+        //设置是否显示按钮，按钮的内容和跳转
+        if((104 == type && 111 == sub_type)||(103 == type && (103 == sub_type || 101 == sub_type))){
+            if(104 == type && 111 == sub_type){
+                help_p.text('一键救援');
+                btn_param.phone= '18585077739';
+                helpimg.attr("src","__PUBLIC__/img/base/soscall.png")
+                btn_type = 1;
+            }else if(103 == type){
+                if(101 == sub_type){
+                    help_p.text('编写攻略');
+                    btn_type = 2;
+                    helpimg.attr("src","__PUBLIC__/img/base/xieyouji.png")
+                }else if(103 == sub_type){
+                    help_p.text('问问驾友');
+                    btn_type = 3;
+                    helpimg.attr("src","__PUBLIC__/img/base/tiwenjiayou.png")
+                }
+            }
+            help_btn.show();
+        }else{
+            help_btn.hide();
+        }
+
+        //载入数据
+        if('reloadtype' == action){
+            postConfig.par.page = 1;
+        }
+        loadData(type,sub_type);
+    }
+
+    //绑定下方按钮事件
+    function bandBtn() {
+        help_btn.on('tap',function () {
+            if(1 == btn_type){
+                window.location = 'tel:18585077739';
+            }else{
+                shidian('btn_'+btn_type,btn_param);
+            }
+        });
+    }
+    bandBtn();
+
+    //初始化地点选择
+    function initLocaSelect(){
+        var findex = arguments[0];
+        var sindex = arguments[1];
+        var loctionSelect_box = $('.loctionSelect_box');
+        loctionSelect_box.find('li').remove();
+        var ul0 = loctionSelect_box.find('.ul0');
+        var ul1 = loctionSelect_box.find('.ul1');
+        var ul2 = loctionSelect_box.find('.ul2');
+        loacSelectData.map(function(item,index){
+            ul0.append('<li class="mui-table-view-cell" findex="'+index+'" code_name="'+item.code_name+'" code_value="'+item.code_value+'"  _id="'+item.id+'">'+item.name+'</li> ');
+            if(index==findex){
+                item.sub.map(function(itemc,index2){
+                    ul1.append('<li class="mui-table-view-cell" findex="'+index+'"  sindex="'+index2+'" code_name="'+itemc.code_name+'" code_value="'+itemc.code_value+'" _id="'+itemc.id+'">'+itemc.name+'</li> ');
+                    if(index2==sindex){
+                        itemc.sub.map(function(itemcc,index3){
+                            ul2.append('<li class="mui-table-view-cell" code_name="'+itemcc.code_name+'" code_value="'+itemcc.code_value+'" _id="'+itemc.id+'">'+itemcc.name+'</li> ');
+                        })
+                    }
+                })
+            }
+        })
+    }
+
+    //selct显示隐藏
+    function selectHideShow(that){
+        //先填充数据
+        var this_obj = $(that);
+        var op_obj = $('.'+this_obj.attr('_#'));
+
+        var allSelct = $('.select_z_index');
+        for (var i = 0;i<allSelct.length;i++) {
+            !(allSelct.eq(i).hasClass(this_obj.attr('_#')))?allSelct.eq(i).hide():'';
+        }
+        op_obj.toggle();
+    }
+
+    //渲染数据
+    function loadData(type,sub_type){
+        //根据当前参数，发起请求
+        var page = '1';
+        page = postConfig.par.page;
+        $.ajax({
+            url: postConfig.setting.url,
+            data: postConfig.par,
+            type: 'post',
+            cache: false,
+            timeout:10000,
+            success: function(data) {
+                var cover = false;
+                if('string' == typeof data){
+                    data = JSON.parse(data);
+                }
+                postConfig.par.page = page+1;
+                if(1 == page){
+                    mui('#pullrefresh').pullRefresh().endPulldownToRefresh(false);
+                    mui('#pullrefresh').pullRefresh().refresh(true);
+                    cover = true;
+                }else {
+                    if (data.data.length != postConfig.par.page_size) {
+                        mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+                    } else {
+                        mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+                    }
+                }
+                if (103 == type) {
+                    if (103 == sub_type) {
+                        getHtml = getQeHtml;
+                    } else {
+                        getHtml = getArtHtml;
+                    }
+                } else {
+                    getHtml = getPlaceHtml;
+                }
+                render(data.data,getHtml,cover);
+            },
+            error: function(mesg) {
+                if(1 == page){
+                    mui('#pullrefresh').pullRefresh().endPulldownToRefresh(true);
+                    alert('请检查网络，稍后再试！');
+                }else{
+                    mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+                    mui('#pullrefresh').pullRefresh().refresh(true);
+                    alert('请检查网络，稍后再试！');
+                }
+            }
+        });
+    }
+
+    //渲染DOM
+    function render(data,getHtmlFunc,cover) {
+        var html = (data.map(getHtmlFunc)).join('');
+        if(cover){
+            $('.databox li').remove();
+            //滚动到页面顶部
+            $('.mui-scroll').css('transform','translate3d(0, 0, 0) translateZ(0px)')
+            //把下拉刷新加回来
+            $('.databox').html(html);
+        }else{
+            $('.databox').append(html);
+        }
+    }
+
+    //游记
+    function getArtHtml(data,index){
+        //一个有3种不同显示方式的数据
+        var car_info = data.car_full_name?'<p class="sub_title"><span>座驾：</span>'+data.car_full_name+'</p>':'';
+        var footprint = '<p class="sub_title"><span>足迹：</span>'+data.footprint+'</p>';
+        return '<li class="mui-table-view-cell box boxt2" style="">'+
+                '<a class="a_btn" href="{{$baseUrl}}index/web/art?id='+data.id+'&token='+sd.token()+'&is_web=101&need_delete_table_cache=102">'+
+                '<div class="content " style="">'+
+                '<div class="L floatL" style=""><img style="" src="'+data.img_url+'"/></div>'+
+                '<div class="R floatL" style="">'+
+                '<div class="title twoSy" style="">'+data.title+'</div>'+
+                car_info+
+
+                footprint+
+                '<p class="desc">'+data.content_text+'</p>'+
+                '</div>'+
+                '</div>'+
+                '<div class="footer" style="">'+
+                '<div class="floatL L" style="">'+
+                '<img class="user_head_img" style="" src="'+data.user.head_img_url+'"/>'+data.user.nick_name+'&nbsp;'+data.user.honor+'&nbsp;'+data.user.club_title+
+                '</div>'+
+                '<div class="floatL R" style="">'+
+                '<img class="sub_icon" style="" src="__PUBLIC__/img/base/page_view.png"/>'+data.read_count+'&nbsp;&nbsp;&nbsp;'+
+                '<img class="sub_icon" style="" src="__PUBLIC__/img/base/pinglun.png"/>'+data.comments_count+
+                '</div>'+
+                '</div>' +
+                '</a>'+
+                '</li>';
+    }
+
+    //问答
+    function getQeHtml(data,index) {
+
+        var footprint = '<p class="sub_title"><span>足迹：</span>'+data.footprint+'</p>';
+
+        return  '<li class="mui-table-view-cell box boxt1" style="">'+
+                '<a class="a_btn" href="{{$baseUrl}}index/web/art?id='+data.id+'&token='+sd.token()+'&is_web=101&need_delete_table_cache=102">'+
+                '<div class="title mui-ellipsis" style="">'+data.title+'</div>'+
+                '<div class="loc" style="">'+footprint+'</div>'+
+                '<div class="content twoSy" style="">'+data.content_text+'</div> ' +
+                '<div class="footer" style="">'+
+                '<div class="floatL L" style="">'+
+                '<img class="user_head_img" style="" src="'+data.user.head_img_url+'"/>'+data.user.nick_name+
+                '</div>'+
+                '<div class="floatL R" style="">'+
+                '<img class="sub_icon" style="" src="__PUBLIC__/img/base/page_view.png"/>'+data.read_count+'&nbsp;&nbsp;&nbsp;'+
+                '<img class="sub_icon" style="" src="__PUBLIC__/img/base/pinglun.png"/>'+data.comments_count+
+                '</div>'+
+                '</div>' +
+                '</a>'+
+                '</li>';
+
+    }
+
+    //服务地点
+    function getPlaceHtml(data,index) {
+        //一个有3种不同显示方式的数据
+        var  star = getStar(data.star);
+         return '<li class="mui-table-view-cell box" style="">'+
+                '<a class="a_btn" href="{{$baseUrl}}index/web/place?id='+data.id+'&token='+sd.token()+'&is_web=101&need_delete_table_cache=102">'+
+                '<div class="L" style=""> <img style="" src="'+data.img_url+'" />'+
+                '</div> <div class="C" style="">'+
+                '<div class="Rt mui-ellipsis" style="">'+data.title+'</div>'+
+                '<div class="tuijian mui-ellipsis">驾友推荐'+star+'</div>'+
+                '<div class="pinglun mui-ellipsis">'+data.comments_count+'条评论，'+data.art_count+'篇游记提及</div>'+
+                '<div class="dian mui-ellipsis">'+data.content+'</div>'+
+                '</div><div class="R" >'+
+                '<div class="distancs">'+data.distance_str+'</div> </div></a></li>';
+    }
+
+    //过滤select 的参数
+    function filter_data(data,condition) {
+        var temp = [];
+        var can;
+        for (var item in data){
+            can = true;
+            for (var key in condition){
+                if(data[item][key] != condition[key]){
+                    can = false;
+                    break;
+                }
+            }
+            if(can){
+                temp.push(data[item]);
+            }
+        }
+        return temp;
+    }
+
+    //初始化order select
+    var order_wrap_ul = $('#order_wrap_ul');
+    function setOrder(type,sub_type) {
+        var data = filter_data(order,{type:type,sub_type:sub_type});
+        var html = '<li class="mui-table-view-cell select_item" obj_type="order" key="" id="0">默认排序</li>';
+        data.map(function (item,index) {
+            html += '<li class="mui-table-view-cell select_item" obj_type="order" key="'+item.key+'" id="'+item.id+'">'+item.title+'</li>';
+        });
+        order_wrap_ul.find('li').remove();
+        order_wrap_ul.append(html);
+    }
+
+    //初始化tag select
+    var tag_wrap_ul = $('#tag_wrap_ul');
+    function setTag(type,sub_type) {
+        var data = filter_data(tag,{type:type,sub_type:sub_type});
+        var html = '<li class="mui-table-view-cell select_item" obj_type="tag" id="0">全部类型</li>';
+        data.map(function (item,index) {
+            html += '<li class="mui-table-view-cell select_item" obj_type="tag" id="'+item.id+'">'+item.tag_name+'</li>';
+        });
+        tag_wrap_ul.find('li').remove();
+        tag_wrap_ul.append(html);
+    }
+
+    //传入星星数，返回对应的dom
+    function getStar(star) {
+        var html = '<img style="width: 14px;height: 14px;" src="__PUBLIC__/img/base/star.png"/>';
+        return html.repeat(parseInt(star));
+    }
+
+    String.prototype.repeat = function(num) {
+        if(0 < num){
+            return new Array(num+1).join(this);
+        }
+        return '';
+    };
+
+    //和shidianAPP交互
+    function shidian($action, $param) {
+        if (typeof($param != "string")){
+            $param = JSON.stringify($param);
+        }
+        self.location='shidian://'+$action+'?jp='+$param;
+    }
+
+    function initProxy(key) {
+        if('undefined' == typeof localStorage[key]){
+            localStorage[key] = '{}';
+        }
+
+        var object = {};
+        object = JSON.parse(localStorage[key]);
+        return new Proxy(object,{
+            get: function (target, name) {
+                var temp = localStorage[key];
+                if('object' == typeof temp)
+                    return temp[name];
+                else
+                    return (JSON.parse(temp))[name];
+            },
+            set:function(target, propertyName, value, receiver){
+                object[propertyName] = value;
+                var temp = (JSON.parse(localStorage[key]));
+                temp[propertyName] = value;
+                localStorage[key] = JSON.stringify(temp);
+            }
+        });
+    }
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>流水</title>
+    <link href="__PUBLIC__/temp/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 80%;
+                margin:0 auto;
+                border: 2px solid #DDDDDD;
+                padding-bottom:125px ;
+            }
+            .comment{
+                width: 100%;
+                font-size:0.8em;
+                color: #666666;
+
+            }
+
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.1em;
+
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 30px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+
+            }
+
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.2em;
+
+                color: #666666;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+            .comb{
+                width: 98%;text-align: center;
+                margin: 35px auto;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+
+            }
+
+        }
+        .header{
+
+
+            padding: 16px 0;
+            background: #F9F9F9;
+            color:#FFCC00;
+            font-weight: bold;
+
+
+        }
+        .btn1{
+            border: none;
+            background: #F9F9F9;
+        }
+
+        .btn2{
+            font-size: 0.9em;
+            width: 80%;
+            padding: 3px 0;
+            font-weight: normal;
+            color: #080808;
+        }
+        .btn3{
+            border: none;
+            background: #F9F9F9;
+            width:112px;
+            padding: 3px 0;
+        }
+        .btn4{
+            border-radius: 8px;
+            padding: 3px 12px;
+            font-size: 0.8em;
+            background: #FFFFFF;
+            margin-left:  10px;
+
+        }
+        .btn5{
+            border: none;
+            background: #F9F9F9;
+            width: 220px;
+            padding: 3px 0px;
+        }
+        .btn6{
+            width: 240px;
+            font-size: 0.8em;
+            padding: 3px 0px;
+        }
+        button{
+            outline: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <div class="comment">
+                <div class="row header">
+                    <div class="col-xs-3 col-md-3" style="text-align: left;padding: 0">
+                        <button class="btn1">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            钱包</button>
+                    </div>
+                    <div class="col-xs-8 col-md-8" style=" text-align: left;">
+                        <select class="btn2" id="year_time"> </select></div>
+
+                </div>
+                <div class="comm">
+                    <table class="table">
+                        <!--<thead><th></th></thead>-->
+                        <tbody id="databody">
+                            <tr><td>该月现金收入：</td><td class="data1"></td><td>￥</td></tr>
+                            <tr><td>该月直接发展用户数：</td><td class="data2"></td><td>人</td></tr>
+                            <tr><td>该月直直接签约商家数：</td><td class="data3"></td><td>家</td></tr>
+                            <tr><td>该月下级发展用户数：</td><td class="data4"></td><td>人</td></tr>
+                            <tr><td>该月下级签约商家数：</td><td class="data5"></td><td>家</td></tr>
+                            <tr><td>用户较上月情况：</td><td class="data6"></td><td>人</td></tr>
+                            <tr><td>商家较上月情况：</td><td class="data7"></td><td>家</td></tr>
+                            <tr><td>收入较上月情况：</td><td class="data8"></td><td>￥</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content" style="text-align: center">
+            <div id="content" style="height: 100px;margin-top: 30px">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/temp/js/jquery.min.js"> </script>
+<script src="__PUBLIC__/temp/js/bootstrap.js"></script>
+<script type="text/javascript">
+    var url = "{{:web_url('/branch/wallet/m')}}";
+    var param = {orgid:"{{$branch.id}}",date:"{{:date('Y-m',time())}}"};
+    function ajaxWalletdetail(para){
+//        $("#databody").empty();
+        $.ajax({
+            type: "GET",
+            url: url,
+            data:para,
+            success: function (data) {
+                if (200 == data.code) {
+                    for (var key in data.data){
+                        $('#databody .'+key).text(data.data[key]);
+                    }
+                }else{
+                    $("#content").text(data.desc);
+                    $('#myModal').modal('toggle');
+                }
+            },
+            error:function(data){
+                $("#content").text("获取失败，请检查网络");
+                $('#myModal').modal('toggle');
+            }
+        })
+    }
+    $(function(){
+        $(".btn1").click(function(){
+            window.history.back();
+        });
+
+        //加载选择时间
+        ajaxWalletdetail(param);
+
+        timeSelect();
+
+        //获取数据
+        $("#year_time").change(function(){
+            ajaxWalletdetail($("#year_time").val());
+        })
+    });
+
+    //初始化时间选择器
+    function timeSelect() {
+        var s_y   = '2017';
+        var s_m   = '9';
+
+        var now = new Date();
+        var e_y = now.getFullYear();       //年
+        var e_m = now.getMonth() + 1;     //月
+
+        var html = initTimeArr(s_y,s_m,e_y,e_m).map(function ($vo) {
+            return '<option value="'+$vo+'">'+$vo+'</option>';
+        }).join('');
+
+        $("#year_time").append(html);
+    }
+
+    //输入起始时间，返回月份加年份数组
+    function initTimeArr(s_y,s_m,e_y,e_m) {
+        var year_arr = [];
+        var i;
+        var j;
+        var max;
+        for(i = s_y; i <= e_y; i++)
+        {
+            max = 12;
+            if(i == s_y){
+                j = s_m;
+            }else{
+                j = 1;
+            }
+            if(i == e_y){
+                max = e_m;
+            }
+            for ( j; j <= max; j++){
+
+                year_arr.unshift(i+'-'+j);
+            }
+        }
+
+        return year_arr;
+    }
+
+
+</script>
+</body>
+</html>

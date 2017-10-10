@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>商户管理</title>
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 100%;
+                margin:0 auto;
+
+
+            }
+            .comment{
+                width: 100%;
+                font-size:0.8em;
+                color: #999999;
+
+            }
+            .img-rounded{
+                width: 100%;
+                height: 160px;
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+
+            .header{
+                left: 15px;
+            }
+
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.5em;
+                color: #999999;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 30px auto;
+            }
+
+            .img-rounded{
+                width: 100%;
+                height: 78px;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+
+            }
+
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.6em;
+
+                color: #999999;
+                text-align: center;
+
+            }
+            .comm{
+                width: 100%;
+                margin: 35px auto;
+            }
+
+
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+
+            }
+
+        }
+        .comb{
+            width: 100%;
+            text-align: left;
+            padding: 13px 25px;
+
+        }
+        .header{
+            position: fixed;
+            top: 0;
+            border-bottom:1px solid #DDDDDD;
+            width: 100%;
+            margin: 0 -15px;
+            padding: 10px 0;
+            background: #F9F9F9;
+            color:#FFCC00;
+            text-align: center;
+            font-size: 0.8em;
+            z-index: 5;
+        }
+        .comr{
+            width: 100%;
+            background: #FFFFFF;
+            text-align: left;
+        }
+        .menu{
+            background: #F9F9F9;
+            font-size: 0.9em;
+            padding: 5px 15px;
+            width: 100%;
+            color: #000000;
+            font-weight: bold;
+        }
+        #mainContent{
+            margin-top: 56px;
+            width:100%;
+        }
+
+        .btn7{
+            border:none;
+            padding: 5px 20px 5px 7px;
+            font-size:1.1em;
+            color: #000000;
+            background: #F9F9F9;
+            margin-right: -10px;
+        }
+
+        .btn10{
+            border:none;
+            padding: 5px 0;
+            font-size:1.1em;
+            background: #F9F9F9;
+            color:#FFCC00;
+            font-weight: bold;
+        }
+
+        .hrline{
+            width:95%;
+            height:2px ;
+            border-top: 1px solid #DDDDDD;
+            margin-left:5%;
+        }
+
+        .span1{
+            color: #000000;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .span2{
+
+            font-weight: normal;
+            font-size: 0.7em;
+        }
+
+
+        .col-xs-2{
+            padding: 0;
+        }
+
+        .col-xs-3{
+            padding: 0;
+
+        }
+
+        button{
+            outline: 0;
+        }
+        .col-xs-9{
+
+        }
+        .comb{
+            cursor: pointer;
+        }
+    </style>
+
+
+</head>
+<body>
+<div class="container">
+    <div class="row" style="padding-bottom: 100px">
+        <div class="col-xs-12 col-md-12 " style="padding: 0">
+            <div  class="comment">
+                <div class="header row" style="margin: 0;">
+                    <div class="col-xs-2" style="padding-right: 0"><button class="btn10" >
+                        <span class="glyphicon glyphicon-chevron-left"></span></button>
+                    </div>
+                    <div class="col-xs-8" style="padding: 0">
+                        <button class="btn7" id="getbtn">点选插入地点</button>
+                    </div>
+                    <div class="col-xs-2" style="padding-left: 0">
+                        <button class="btn10" >地图</button>
+                    </div>
+                </div>
+                <div id="mainContent">
+
+                    <div class="comr" id="view">
+                        <div class="menu">景点</div>
+                        <div class="comb">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <img class="img-rounded">
+                                </div>
+                                <div class="col-xs-9">
+                                    <span class="span1"> 花舞人间</span><br>
+                                    <span class="span2">这是一个提供服务的地点</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="__PUBLIC__/js/jquery.min.js"> </script>
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        ajaxData();
+
+        //点击事件
+        $('body').on('click','.comb',function () {
+
+            //把被点击的ID传给父级
+
+
+        });
+    });
+
+    //请求数据
+    function ajaxData() {
+        $.ajax({
+            type: "GET",
+            url: "http://api.myfreego.cn/place",
+            data: "place_type=98",
+            success: function (data) {
+                if (data.code = 200) {
+                    renderData(data.data);
+                }else{
+                    msg(data.desc,2);
+                }
+            },
+            error: function (data) {}
+        })
+
+    }
+    //渲染数据
+    function renderData(data) {
+        var html = data.map(function (item) {
+            var dom = '<div class="comr"><div class="menu">'+item.title+'</div>';
+            if(item.sub){
+                dom += item.sub.map(function (s) {
+                    return '<div class="comb"><div class="row"><div class="col-xs-3">'+
+                            '<img class="img-rounded" src="'+(s.img_url?s.img_url:'')+'" style="width: 100%;"></div>'+
+                            '<div class="col-xs-9"><span class="span1">'+s.title+'</span><br>'+
+                            '<span class="span2">'+s.content+'</span> </div></div></div>';
+                }).join('');
+            }
+            dom += '</div></div>';
+            return dom;
+        }).join('');
+        $('#mainContent').html(html);
+    }
+</script>
+</body>
+</html>

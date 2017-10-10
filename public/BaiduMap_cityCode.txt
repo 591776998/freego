@@ -1,0 +1,39 @@
+array (size=9)
+  'location' => 
+    array (size=2)
+      'lng' => float 104.52595528419
+      'lat' => float 30.990227707379
+  'formatted_address' => string '四川省德阳市中江县' (length=27)
+  'business' => string '' (length=0)
+  'addressComponent' => 
+    array (size=11)
+      'country' => string '中国' (length=6)
+      'country_code' => int 0
+      'province' => string '四川省' (length=9)
+      'city' => string '德阳市' (length=9)
+      'district' => string '中江县' (length=9)
+      'town' => string '' (length=0)
+      'adcode' => string '510623' (length=6)
+      'street' => string '' (length=0)
+      'street_number' => string '' (length=0)
+      'direction' => string '' (length=0)
+      'distance' => string '' (length=0)
+  'pois' => 
+    array (size=0)
+      empty
+  'roads' => 
+    array (size=0)
+      empty
+  'poiRegions' => 
+    array (size=0)
+      empty
+  'sematic_description' => string '正兴桥东北448米' (length=21)
+  'cityCode' => int 74
+  
+  
+  
+  
+  
+  
+  
+  

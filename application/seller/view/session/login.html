@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>自游GO商户平台</title>
+    <link href="__PUBLIC__/temp/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <script src="__PUBLIC__/temp/js/jquery.min.js"> </script>
+    <script src="__PUBLIC__/temp/js/bootstrap.js"></script>
+    <style type="text/css">
+        @media (min-width:992px) {
+            .row{
+                width: 60%;
+                margin:0 auto;
+                border: 2px solid #DDDDDD;
+            }
+            .comment{
+                width: 100%;
+                font-size:1.1em;
+                padding-top: 10px;
+                color: #666666;
+                font-weight:bold;
+            }
+
+            .main{
+                padding: 10px 8px;
+                margin: 0 18%;
+            }
+            .comm{
+                width: 100%;
+                margin: 45px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+            .btn1{
+                border: none;
+                background: #F2F2F2;
+                width: 240px;
+            }
+        }
+        @media (max-width:376px){
+            .comment{
+                width: 100%;
+                font-size:1.5em;
+                padding-top: 10px;
+                color: #666666;
+                font-weight:bold;
+            }
+            .comm{
+                width: 100%;
+                margin: 45px auto;
+            }
+            .comb{
+                width: 90%;text-align: center;
+                margin: 30px auto;
+            }
+            .btn1{
+                border: none;
+                background: #F2F2F2;
+                width: 180px;
+               padding:0px 15px;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+
+            }
+        }
+        @media (min-width:410px){
+            .comment{
+                width: 100%;
+                font-size:1.8em;
+                padding-top: 10px;
+                color: #666666;
+                font-weight:bold;
+            }
+            .comm{
+                width: 100%;
+                margin: 55px auto;
+            }
+            .comb{
+                width: 98%;text-align: center;
+                margin: 35px auto;
+            }
+            .btn1{
+                border: none;
+                background: #F2F2F2;
+                width: 230px;
+            }
+            .modal-dialog{
+                width: 200px;
+                margin: 280px auto;
+
+            }
+        }
+         .container{
+             height: 100%;
+             overflow: hidden;
+         }
+        .imgCom{
+            width: 180px;
+            height:180px;
+            background: #F2F2F2 ;
+            margin: 0 auto;
+
+        }
+
+
+        .btn2{
+            width: 120px;
+            font-size: 0.7em;
+            margin: 0 10px;
+            padding: 6px 0px;
+            background: #FFFFFF;
+            border:1px solid #FFCC00;
+            border-radius: 8px;
+            font-weight: normal;
+        }
+        .btn3{
+            background: #FFFFFF;
+            border: none;
+            color:#FFCC00;
+            font-weight: bold;
+        }
+        .img-rounded{
+            width: 180px;
+            height:180px;
+        }
+        button{
+            outline: 0;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <div class="comment">
+                <div class="comm" style="margin-top:40px">
+                    <div class="imgCom"><img class="img-rounded" src="__PUBLIC__/temp/img/login.png"></div>
+                </div>
+                <div class="comm" style="text-align: center">
+                    <h2><strong>自游GO商户平台</strong></h2>
+                </div>
+
+                <div class="comm">
+                    <div class="comb">手机号：<input class="btn1" id="phone" type="text"></div>
+                    <div class="comb" >密&nbsp &nbsp&nbsp码：<input class="btn1" style="font-size: 1.0em;font-weight: normal" id="pwd" placeholder="请输入密码或验证码" type="password"></div>
+                </div>
+
+                <div class="comm" style="text-align: center">
+                    <button class="btn2" id="submit">密码登陆</button>
+                    <button class="btn2"  id="codebtn">验证码登陆</button>
+
+                </div>
+
+
+                <div class="comm" style="text-align: center">
+                    <button class="btn3" id="join">成为合作商户？</button>
+                </div>
+            </div>
+            <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content" style="text-align: center">
+                        <div id="content" style="height: 100px;margin-top: 30px">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/temp/js/md5.js"> </script>
+<script type="text/javascript" src="__PUBLIC__/js/seller.js"> </script>
+<script type="text/javascript">
+    $().ready(function(){
+
+        var formDate={};
+        var formCode={};
+        formDate.type = 101;
+        //跳转注册页
+        $('#join').on('click',function () {
+            jump("{{:web_url('/seller/seller/register')}}");
+        });
+        //获取验证码
+
+        $('#codebtn').on('click',function () {
+            formDate.type = 102;
+            formCode.type = 111;
+            formCode.phone=$("#phone").val();
+            $.ajax({
+                type:"POST",
+                url:"{{:web_url('/seller/vcode/save')}}",
+                dataType:"json",
+                data:formCode,
+                success:function(data){
+                    if(data.code=200)  $('#codebtn').val("已发送");
+                    if(data.code=201){
+                        $("#content").text(data.desc);
+                        $('#myModal').modal('toggle');
+                    }
+                },
+                error:function(data){
+                    $("#content").text(data.desc);
+                    $('#myModal').modal('toggle');
+                }
+            })
+        });
+        //账号密码登陆
+        $('#submit').on('click',function () {
+            if(formDate.type==101){
+                formDate.pwd=hex_md5("ShiDianAdmin"+$("#pwd").val());
+                formDate.pwd=formDate.pwd.toUpperCase();
+            }
+            else{
+                formDate.vcode=$("#pwd").val();
+                formDate.pwd=null;
+            }
+            formDate.phone=$("#phone").val();
+            $.ajax({
+                type: "POST",
+                url: "{{:web_url('seller/session/save')}}",
+                dataType:"json",
+                data:formDate,
+                success: function(data) {
+                    if(200 == data.code){
+                        if(data.data.info_status==101){
+                            jump("{{:web_url('/seller/index/index')}}");
+                        }
+                        else if(data.data.info_status==102){
+                            if(choose('资质还在审核中，去查看？')){
+                                jump("{{:web_url('/seller/sellerinfo/res')}}");
+                            }
+                        }
+                        else if(data.data.info_status==103){
+//                            $("#content").text("还未提交审查资格");
+//                            $('#myModal').modal('toggle');
+                            if(choose('还未提交审查资格，现在去提交？')){
+                                jump("{{:web_url('/seller/sellerinfo/editor')}}");
+                            }
+                        }
+                        else {
+//                            $("#content").text("资质失效或不存在");
+//                            $('#myModal').modal('toggle');
+                            if(choose('资质失效或不存在，现在去提交？')){
+                                jump("{{:web_url('/seller/sellerinfo/editor')}}");
+                            }
+                        }
+
+                    }else{
+                        $("#content").text(data.desc);
+                        $('#myModal').modal('toggle');
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    $("#content").text("登录失败，请检查网络后重试");
+                    $('#myModal').modal('toggle');
+                }
+            })
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>固定布局，加载顶部、底部</title>
+    <link href="__PUBLIC__/temp/css/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/temp/css/dropload.css" rel="stylesheet">
+    <style>
+        html,body{
+            height: 100%;
+        }
+        .outer{
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .outer .inner{
+            flex: 1;
+            overflow-y: scroll;
+        }
+        .header{
+            background: #f5f5f5;
+            display: flex;
+            flex-direction: row;
+            height: 64px;
+            line-height: 34px;
+            padding-top: 15px;
+            position: fixed;
+            width: 100%;
+            z-index: 1;
+        }
+        .header a{
+            height: 32px;
+            width: 70px;
+            text-align: center;
+            display: block;
+            color: #FFCC00;
+            font-size: 18px;
+        }
+        .header input{
+            height: 32px;
+            flex: 1;
+        }
+
+        .lists{
+            display: flex;
+            flex-direction: column;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .mainColor{
+            color: #FFCC00;
+        }
+        .comb{
+            width: 100%;
+            height: 90px;
+            display: flex;
+            flex-direction: row;
+            padding-top: 20px;
+        }
+        .comb .left_img {
+            width: 80px;
+        }
+        .comb .c{
+            flex: 1;
+        }
+        .comb .r{
+            width: 70px;
+        }
+
+        .comb .left_img img{
+            width: 55px;
+            height: 55px;
+        }
+
+        .comb .span1{
+            height: 33px;
+            line-height: 33px;
+            font-size: 20px;
+        }
+        .comb .span2{
+            height: 22px;
+            line-height: 22px;
+            font-size: 20px;
+        }
+        .comb .span3{
+            font-size: 20px;
+            height: 55px;
+            line-height: 55px;
+        }
+        a,a:hover,a:focus{
+            color: #FFCC00;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+<body>
+<div class="outer">
+    <div class="header">
+
+        <a href="javascript:;" class="btn lock"><&nbsp;后退</a>
+        <input type="text"  />
+        <a href="javascript:;" class="btn lock">贵阳</a>
+
+    </div>
+    <div style="height: 64px;"></div>
+    <div class="inner">
+        <div class="lists"></div>
+    </div>
+</div>
+<!-- jQuery1.7以上 或者 Zepto 二选一，不要同时都引用 -->
+<script src="__PUBLIC__/temp/js/jquery.min.js"> </script>
+<script src="__PUBLIC__/temp/js/bootstrap.js"></script>
+<script type="text/javascript" src="__PUBLIC__/temp/js/dropload.min.js"></script>
+<script src="__PUBLIC__/js/branch.js"> </script>
+<script type="text/javascript">
+    var pagePara={page_size:10,page:1};
+    var pageUrl = "{{:web_url('/branch/seller/test')}}";
+
+    $(function(){
+        $('.back_btn').on('click',function () {
+            window.history.back();
+        });
+
+        var list_wrap = $('.inner');
+        var flush = initFlushList(list_wrap,list_wrap.find('.lists'));
+
+        $("#key_word").change(function(){
+            flush();
+        });
+
+    });
+
+    //初始化上下拉刷新
+    function initFlushList(dom,list) {
+        var dp = dom.dropload({
+            domUp : {
+                domClass   : 'dropload-up',
+                domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
+                domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+                domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
+            },
+            domDown : {
+                domClass   : 'dropload-down',
+                domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+                domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+                domNoData  : '<div class="dropload-noData">暂无数据</div>'
+            },
+            loadUpFn : function(me){
+                ajaxLoadData(list,function (status) {
+                    me.resetload();
+                },true);
+            },
+            loadDownFn : function(me){
+                ajaxLoadData(list,function (status) {
+                    me.resetload();
+                },false);
+            }
+        });
+
+        return function () {
+            ajaxLoadData(list,function(){},true);
+        }
+    }
+
+    //异步加载商家数据 传入列表的dom ,消除加载效果的函数 ，是否覆盖
+    function ajaxLoadData(dom,func,cover){
+        $.ajax({
+            type:"POST",
+            url:pageUrl,
+            dataType:"json",
+            data:pagePara,
+            success:function(data){
+                var go = true;
+                if(200 == data.code) {
+                    if(cover){
+                        dom.html(renderList(data.data));
+                    }else{
+                        dom.append(renderList(data.data));
+                    }
+                    if(data.data.length != pagePara.page_size){
+                        go = false;
+                    }
+                }else{
+                    msg(data.desc,2);
+                }
+                func(go);
+            },
+            error:function(data){
+                func(true);
+                msg('网络错误，请稍后再试'.desc,2);
+            }
+        })
+    }
+
+    //渲染dom
+    function renderList(data) {
+        return data.map(function (item) {
+            var btn_dom = '';
+            if(101 == item.info_status){
+                //正常
+                btn_dom = '<a class="btn6 mainColor" value="'+ item.id+'">查看</a>';
+            }else if(102 == item.info_status){
+                //待审核
+                btn_dom = '<a class="btn6 mainColor" value="'+ item.id+'">查看</a>'+
+                        '<a class="btn6 mainColor" value="'+ item.id+'">通过</a>';
+            }else if(100 ==  item.info_status){
+                //未通过
+                btn_dom = '<a class="btn6 mainColor" value="'+ item.id+'">查看</a>';
+            }
+            var title = '';
+            var boss  = '';
+            var img_url = '';
+            if(JSON.stringify(item.place) != "{}"){
+                title = item.place.title;
+                boss  = item.place.boss;
+                img_url  = item.place.img_url;
+            }else  if(JSON.stringify(item.sellerinfo) != "{}"){
+                title = item.sellerinfo.title;
+                boss  = item.sellerinfo.boos_name;
+                img_url  = item.img_url?item.img_url:'';
+            }else{
+                title = item.name;
+                boss  = item.boss;
+                img_url  = item.img_url?item.img_url:'';
+            }
+            return  '<div class="comb">'+
+                    '<div class="left_img"> ' +
+                    '<img class="img-rounded" src="'+img_url+'"></div>'+
+                    '<div class="c" style="text-align: left">'+
+                        '<span class="span1">'+title+'</span><br>'+
+                        '<span class="span2" >负责人：</span><span class="span2">'+boss+'</span>'+
+                    '</div>'+
+                    '<div class="span3 r">' +
+                        btn_dom+
+                    '</div>'+
+                    '</div>';
+        }).join('');
+    }
+
+
+    //查看
+    function seemessage1(a){
+        location.href="?"+a;
+    }
+    //查看
+    function seemessage2(a){
+        location.href="?"+a;
+    }
+    //通过
+    function passmessage(a){
+        var submitData={};
+        submitData.info_status=101;
+        submitData.id=a;
+        $.ajax({
+            type: "POST",
+            url: "{{:web_url('/branch/seller/update')}}",
+            dataType: "json",
+            data:submitData,
+            success: function (data) {
+                if(200 == data.code) {
+                    $("#content").text("操作成功");
+                    $('#myModal').modal('toggle');
+
+                }else{
+                    $("#content").text(data.desc);
+                    $('#myModal').modal('toggle');
+
+                }
+            },
+            error: function (data) {
+                $("#content").text(data.desc);
+                $('#myModal').modal('toggle');
+            }
+        })
+    }
+</script>
+</body>
+</html>

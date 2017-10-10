@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+    <script type="text/javascript">
+    </script>
+    <style>
+        @media (min-width:992px) {
+            .row{
+                width: 60%;
+                margin: 0 auto;
+                border-right: 2px solid #DDDDDD;
+                border-left: 2px solid #DDDDDD;
+            }
+            .imgCom{
+                width: 100%;
+                height:135px;
+                margin: 10px 0;
+                background: #F2F2F2 ;
+            }
+            .main{
+                padding: 10px 45px;
+                margin: 0 18%;
+            }
+        }
+        @media (max-width:376px){
+            .comment{
+                font-size:7px;
+                padding-top: 10px;
+
+                color: #979797;
+                line-height:50px;
+                font-weight:bold;
+            }
+        }
+        @media (min-width:410px){
+            .comment{
+                font-size:1.2em;
+                padding-top: 10px;
+                letter-spacing:0.5px;
+                color: #979797;
+                line-height:50px;
+                font-weight:bold;
+            }
+        }
+        a:hover{
+            cursor: pointer;
+        }
+        .main{
+            padding: 10px 45px;
+
+        }
+
+        .span1{
+            background: #D8D8D8;
+            padding: 6px 10px;
+            margin-left:  25px;
+            font-weight:normal;
+            border: none;
+            height: 25px;
+            width:200px;
+        }
+
+
+        .span2{
+            background:#D8D8D8;
+            padding: 6px 10px;
+            margin-left:  25px;
+            font-weight:normal;
+            border: none;
+            height: 25px;
+            width:180px;
+        }
+        .span3{
+            background:#D8D8D8;
+            padding: 6px 10px;
+            margin:0 5px;
+            font-weight:normal;
+            border: none;
+            height: 25px;
+            width:50px;
+        }
+
+
+        .btn{
+            border-radius: 7px;
+            margin-left:5px ;
+            font-size: 0.9em;
+            margin-bottom:5px ;
+            padding: 2px;
+            color: #979797;
+            height: 28px;
+            background: #FFFFFF;
+            border: 1px solid #DDDDDD;
+
+        }
+        .btn1{
+            border-radius: 7px;
+            margin-left:5px ;
+            font-size: 0.9em;
+            margin-bottom:5px ;
+            padding: 2px;
+            color: #0000ff;
+            height: 28px;
+            background: #FFFFFF;
+            border:none;
+
+        }
+
+        select{
+            width: 95%;
+            height: 25px;
+            color: #000000;
+            font-size: 15px;
+            margin: 0 5px;
+        }
+        a{
+            color:#0000ff;
+            margin: 0 10px;
+        }
+        .imgCom{
+            width: 100%;
+            height: 75px;
+            margin: 10px 0;
+            background: #F2F2F2 ;
+        }
+        textarea{
+            background: #F2F2F2;
+            width: 100%;
+            border:none;
+        }
+
+    </style>
+    <!--/script-->
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 main">
+            <h2 style="font-weight: bolder">套餐</h2>
+            <div class="comment">
+                <form id="main_form" method="post" enctype="multipart/form-data" method="post" onkeypress="javascript:return noJump();">
+                <input type="number" name="services_id" value="{{$services_id}}" hidden/>
+                封面图片<br />
+                <div class="col-xs-12 img_input">
+                    <img class="imgCom" style="width: 90px;height: 90px;">
+                    <input name="img" class="input hide" type="file" accept="image/*" hidden />
+                </div>
+                名称：&nbsp&nbsp&nbsp<input name="title" type="text" class="span1" /><br />
+                简介：&nbsp&nbsp&nbsp<input name="content" type="text" class="span1" /><br />
+                挂牌价：<input name="price" class="span2" placeholder="输入范围0以上"/>￥<br />
+                实售价：<input name="fact_price" class="span2" placeholder="输入范围0以上"/>￥<br />
+                积分：&nbsp&nbsp&nbsp<input name="back_points" type="number" class="span2" min="0" placeholder="请输入正整数"/>分<br />
+                <div>
+                    <label><input name="has_max_num" value="101" type="checkbox" checked="checked" /><span>设置库存数</span></label><br />
+                    <div class="has_max_num_div">总数<input type="number" name="total_num" class="span3" min="0" placeholder="整数"/>个<br /><br /></div>
+                </div>
+                <div>
+                    <label><input name="has_pre_num" value="101" type="checkbox" checked="checked" /><span>设置限购</span></label><br />
+                    <div class="has_pre_num_div">每个人限买<input type="number" name="pre_num" class="span3" min="0" placeholder="整数"/>个<br /></div>
+                </div>
+                套餐类型
+                <select name="plan_type">
+                    <option value="101">主套餐（单选）</option>
+                    <option value="102">附加可选套餐（无最低限制购买数量）</option>
+                    <option value="103">附加捆绑套餐（捆绑购买最少1个）</option>
+                </select>
+                价格计算方式
+                <select name="price_type">
+                    <option value="101">时间x价格x数量</option>
+                    <option value="102">数量x价格</option>
+                    <option value="103">时间段x价格x保额x数量</option>
+                </select>
+                时间计算方式
+                <select name="time_type">
+                    <option value="101">小时段制</option>
+                    <option value="102">日期段制</option>
+                    <option value="103">日期制</option>
+                </select>
+                <label><input name="need_book" value="101" type="checkbox" /><span>购买前需店家确认还有该商品</span></label><br />
+                <label><input name="ftof" value="101" type="checkbox" /><span>可支持到店支付</span></label><br />
+                <label><input name="verify" value="101" type="checkbox" /><span></span>是否需要验票扫码</span></label><br />
+                    <button id="submit" type="button" class="btn">提交</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="#to-top" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+<!---->
+<script src="__PUBLIC__/js/jquery.3.2.1.js"> </script>
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+<script src="__PUBLIC__/js/seller.js"></script>
+<script>
+    $(function(){
+
+        //图片
+        imgInput();
+
+        //价格类型和时间模式的联动
+        timeSelectShow($('select[name=price_type]').val());
+        $('select[name=price_type]').on('change',function () {
+            msg('change!');
+            var val = $(this).val();
+            msg(val);
+            timeSelectShow(val);
+        });
+
+        //库存
+        numberInputShow($('input[name=has_max_num]').is(':checked'),$('.has_max_num_div'));
+        $('input[name=has_max_num]').on('change',function () {
+            msg('c');
+            numberInputShow($(this).is(':checked'),$('.has_max_num_div'));
+        });
+
+        //限购
+        numberInputShow($('input[name=has_pre_num]').is(':checked'),$('.has_pre_num_div'));
+        $('input[name=has_pre_num]').on('change',function () {
+            msg('c');
+            numberInputShow($(this).is(':checked'),$('.has_pre_num_div'));
+        });
+
+        //提交
+        $('#submit').on('click',function () {
+            var formData = new FormData(document.querySelector('#main_form'));
+            $.ajax({
+                type: "POST",
+                url: "{{:web_url('/seller/Plan/save')}}",
+                data: formData,//.serialize(),
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if(200 == data.code){
+                        var parent_win = window.opener;
+                        parent_win.plan_callback(data.data);
+                        //2.重定向到编辑页面
+                        jump('{{:web_url('/seller/Plan/editor')}}?id='+data.data.id);
+                    }else{
+                        msg(data.desc,2);
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    msg("保存失败，请检查网络后重试",2);
+                }
+            });
+        });
+    });
+
+    //传入限制，控制数量按钮的显示隐藏
+    function numberInputShow(status,dom) {
+        if(status){
+            dom.show();
+        }else{
+            dom.hide();
+        }
+    }
+
+    //传入套餐类型，判断时间select是否显示
+    function timeSelectShow(type) {
+        var show = true;
+        if(102 == type){
+            show = false;
+        }
+        if(show){
+            msg('show');
+            $('select[name=time_type]').show();
+        }else{
+            msg('hide');
+            $('select[name=time_type]').hide();
+        }
+    }
+
+    //图片
+    function imgInput() {
+        var can = true;
+        $('.img_input').on('click',function (e) {
+            if(can){
+                can = false;
+                var input = $(this).find('.input');
+                input.trigger("click");
+                can = true;
+            }
+        });
+        $('.img_input').on('change','.input',function () {
+            var parent = $(this).parent();
+            var objUrl = getObjectURL(this.files[0]) ;
+            if (objUrl) {
+                parent.find('img').attr("src", objUrl) ; //将图片路径存入src中，显示出图片
+            }
+        });
+    }
+
+
+</script>
+
+</body>
+</html>

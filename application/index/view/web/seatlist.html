@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <style type="text/css">
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        .mui-table-view-chevron .mui-table-view-cell {
+            padding-right: 0;
+        }
+        .headerH64{
+            height: 64px;
+            padding-top: 20px;
+        }
+        .mui-bar-nav~.mui-content {
+            padding-top: 64px;
+        }
+        .mui-bar-nav~.mui-content .mui-pull-top-pocket {
+            top: 64px;
+        }
+        .mui-table-view-chevron .mui-table-view-cell>a:not(.mui-btn) {
+            margin-right: 0;
+        }
+        .list_item{
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .list_item_top{
+            height: 58px;
+        }
+        .list_item_top img{
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            margin-top: 11px;
+            margin-right: 16px;
+        }
+        .list_item_top div{
+            padding-top: 6px;
+            padding-bottom: 6px;
+            line-height: 23px;
+        }
+        .list_item_top div p{
+            font-size: 12px;
+            margin-bottom: 0;
+        }
+        .list_item_top div p span{
+            margin-right: 8px;
+        }
+        .list_item_bot{
+            height: 42px;
+        }
+        .list_item_bot img{
+            width: 36px;
+            height: 27px;
+            margin-top: 8px;
+            margin-right: 16px;
+        }
+        .list_item_bot p{
+            margin-left: 52px;
+            line-height: 42px;
+            margin-bottom: 0;
+            color: black;
+        }
+        .list_item_bot span{
+            font-size: 14px;
+            line-height: 42px;
+            margin-bottom: 0;
+        }
+        .item_top_line{
+            margin-left: 52px;
+            background-color: #dadada;
+            height: 1px;
+        }
+        .yellow{
+            color: #f3a41a;
+        }
+        .item_line{
+            background-color: #dadada;
+            height: 1px;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+</head>
+
+<body>
+{{eq name="is_app" value="102"}}
+{{include file="web/h5_view_head" /}}
+{{else/}}
+<header class="mui-bar mui-bar-nav headerH64" style="background-color: #fff;">
+    <a id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left yellow"><span class="ltext"></span></a>
+    <h1 class="mui-title">{{$title}}</h1>
+</header>
+{{/eq}}
+
+<!--下拉刷新容器-->
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+    <div class="mui-scroll">
+        <ul class="mui-table-view mui-table-view-chevron databox" id="content_wrap"></ul>
+    </div>
+</div>
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/jquery.3.2.1.js"></script>
+<script src="__PUBLIC__/js/mui.lazyload.js"></script>
+<script src="__PUBLIC__/js/mui.lazyload.img.js"></script>
+<script src="__PUBLIC__/js/shidian.js"></script>
+<script>
+    var sd = new shiDianCommon({});
+    var token = sd.token('{{$token}}');
+    var baseUrl = '{{$baseUrl}}';
+    var pulicS = '__PUBLIC__/img/';
+
+    var page = 1;
+    var page_size = 20;
+
+    mui.init({
+        pullRefresh: {
+            container: '#pullrefresh',
+            down: {
+                style:'circle',
+                auto: true,//可选,默认false.首次加载自动下拉刷新一次
+                contentdown : "下拉可以刷新",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+                contentover : "释放立即刷新",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+                contentrefresh : "正在刷新...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+                callback: function() {
+                    //加载数据，重新渲染页面
+                   page = 1;
+                   $.ajax({
+                       url:'{{:web_url('seatdata')}}',
+                       data:{page:page,page_size:page_size,main_id:'{{$main_id}}'},
+                       success:function(data){
+                           loadData(data.data,true);
+                           mui('#pullrefresh').pullRefresh().endPulldownToRefresh(false);
+                           mui('#pullrefresh').pullRefresh().refresh(true);
+                       },
+                       error:function () {
+                            popTitle('获取数据失败，请稍后再试！',2);
+                            mui('#pullrefresh').pullRefresh().endPulldownToRefresh(true);
+                       }
+                   });
+
+                }
+            },
+            up: {
+                contentrefresh: '正在加载...',
+                callback: function () {
+                    page++;
+                    $.ajax({
+                        url:'{{:web_url('seatdata')}}',
+                        data:{page:page,page_size:page_size,main_id:'{{$main_id}}'},
+                        success:function(data){
+                            loadData(data.data,false);
+                            if(data.data.length != page_size){
+                                mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+                            }else{
+                                mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+                            }
+                        },
+                        error:function () {
+                            popTitle('获取数据失败，请稍后再试！',2);
+                            mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+                            mui('#pullrefresh').pullRefresh().refresh(true);
+                        }
+                    });
+                }
+            }
+        }
+    });
+
+    //刷新列表页面
+    function loadData( data, $remove) {
+        if(data.length!=0){
+            var html = data.map(function ($vo) {
+                console.log($vo);
+                var cengche;
+                if('{{$now_user_id}}' != $vo.user_id){
+                    cengche = '<span class="mui-pull-right yellow rub_car_btn" id="'+$vo.id+'">+申请蹭车</span>';
+                }else{
+                    cengche = '';
+                }
+                return  '<li class="list_item">' +
+                        '<div class="list_item_top">' +
+                        '<img src="__PUBLIC__/img/zhanwei.png" data-lazyload="'+$vo.user.head_img_url+'" class="mui-pull-left user_info_btn" the_id="'+$vo.user.id+'"/>' +
+                        '<div class="mui-pull-left"> ' +
+                        '<p><span class="yellow user_info_btn" the_id="'+$vo.user.id+'">'+$vo.user.nick_name+'</span><span>'+$vo.user.honor+'</span><span class="yellow commentlist" the_id="'+$vo.user.id+'">蹭友评价</span>('+$vo.user.comment_main_count+')</p> ' +
+                        '<p>去过'+$vo.user.country_count+'个国家，'+$vo.user.city_count+'个城市，留下'+$vo.user.dynamic_count+'个动态，'+$vo.user.travels_count+'篇游记</p> ' +
+                        '</div> ' +
+                        '</div> ' +
+                        '<div class="item_top_line"></div> ' +
+                        '<div class="list_item_bot"> ' +
+                        '<p class="mui-pull-left ">驾驶'+$vo.car_name+'，提供车位：'+$vo.use_seats+'/'+$vo.total_seats+'</p>' +
+                        cengche+
+                        '</div> ' +
+                        '</li> ' +
+                        '<div class="item_line"></div>';
+            }).join('');
+
+            if($remove){
+                document.querySelector('#content_wrap').innerHTML = html;
+            }else{
+                $('#content_wrap').append(html);
+            }
+        }else{
+
+        }
+    }
+
+    mui.ready(function(){
+        mui(document).imageLazyload({
+            placeholder: '__PUBLIC__/img/zhanwei.png'
+        });
+
+        mui('#content_wrap').on('tap','.rub_car_btn',function(){
+            //发送申请 todo
+            var url = "{{:web_url('confirmorder',[],true)}}";
+            var param = {};
+            param.type = 103;
+            param.token = token;
+            param.join_id = this.getAttribute('id');
+            param.num = 1;
+            param.art_id = '{{$main_id}}';
+
+            self.location = url+'?'+$.param(param);
+        });
+
+        //用户详情
+        mui('body').on('tap','.user_info_btn',function(){
+            sd.app('user',{id:this.getAttribute('the_id')});
+        });
+        //评价列表
+        mui('body').on('tap','.commentlist',function(){
+            sd.app('carcommentlist',{main_id:this.getAttribute('the_id'),type:112});
+        });
+    });
+
+    /*********************** hud **********************/
+    //data显示的文字.action:0loading，1.正确，2.错误
+    function popTitle(data,action){
+        if(action==0){
+            iosTooltip(data,pulicS+'oval.svg',300,pulicS+'cenel.png',0.1);
+        }else if(action==1){
+            iosTooltip(data,pulicS+'ok.png',300,'',0);
+        }else if(action == 2){
+            iosTooltip(data,pulicS+'cenel.png',300,'',0);
+        }
+    }
+    function iosTooltip(content, url, animateTime, close, showAddTime) {
+        console.log($);
+        $('#Prompt').attr('id')?$('#Prompt').remove():'';
+        $('#Prompt_z_index').attr('id')?$('#Prompt_z_index').remove():'';
+        !showAddTime?showAddTime = 0:'';
+        var html = '<div class=" " id="Prompt_z_index" style="opacity: 0;z-index: 1110; min-height: 95px; position: absolute; width: 100px; height: 100px;background: black;"></div><div id="Prompt" style="z-index: 1110; min-height: 95px; position: absolute; top: 36%;">'+
+                '<div class="PromptBody" style="z-index: 1111; width: 100%; height: 100%;">'+
+                '<div class="yesPrompttool" style="position: absolute;left: -8px;top: -8px;"> <img id="PromptColse" onclick="closeIosTooltip()" class="hide" style="width: 24px;height: 24px;" src="' + close + '"></div>'+
+                '<div class="yesPrompttop" style="height: 60px;    text-align: center;"><img class="PromptBodyImg" style="height: 32px;width: 32px;margin-top: 18px " src="' + url + '"></div>'+
+                '<div class="yesPrompttop" style="color: white;font-size: 14px;text-align: center;letter-spacing:2px;padding:0 15px 5px 15px;">' + content +'</div>'
+        '</div></div>'
+        $('body').children().eq(0).before(html);
+        var domW = $('#Prompt').width();
+        var domCanW = $('body').width()*0.8;
+        var winW =  $('body').width();
+        if(domW>=domCanW){
+            $('#Prompt,#Prompt_z_index').css('width',domCanW+'px').css('left',$('body').width()*0.1).css('right',$('body').width()*0.1);
+        }else if(domW<=110){
+            $('#Prompt,#Prompt_z_index').css('left',parseInt(winW-110)/2+'px').css('right',parseInt(winW-110)/2+'px');
+        }
+        else{
+            $('#Prompt,#Prompt_z_index').css('left',parseInt(winW-domW)/2+'px').css('right',parseInt(winW-domW)/2+'px');
+        }
+        $("body,html").css({"overflow":"hidden"});
+        $('#Prompt,#Prompt_z_index').css('top',$(window).height()*0.36+$(window).scrollTop());
+        $('#Prompt_z_index').css('height',$('#Prompt').height());
+        $('#Prompt_z_index').css('width',$('#Prompt').width());
+        if(close) {
+            show_mask('', 0.1);
+            $('#PromptColse').removeClass('hide');
+        }
+        $("#Prompt_z_index").animate({
+            opacity: 0.85
+        },animateTime);
+        $("#Prompt").animate({
+            opacity: 1
+        },animateTime+100);
+        if(!close){
+            setTimeout(function(){
+                $("#z-index").remove();
+                hide_mask();
+                $("#Prompt,#Prompt_z_index").animate({opacity: 0}, 300,function(){
+                    $("#Prompt").remove();
+                    $("#Prompt_z_index").remove();
+
+                });
+            },animateTime+1000+showAddTime)
+        }
+    }
+
+    //隐藏遮罩
+    function hide_mask() {
+        $("#z-index").hide();
+        $("#z-index,.z-index").remove();
+    }
+    //显示遮罩
+    function show_mask(top, opacity, anmit) {
+        if(!top) {
+            top = 0;
+        }
+        if(!opacity) {
+            opacity = 0.6;
+        }
+        if(!anmit) {
+            anmit = 700;
+        }
+        var html = '<div id="z-index" class="z-index" style="position: fixed;height: 100%;width: 100%;background: #919191;z-index: 100;opacity: 0;top: ' + top + 'px;left:0"></div>	'
+        $('body').children().eq(0).before(html);
+        $("#z-index").animate({
+            opacity: opacity,
+        }, anmit);
+    }
+
+</script>
+</body>
+
+</html>

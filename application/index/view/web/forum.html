@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{{$title|default="论坛"}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link charset="utf-8" rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <style type="text/css">
+        .mainColor{
+            color: #f4a51d !important;
+        }
+        .mui-control-content {
+            background-color: white;
+            min-height: 215px;
+        }
+        body{
+            background: white;
+        }
+        .mui-slider-group{
+
+        }
+        .mui-table-view-cell{
+            /*margin-left: -15px;*/padding-left: 0;
+        }
+        #slider{
+            margin-top: 64px;
+        }
+        #slider,
+        .mui-slider-group {
+            height: 100% !important;
+        }
+        .mui-content{
+            background: white;
+        }
+        #topLoad {
+            position: fixed;
+            top: 100px;
+            z-index: 1;
+            line-height: 50px;
+            width: 100%;
+            height: 50px;
+            text-align: center;
+            display: none;
+            opacity: 0;
+        }
+        .sderbox{
+            padding: 15px 15px 0 15px;
+        }
+        .bottonLoad{
+            z-index: 1;
+            line-height: 50px;
+            width: 100%;
+            height: 50px;
+            text-align: center;
+            margin-top: -10px;
+            /*display: none;*/
+            opacity: 0;
+        }
+        ul.mui-table-view{padding:0 15px 15px 15px ;margin-top: 0; }
+        .mui-table-view-cell:after{left: 0;}
+        .floatL{float: left;}.textC{text-align: center;}
+        .footerFloat{
+            position: fixed;bottom: 65px;width: 150px;height: 50px;background: white;z-index: 1222;border-radius:30px ;left: 50%;margin-left: -75px;box-shadow: 1px 6px 5px gainsboro ;padding: 20px 15px 0 15px;
+        }
+        .footerFloatl{
+            height: 26px;color: #6D6D6C;
+            width: 50%;border: 2px solid white;border-radius:15px ;font-size: 12px;line-height: 26px;
+        }
+        .footerFloatChose{
+            border-color: #f4a51d !important;
+        }
+        .mui-segmented-control .mui-control-item.mui-active{
+            background-color:#f4a51d;height: 30px;line-height: 30px;
+        }
+        .mui-segmented-control .mui-control-item,.mui-segmented-control{
+            color: #F9B323;border-color:#F9B323 ;font-size: 12px;height: 30px;line-height: 30px;
+        }
+        .footers{
+            padding-top: 10px;position: fixed;width: 100%;bottom: 0;height: 50px;border-top: 1px #F1F2F1 solid;line-height: 50px;text-align: center;background: white;z-index: 111;
+        }
+        .footers .item{
+            line-height: 35px;height: 30px;
+        }
+        .footers .item.item0{
+            width: 24%;"
+        }
+        .footers .item.item1{
+            width: 27%;border-right:1px solid #E0E1E1 ;border-left:1px solid #E0E1E1 ;
+        }
+        .footers .item.item2{
+            width: 25%;border-right:1px solid #E0E1E1 ;
+        }
+        .footers .item.item3{
+            width: 24%;height: 30px;
+        }
+        .footers .item img{
+            height: 18px;width: 18px;margin-right: 8px;margin-bottom: -2px;
+        }
+
+        .head_img{
+            height: 16px !important;
+            width: 16px !important;
+            -moz-border-radius: 8px;
+            border-radius:8px;
+        }
+        .img_icon{
+            margin-right: 3px;
+        }
+        .img_text_center{
+            margin-bottom: -3px;
+        }
+        .mui-bar{
+            background-color: #fff !important;
+        }
+        .headerH64{
+            height: 64px;
+            padding-top: 20px;
+        }
+        .mui-bar .mui-title {
+            right: 80px !important;
+        }
+        {{eq name="is_app" value="102"}}
+        {{$web_css}}
+        {{/eq}}
+
+    </style>
+</head>
+
+<body>
+
+<div class="mui-content ListBox" id="contentWrap" >
+    {{eq name="is_app" value="102"}}
+    {{include file="web/h5_view_head"/}}
+    {{else/}}
+    <header id="header" class="mui-bar mui-bar-nav headerH64  ">
+        <h1 class="mui-title the_header_title">{{$title|default="论坛"}}</h1>
+        <a id="select_forum" class="mui-btn mui-btn-yellow mui-btn-link mui-pull-right mainColor">更换论坛</a>
+        <a id="{{eq name="is_web" value="101"}}back{{else /}}pop{{/eq}}" class="mui-icon mui-icon-left-nav mui-pull-left yellow mainColor"><span class="ltext"></span></a>
+    </header>
+    {{/eq}}
+
+    <div id="slider" class="mui-slider">
+        <!--	内容标题banner-->
+        <div class="sderbox">
+            <div id="sliderSegmentedControl" style="" class="mui-slider-indicator mui-segmented-control ">
+                <a class="mui-control-item {{eq name="index_id" value="1"}}mui-active{{/eq}}" href="#item1mobile">
+                    游记攻略
+                </a>
+                <a class="mui-control-item {{eq name="index_id" value="2"}}mui-active{{/eq}}" href="#item2mobile">
+                    驾友问答
+                </a>
+                <a class="mui-control-item {{eq name="index_id" value="3"}}mui-active{{/eq}}" href="#item3mobile">
+                    活动召集
+                </a>
+                <a class="mui-control-item {{eq name="index_id" value="4"}}mui-active{{/eq}}" href="#item4mobile">
+                    车主认证
+                </a>
+                <a class="mui-control-item {{eq name="index_id" value="5"}}mui-active{{/eq}}" href="#item5mobile">
+                    全部
+                </a>
+            </div>
+        </div>
+        <!--顶部刷新-->
+        <div id="topLoad" style="">
+            <div class="" style="text-align: center;">
+                &nbsp;&nbsp;正在刷新...
+            </div>
+        </div>
+        <div class="mui-slider-group">
+            <div id="item1mobile" class="mui-slider-item mui-control-content {{eq name="index_id" value="1"}}mui-active{{/eq}}">
+                <div id="scroll1" class="mui-scroll-wrapper">
+                    <div id="pullrefresh" style="" class="mui-content mui-scroll-wrapper pullrefresh">
+                        <ul id="tabData1" class="mui-table-view" >
+                            <!--底部刷新-->
+                            <div id="" class="bottonLoad" style="">
+                                <div class="right" style="">
+                                    &nbsp;&nbsp;<span class="text">正在加载...</span>
+                                </div>
+                            </div>
+                            <div class="empth" style="height: 100px;">&nbsp;</div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="item2mobile" class="mui-slider-item mui-control-content {{eq name="index_id" value="2"}}mui-active{{/eq}}">
+                <div id="scroll2" class="mui-scroll-wrapper">
+                    <!--	<div class="mui-scroll">-->
+                    <div id="pullrefresh2" class="mui-content mui-scroll-wrapper pullrefresh">
+                        <ul id="tabData2" cc="cc" class="mui-table-view tabItem">
+                            <!--底部刷新-->
+                            <div id="" class="bottonLoad" style="">
+                                <div class="right" style="">
+                                    &nbsp;&nbsp;<span class="text">正在加载...</span>
+                                </div>
+                            </div>
+                            <div class="empth" style="height: 100px;">&nbsp;</div>
+                        </ul>
+                        <!--却换加载动画-->
+                        <div class="mui-loading"><div class="mui-spinner"></div></div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="item3mobile" class="mui-slider-item mui-control-content {{eq name="index_id" value="3"}}mui-active{{/eq}}">
+                <div id="scroll3" class="mui-scroll-wrapper">
+                    <!--<div class="mui-scroll">-->
+                    <div id="pullrefresh3" class="mui-content mui-scroll-wrapper pullrefresh">
+                        <ul id="tabData3" class="mui-table-view tabItem" style="">
+                            <!--底部刷新-->
+                            <div id="" class="bottonLoad" style="">
+                                <div class="right" style="">
+                                    &nbsp;&nbsp;<span class="text">正在加载...</span>
+                                </div>
+                            </div>
+                            <div class="empth" style="height: 100px;">&nbsp;</div>
+                        </ul>
+                        <!--却换加载动画-->
+                        <div class="mui-loading">
+                            <div class="mui-spinner">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="item4mobile" class="mui-slider-item mui-control-content {{eq name="index_id" value="4"}}mui-active{{/eq}}">
+                <div id="scroll4" class="mui-scroll-wrapper">
+                    <!--<div class="mui-scroll">-->
+                    <div id="pullrefresh4" class="mui-content mui-scroll-wrapper pullrefresh">
+                        <ul id="tabData4" class="mui-table-view tabItem" style="">
+                            <!--底部刷新-->
+                            <div id="" class="bottonLoad" style="">
+                                <div class="right" style="">
+                                    &nbsp;&nbsp;<span class="text">正在加载...</span>
+                                </div>
+                            </div>
+                            <div class="empth" style="height: 100px;">&nbsp;</div>
+                        </ul>
+
+                        <!--却换加载动画-->
+                        <div class="mui-loading">
+                            <div class="mui-spinner">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="item5mobile" class="mui-slider-item mui-control-content {{eq name="index_id" value="5"}}mui-active{{/eq}}">
+            <div id="scroll5" class="mui-scroll-wrapper">
+                <!--<div class="mui-scroll">-->
+                <div id="pullrefresh5" class="mui-content mui-scroll-wrapper pullrefresh">
+                    <ul id="tabData5" class="mui-table-view tabItem" style="">
+                        <!--底部刷新-->
+                        <div id="" class="bottonLoad" style="">
+                            <div class="right" style="">
+                                &nbsp;&nbsp;<span class="text">正在加载...</span>
+                            </div>
+                        </div>
+                        <div class="empth" style="height: 100px;">&nbsp;</div>
+                    </ul>
+
+                    <!--却换加载动画-->
+                    <div class="mui-loading">
+                        <div class="mui-spinner">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="footerFloat" style="">
+        <div class="footerFloatl floatL textC footerFloatChose chooseAll" >全部</div><div class="chooseGood textC footerFloatl footerFloatr floatL" >精华</div>
+    </div>
+    <div class="footers" style="" id="create_btn_wrap">
+        <div class="item floatL item0" id="1" style=" "><img style="" src="__PUBLIC__/img/base/gonglue.png"/>攻略</div>
+        <div class="item floatL item1" id="2" style="" ><img style="" src="__PUBLIC__/img/base/wenwen _2.png"/>问问</div>
+        <div class="item floatL item2" id="3" style="" ><img style="" src="__PUBLIC__/img/base/renzheng.png"/>认证</div>
+        <div class="item floatL item3" id="4" style="" ><img style="" src="__PUBLIC__/img/base/huodong.png"/>活动</div>
+    </div>
+</div>
+
+<script>
+    var nowBannerIndex = "{{$index_id}}";
+</script>
+
+<script src="__PUBLIC__/js/mui.min.js"></script>
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/js/pull.js?v=2"></script>
+<script src="__PUBLIC__/js/shidian.js?v=2"></script>
+
+<script>
+
+    var sd = new shiDianCommon({});
+    var token   = sd.token('{{$token}}');
+    var baseUrl = '{{$baseUrl}}';
+    //事件初始化
+    mui.init();
+    var forum_id = '{{$forum_id}}';
+    if('undefined' == typeof localStorage.shidian_data_forum_last_id){
+        localStorage.shidian_data_forum_last_id = forum_id;
+    }
+    if(forum_id != localStorage.shidian_data_forum_last_id){
+        forum_id = localStorage.shidian_data_forum_last_id;
+        console.log('go');
+        $.ajax({
+            url:"{{:web_url('/forum/read')}}",
+            data:{id:forum_id},
+            success:function (data) {
+                if(200 == data.code){
+                    updateForumData(data.data);
+                }
+            }
+        });
+    }
+
+    function updateForumData(data) {
+        console.log('---------------------');
+        console.log(data);
+        $('header .the_header_title').html(data.title);
+        document.title = data.title;
+    }
+
+    //发文章，跳转原生
+    mui('#create_btn_wrap').on('tap','.item',function(e){
+        shidian('creat'+this.getAttribute('id'),{forum_id:forum_id,index:nowBannerIndex});
+    });
+
+    //更换论坛
+    var select_forum = document.getElementById("select_forum");
+    select_forum.addEventListener("tap",function () {
+        self.location='{{$baseUrl}}index/web/forummulist';
+    });
+
+    listsH = document.body.offsetHeight + 'px';
+    document.getElementById('contentWrap').style.height = listsH;
+            //请求数据参数配置//必修改更具实际参数
+    window.postConfig = [{
+        postUrl: baseUrl+'art/index',
+        par: {
+            art_type: 101,
+            forum_id:forum_id,
+            order:'comment_time',
+            page:1,
+            page_size:20
+        }
+    }, {
+        postUrl: baseUrl+'art/index',
+        par: {
+            art_type: 103,
+            forum_id:forum_id,
+            order:'comment_time',
+            page:1,
+            page_size:20
+        }
+    }, {
+        postUrl: baseUrl+'art/index',
+        par: {
+            art_type: 102,
+            forum_id:forum_id,
+            order:'comment_time',
+            page:1,
+            page_size:20
+        }
+    }, {
+        postUrl: baseUrl+'art/index',
+            par: {
+                art_type: 105,
+                forum_id:forum_id,
+                order:'comment_time',
+                page:1,
+                page_size:20
+            }
+    },{
+        postUrl: baseUrl+'art/index',
+            par: {
+                art_type: 0,
+                forum_id:forum_id,
+                order:'comment_time',
+                page:1,
+                page_size:20
+        }
+    }];
+    mui.ready(function() {
+        initPull();
+        //加载数据//loadData(页数,上/下,指定加载那一列(不传默认为当前选中页),修改配置参数用着全部和精华(不传默认为postConfig配置参数))
+        loadData(1, 'no', 1);
+        loadData(1, 'no', 2);
+        loadData(1, 'no', 3);
+        loadData(1, 'no', 4);
+        loadData(1, 'no', 5);
+        //精华，全部筛选
+        mui('body').on('tap','.footerFloatl',function(){
+            var allFooterChose = $('.footerFloatl');
+            allFooterChose.removeClass('footerFloatChose');
+            if($(this).hasClass('chooseAll')){
+                //必修改更具实际参数
+
+                postConfig[nowBannerIndex-1].par.is_best = 0;
+
+                allFooterChose.eq(0).addClass('footerFloatChose');
+                autotopRefresh()
+            }else if($(this).hasClass('chooseGood')){
+                //必修改更具实际参数
+                postConfig[nowBannerIndex-1].par.is_best = 101;
+                allFooterChose.eq(1).addClass('footerFloatChose');
+                autotopRefresh()
+            }
+        });
+
+        //文章详情
+        mui('body').on('tap','.art_item',function(){
+            self.location=baseUrl+'index/web/art?id='+this.dataset.art_id+'&is_web=101&token='+token;
+        })
+    })
+
+    function htmlJion(item) {
+
+        var ding ='';
+        if(item.is_top.id){
+            ding = '<img style="height: 15px;width: 15px;" class="img_text_center" src="__PUBLIC__/img/base/ding.png"/>';
+        }
+        var jinhua ='';
+        if(item.is_best.id){
+            jinhua = '<img style="height: 15px;width: 15px;" class="img_text_center" src="__PUBLIC__/img/base/jin.png"/>';
+        }
+
+
+        if(item.img_url){
+            var cover_img = '<div class="L" style="float: left;width: 80px;">' +
+            '<img style="height: 50px;width: 80px;" src="'+item.img_url+'"/>' +
+            '</div>';
+            var right = 'padding-left: 90px;';
+        }else{
+            var cover_img = '<div class="L" style="float: left;width: 1px;height: 56px;"></div>';
+            var right = 'height:56px;';
+        }
+        if(102 == item.type){
+            var xiangqing = '	<img style="height: 15px;width: 15px;" class="img_icon"  src="__PUBLIC__/img/base/jiaru.png"/>' +item.joined_count;
+        }else{
+            var xiangqing = '	<img style="height: 15px;width: 15px;" class="img_icon"  src="__PUBLIC__/img/base/zan.png"/>' +item.likes_count+
+            '	<img style="height: 14px;width: 14px;" class="img_icon"  src="__PUBLIC__/img/base/pinglun.png"/>' +item.comments_count;
+        }
+
+        var html = '<li class="mui-table-view-cell box art_item" style="position: relative;" data-art_id="'+item.id+'">' +
+                cover_img+
+                '<div class="R" style="position: absolute;left: 0px;width: 100%;'+right+'">' +
+                '<div class="Rt mui-ellipsis" style="">'+item.title+'</div>' +
+                '<div class="Rb" style="padding-top: 10px;">' +
+                '	<div class="RbLbox" style="float: left;width: 50%;"> ' +
+                '	<img class="head_img img_text_center" src="'+item.user.head_img_url+'" />' +
+                '	'+item.user.nick_name+'&nbsp;' +
+                jinhua+
+                ding+
+                '</div>' +
+                '<div class="RbRbox" style="float: left;width: 50%;text-align: right;"> ' +
+                '	<img style="height: 13px;width: 16px;" class="img_icon" src="__PUBLIC__/img/base/liulan.png"/>' +item.read_count+xiangqing+
+                '</div> 	</div> </div></li>'
+        return html;
+    }
+
+
+    //和shidianAPP交互
+    function shidian($action, $param) {
+        if (typeof($param != "string")){
+            $param = JSON.stringify($param);
+        }
+        self.location='shidian://'+$action+'?jp='+$param;
+    }
+</script>
+
+</body>
+
+</html>
